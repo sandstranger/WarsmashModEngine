@@ -1,1 +1,1 @@
-include 'desktop', 'core', 'server', 'shared', 'fdfparser', 'jassparser'
+include 'android', 'core', 'server', 'shared', 'fdfparser', 'jassparser'
