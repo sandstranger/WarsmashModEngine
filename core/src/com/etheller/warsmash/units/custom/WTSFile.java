@@ -64,7 +64,7 @@ public class WTSFile implements WTS {
 					state = ParseState.NEXT_TRIGSTR;
 				}
 				else {
-					if (!data.isEmpty()) {
+					if (data.length() !=0) {
 						data.append('\n');
 					}
 					data.append(currentLine);

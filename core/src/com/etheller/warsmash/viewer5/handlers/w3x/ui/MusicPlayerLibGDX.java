@@ -2,6 +2,7 @@ package com.etheller.warsmash.viewer5.handlers.w3x.ui;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
@@ -129,7 +130,7 @@ public class MusicPlayerLibGDX implements MusicPlayer {
 		int validMusicCount = 0;
 		for (int i = 0; i < musics.length; i++) {
 			if (this.dataSource.has(musics[i])) {
-				final Music newMusic = Gdx.audio.newMusic(new DataSourceFileHandle(this.dataSource, musics[i]));
+				final Music newMusic = Gdx.audio.newMusic(Gdx.files.internal(musics[i].toLowerCase(Locale.US).replace('\\', '/')));
 				newMusic.setVolume(this.volume);
 				this.currentMusics[i] = newMusic;
 				validMusicCount++;

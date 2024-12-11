@@ -194,7 +194,7 @@ public abstract class ModelViewer {
 
 				// TODO this is a synchronous hack, skipped some Ghostwolf code
 				try {
-					resource.loadData(this.dataSource.getResourceAsStream(finalSrc), null);
+					resource.loadData(this.dataSource.getResourceAsStream(finalSrc), this.dataSource);
 				}
 				catch (final Exception e) {
 					throw new IllegalStateException("Unable to load data: " + finalSrc, e);
@@ -261,7 +261,7 @@ public abstract class ModelViewer {
 
 		// TODO this is a synchronous hack, skipped some Ghostwolf code
 		try {
-			resource.loadData(dataSource.getResourceAsStream(path), null);
+			resource.loadData(dataSource.getResourceAsStream(path), dataSource);
 		}
 		catch (final IOException e) {
 			throw new IllegalStateException("Unable to load data: " + path);

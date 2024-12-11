@@ -272,7 +272,7 @@ public class Terrain {
 			final String texFile = cliffInfo.getField("texFile");
 			final AnyExtensionImage imageInfo = ImageUtils.getAnyExtensionImageFixRGB(dataSource,
 					texDir + "\\" + texFile + texturesExt, "cliff texture");
-			final BufferedImage image = imageInfo.getRGBCorrectImageData();
+			final com.badlogic.gdx.graphics.Texture image = imageInfo.getRGBCorrectImageData();
 			this.cliffTextures
 					.add(new UnloadedTexture(image.getWidth(), image.getHeight(), ImageUtils.getTextureBuffer(image),
 							cliffInfo.getField("cliffModelDir"), cliffInfo.getField("rampModelDir")));
@@ -378,13 +378,13 @@ public class Terrain {
 
 		if (waterInfo != null) {
 			final String fileName = waterInfo.getField("texFile");
-			final List<BufferedImage> waterTextures = new ArrayList<>();
+			final List<com.badlogic.gdx.graphics.Texture> waterTextures = new ArrayList<>();
 			boolean anyWaterTextureNeedsSRGB = false;
 			int waterImageDimension = 128;
 			for (int i = 0; i < this.waterTextureCount; i++) {
 				final AnyExtensionImage imageInfo = ImageUtils.getAnyExtensionImageFixRGB(dataSource,
 						fileName + (i < 10 ? "0" : "") + Integer.toString(i) + texturesExt, "water texture");
-				final BufferedImage image = imageInfo.getImageData();
+				final com.badlogic.gdx.graphics.Texture image = imageInfo.getImageData();
 				if ((image.getWidth() != 128) || (image.getHeight() != 128)) {
 					System.err.println(
 							"Odd water texture size detected of " + image.getWidth() + " x " + image.getHeight());
@@ -401,7 +401,7 @@ public class Terrain {
 			gl.glTexParameteri(GL30.GL_TEXTURE_2D_ARRAY, GL30.GL_TEXTURE_BASE_LEVEL, 0);
 
 			for (int i = 0; i < waterTextures.size(); i++) {
-				final BufferedImage image = waterTextures.get(i);
+				com.badlogic.gdx.graphics.Texture image = waterTextures.get(i);
 				gl.glTexSubImage3D(GL30.GL_TEXTURE_2D_ARRAY, 0, 0, 0, i, image.getWidth(), image.getHeight(), 1,
 						GL30.GL_RGBA, GL30.GL_UNSIGNED_BYTE, ImageUtils.getTextureBuffer(image));
 			}

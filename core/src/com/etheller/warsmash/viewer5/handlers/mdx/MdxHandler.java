@@ -9,6 +9,7 @@ import com.etheller.warsmash.viewer5.handlers.ModelHandler;
 import com.etheller.warsmash.viewer5.handlers.ResourceHandlerConstructionParams;
 import com.etheller.warsmash.viewer5.handlers.blp.BlpHandler;
 import com.etheller.warsmash.viewer5.handlers.blp.DdsHandler;
+import com.etheller.warsmash.viewer5.handlers.blp.PngHandler;
 import com.etheller.warsmash.viewer5.handlers.tga.TgaHandler;
 
 public class MdxHandler extends ModelHandler {
@@ -31,6 +32,7 @@ public class MdxHandler extends ModelHandler {
 	@Override
 	public boolean load(final ModelViewer viewer) {
 		viewer.addHandler(new BlpHandler());
+		viewer.addHandler(new PngHandler());
 		viewer.addHandler(new DdsHandler());
 		viewer.addHandler(new TgaHandler());
 

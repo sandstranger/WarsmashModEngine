@@ -38,11 +38,11 @@ public class GroundTexture {
 		return this.buildable;
 	}
 
-	private void loadImage(final String path, final GL30 gl, final BufferedImage image, final boolean sRGBFix) {
+	private void loadImage(final String path, final GL30 gl, final com.badlogic.gdx.graphics.Texture image, final boolean sRGBFix) {
 		if (image == null) {
 			throw new IllegalStateException(this.tileId + ": Missing ground texture: " + path);
 		}
-		final Buffer buffer = ImageUtils.getTextureBuffer(sRGBFix ? ImageUtils.forceBufferedImagesRGB(image) : image);
+		final Buffer buffer = ImageUtils.getTextureBuffer(image);
 		final int width = image.getWidth();
 		final int height = image.getHeight();
 

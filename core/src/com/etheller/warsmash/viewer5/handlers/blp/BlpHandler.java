@@ -2,6 +2,7 @@ package com.etheller.warsmash.viewer5.handlers.blp;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.Gdx;
 import com.etheller.warsmash.viewer5.HandlerResource;
 import com.etheller.warsmash.viewer5.ModelViewer;
 import com.etheller.warsmash.viewer5.handlers.ResourceHandler;
@@ -21,8 +22,10 @@ public class BlpHandler extends ResourceHandler {
 
 	@Override
 	public HandlerResource<?> construct(final ResourceHandlerConstructionParams params) {
-		return new BlpTexture(params.getViewer(), params.getHandler(), params.getExtension(), params.getPathSolver(),
-				params.getFetchUrl());
+		return new BlpGdxTexture(params.getViewer(), params.getHandler(), params.getExtension(), params.getPathSolver(),
+				params.getFetchUrl().substring(0,params.getFetchUrl().length()-4)+".png");
+	//			return new BlpTexture(params.getViewer(), params.getHandler(), params.getExtension(), params.getPathSolver(),
+//				params.getFetchUrl());
 	}
 
 }

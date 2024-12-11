@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.IntBuffer;
+import java.util.Locale;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
@@ -174,10 +175,10 @@ public class WarsmashGdxFDFTestRenderScreen implements InputProcessor, Screen, S
 									musicPath = musicSLK.get(musicPath).getField("FileNames");
 								}
 								final String[] moreSplitMusics = musicPath.split(",");
-								final String finalMusicPath = moreSplitMusics[(int) (Math.random()
+								String finalMusicPath = moreSplitMusics[(int) (Math.random()
 										* moreSplitMusics.length)];
-								final Music music = Gdx.audio.newMusic(new DataSourceFileHandle(
-										WarsmashGdxFDFTestRenderScreen.this.viewer.dataSource, finalMusicPath));
+								finalMusicPath = finalMusicPath.replace('\\', '/');
+								final Music music = Gdx.audio.newMusic(Gdx.files.internal(finalMusicPath));
 //							music.setVolume(0.2f);
 								music.setLooping(true);
 								music.play();

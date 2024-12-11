@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.apache.commons.compress.utils.IOUtils;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.etheller.warsmash.viewer5.ModelInstance;
 import com.etheller.warsmash.viewer5.ModelViewer;
@@ -185,6 +186,7 @@ public class MdxModel extends com.etheller.warsmash.viewer5.Model<MdxHandler> {
 						: "";
 				path = "ReplaceableTextures\\" + ReplaceableIds.getPathString(replaceableId) + idString + ".blp";
 			}
+
 
 			if ((texture.reforged || reforged) && !path.endsWith(".dds")) {
 				final String ddsPath = path.substring(0, path.length() - 4) + ".dds";

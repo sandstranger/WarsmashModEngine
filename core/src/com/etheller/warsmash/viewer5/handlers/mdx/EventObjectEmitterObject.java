@@ -34,6 +34,9 @@ public class EventObjectEmitterObject extends GenericObject implements EmitterOb
 
 		@Override
 		public Object call(final InputStream data) {
+			return Gdx.audio.newSound(Gdx.files.internal(this.filename.replace('\\','/')));
+		}
+			/*
 			final FileHandle temp = new FileHandle(this.filename) {
 				@Override
 				public InputStream read() {
@@ -49,7 +52,7 @@ public class EventObjectEmitterObject extends GenericObject implements EmitterOb
 				System.err.println("Warning: missing sound file: " + this.filename);
 				return null;
 			}
-		}
+		}*/
 	}
 
 	private static final LoadGenericCallback mappedDataCallback = new LoadGenericCallback() {

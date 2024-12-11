@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.CRC32C;
+//import java.util.zip.CRC32C;
 
 import com.badlogic.gdx.utils.IntIntMap;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -590,7 +590,7 @@ public class BattleNetUI {
 		}
 
 		this.customCreatePanelCreateButton.setOnClick(new Runnable() {
-			private final CRC32C mapChecksumCalculator = new CRC32C();
+			//private final CRC32C mapChecksumCalculator = new CRC32C();
 
 			@Override
 			public void run() {
@@ -637,8 +637,8 @@ public class BattleNetUI {
 					}
 				}
 
-				final long mapChecksum = BattleNetUI.this.customCreateCurrentMap
-						.computeChecksum(this.mapChecksumCalculator);
+				final long mapChecksum = 0;// BattleNetUI.this.customCreateCurrentMap
+//						.computeChecksum(this.mapChecksumCalculator);
 
 				String mapName = BattleNetUI.this.customCreatePanelCurrentSelectedMapPath;
 				mapName = mapName.substring(Math.max(mapName.lastIndexOf('/'), mapName.lastIndexOf('\\')) + 1);

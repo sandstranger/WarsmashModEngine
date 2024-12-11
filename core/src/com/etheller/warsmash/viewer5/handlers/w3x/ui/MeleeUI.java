@@ -491,15 +491,8 @@ public class MeleeUI implements CUnitStateListener, CommandButtonListener, Comma
 				276.25f * this.heightRatioCorrection);
 		Texture minimapTexture = null;
 		if (war3MapViewer.dataSource.has("war3mapMap.tga")) {
-			try {
-				minimapTexture = ImageUtils.getTextureNoColorCorrection(TgaFile.readTGA("war3mapMap.tga",
-						war3MapViewer.dataSource.getResourceAsStream("war3mapMap.tga")));
-			}
-			catch (final IOException e) {
-				System.err.println("Could not load minimap TGA file");
-				e.printStackTrace();
-			}
-		}
+            minimapTexture = ImageUtils.getAnyExtensionTexture(war3MapViewer.dataSource, "war3mapMap.tga");
+        }
 		else if (war3MapViewer.dataSource.has("war3mapMap.blp")) {
 			minimapTexture = ImageUtils.getAnyExtensionTexture(war3MapViewer.dataSource, "war3mapMap.blp");
 		}

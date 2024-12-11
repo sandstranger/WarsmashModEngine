@@ -2602,8 +2602,7 @@ public class MenuUI {
 			int validMusicCount = 0;
 			for (int i = 0; i < musics.length; i++) {
 				if (this.viewer.dataSource.has(musics[i])) {
-					final Music newMusic = Gdx.audio
-							.newMusic(new DataSourceFileHandle(this.viewer.dataSource, musics[i]));
+					final Music newMusic = Gdx.audio.newMusic(Gdx.files.internal(musics[i].toLowerCase(Locale.US).replace('\\', '/')));
 					newMusic.setVolume(1.0f);
 					this.currentMusics[i] = newMusic;
 					validMusicCount++;
