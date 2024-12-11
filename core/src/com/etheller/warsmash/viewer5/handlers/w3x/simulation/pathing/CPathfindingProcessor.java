@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import java.util.PriorityQueue;
 
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.etheller.warsmash.viewer5.handlers.w3x.environment.PathingGrid;
 import com.etheller.warsmash.viewer5.handlers.w3x.environment.PathingGrid.MovementType;
 import com.etheller.warsmash.viewer5.handlers.w3x.simulation.CSimulation;
@@ -38,13 +39,13 @@ public class CPathfindingProcessor {
 		this.cornerNodes = new Node[pathingGrid.getHeight() + 1][pathingGrid.getWidth() + 1];
 		for (int i = 0; i < this.nodes.length; i++) {
 			for (int j = 0; j < this.nodes[i].length; j++) {
-				this.nodes[i][j] = new Node(new Point2D.Float(pathingGrid.getWorldX(j), pathingGrid.getWorldY(i)));
+				this.nodes[i][j] = new Node(new Vector2(pathingGrid.getWorldX(j), pathingGrid.getWorldY(i)));
 			}
 		}
 		for (int i = 0; i < this.cornerNodes.length; i++) {
 			for (int j = 0; j < this.cornerNodes[i].length; j++) {
 				this.cornerNodes[i][j] = new Node(
-						new Point2D.Float(pathingGrid.getWorldXFromCorner(j), pathingGrid.getWorldYFromCorner(i)));
+						new Vector2(pathingGrid.getWorldXFromCorner(j), pathingGrid.getWorldYFromCorner(i)));
 			}
 		}
 		this.pathingGridCellCount = pathingGrid.getWidth() * pathingGrid.getHeight();
@@ -67,9 +68,9 @@ public class CPathfindingProcessor {
 	 * @return
 	 */
 	public void findNaiveSlowPath(final CUnit ignoreIntersectionsWithThisUnit,
-			final CUnit ignoreIntersectionsWithThisSecondUnit, final float startX, final float startY,
-			final Point2D.Float goal, final PathingGrid.MovementType movementType, final float collisionSize,
-			final boolean allowSmoothing, final CBehaviorMove queueItem) {
+								  final CUnit ignoreIntersectionsWithThisSecondUnit, final float startX, final float startY,
+								  final Vector2 goal, final PathingGrid.MovementType movementType, final float collisionSize,
+								  final boolean allowSmoothing, final CBehaviorMove queueItem) {
 		this.moveQueue.offer(new PathfindingJob(ignoreIntersectionsWithThisUnit, ignoreIntersectionsWithThisSecondUnit,
 				startX, startY, goal, movementType, collisionSize, allowSmoothing, queueItem));
 	}
@@ -131,7 +132,7 @@ public class CPathfindingProcessor {
 	public float h(final Node n) {
 		float bestDistance = 0;
 		for (int i = 0; i < this.goals; i++) {
-			final float possibleDistance = (float) n.point.distance(this.goalSet[i].point);
+			final float possibleDistance = n.point.dst(this.goalSet[i].point);
 			if (possibleDistance > bestDistance) {
 				bestDistance = possibleDistance; // always overestimate
 			}
@@ -141,13 +142,13 @@ public class CPathfindingProcessor {
 
 	public static final class Node {
 		public Direction cameFromDirection;
-		private final Point2D.Float point;
+		private final Vector2 point;
 		private double f;
 		private double g;
 		private Node cameFrom;
 		private int pathfindJobId;
 
-		private Node(final Point2D.Float point) {
+		private Node(final Vector2 point) {
 			this.point = point;
 		}
 
@@ -254,7 +255,7 @@ public class CPathfindingProcessor {
 				final int goalCellX = job.gridMapping.getX(this.pathingGrid, job.goalX);
 				final Node mostLikelyGoal = job.searchGraph[goalCellY][goalCellX];
 				mostLikelyGoal.touch(this.pathfindJobId);
-				final double bestGoalDistance = mostLikelyGoal.point.distance(job.goalX, job.goalY);
+				final double bestGoalDistance = mostLikelyGoal.point.dst(job.goalX, job.goalY);
 				Arrays.fill(this.goalSet, null);
 				this.goals = 0;
 				for (int i = goalCellX - 1; i <= (goalCellX + 1); i++) {
@@ -263,7 +264,7 @@ public class CPathfindingProcessor {
 							if ((i >= 0) && (i < job.searchGraph[j].length)) {
 								final Node possibleGoal = job.searchGraph[j][i];
 								possibleGoal.touch(this.pathfindJobId);
-								if (possibleGoal.point.distance(job.goalX, job.goalY) <= bestGoalDistance) {
+								if (possibleGoal.point.dst(job.goalX, job.goalY) <= bestGoalDistance) {
 									this.goalSet[this.goals++] = possibleGoal;
 								}
 							}
@@ -317,7 +318,7 @@ public class CPathfindingProcessor {
 									job.ignoreIntersectionsWithThisSecondUnit, job.startX, job.startY, job.movementType,
 									job.collisionSize, x, y)) {
 
-								final double tentativeScore = possibleNode.point.distance(job.startX, job.startY);
+								final double tentativeScore = possibleNode.point.dot(job.startX, job.startY);
 								possibleNode.g = tentativeScore;
 								possibleNode.f = tentativeScore + h(possibleNode);
 								job.openSet.add(possibleNode);
@@ -339,7 +340,7 @@ public class CPathfindingProcessor {
 				Node current = job.openSet.poll();
 				current.touch(this.pathfindJobId);
 				if (isGoal(current)) {
-					final LinkedList<Point2D.Float> totalPath = new LinkedList<>();
+					final LinkedList<Vector2> totalPath = new LinkedList<>();
 					Direction lastCameFromDirection = null;
 
 					if ((current.cameFrom != null)
@@ -462,7 +463,7 @@ public class CPathfindingProcessor {
 		private final CUnit ignoreIntersectionsWithThisSecondUnit;
 		private final float startX;
 		private final float startY;
-		private final Point2D.Float goal;
+		private final Vector2 goal;
 		private final MovementType movementType;
 		private final float collisionSize;
 		private final boolean allowSmoothing;
@@ -482,7 +483,7 @@ public class CPathfindingProcessor {
 
 		public PathfindingJob(final CUnit ignoreIntersectionsWithThisUnit,
 				final CUnit ignoreIntersectionsWithThisSecondUnit, final float startX, final float startY,
-				final Point2D.Float goal, final PathingGrid.MovementType movementType, final float collisionSize,
+				final Vector2 goal, final PathingGrid.MovementType movementType, final float collisionSize,
 				final boolean allowSmoothing, final CBehaviorMove queueItem) {
 			this.ignoreIntersectionsWithThisUnit = ignoreIntersectionsWithThisUnit;
 			this.ignoreIntersectionsWithThisSecondUnit = ignoreIntersectionsWithThisSecondUnit;

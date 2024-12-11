@@ -121,14 +121,14 @@ public class WarsmashTestGame2 extends ApplicationAdapter {
 	}
 
 	public static final String vsSimple = "\r\n" + //
-			"#version 450 core\r\n" + //
+			"#version 300\r\n" + //
 			"    layout(location = 0) in vec3 aPos;\r\n" + //
 			"    void main() {\r\n" + //
 			"      gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\r\n" + //
 			"    }\r\n";
 
 	public static final String fsSimple = "\r\n" + //
-			"#version 450 core\r\n" + //
+			"#version 300\r\n" + //
 			"    out vec4 FragColor;\r\n" + //
 			"    void main() {\r\n" + //
 			"      FragColor = vec4(0.2f, 1.0f, 0.2f, 1.0f);\r\n" + //

@@ -3,7 +3,6 @@ package com.etheller.warsmash.viewer5;
 import java.awt.image.BufferedImage;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.GL30;
 import com.etheller.warsmash.viewer5.handlers.ResourceHandler;

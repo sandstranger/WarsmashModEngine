@@ -1,11 +1,11 @@
 package net.warsmash.phone.android;
 
 import android.os.Bundle;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
+import com.etheller.warsmash.WarsmashGdxMenuScreen;
 import com.etheller.warsmash.WarsmashGdxMultiScreenGame;
 import com.etheller.warsmash.viewer5.AudioContext;
 import com.etheller.warsmash.viewer5.AudioDestination;
@@ -13,6 +13,8 @@ import com.etheller.warsmash.viewer5.gl.ANGLEInstancedArrays;
 import com.etheller.warsmash.viewer5.gl.AudioExtension;
 import com.etheller.warsmash.viewer5.gl.Extensions;
 import com.etheller.warsmash.viewer5.gl.WireframeExtension;
+
+import java.util.function.Consumer;
 
 /** Launches the Android application. */
 public class AndroidLauncher extends AndroidApplication {
@@ -23,7 +25,11 @@ public class AndroidLauncher extends AndroidApplication {
 		configuration.useGL30 = true;
 //		DataTable dataTable = loadWarsmashIni();
 		loadExtensions();
-		final WarsmashGdxMultiScreenGame warsmashGdxMultiScreenGame = new WarsmashGdxMultiScreenGame();
+		final WarsmashGdxMultiScreenGame warsmashGdxMultiScreenGame = new WarsmashGdxMultiScreenGame((Consumer<WarsmashGdxMultiScreenGame>) (game) -> {
+			final WarsmashGdxMenuScreen menuScreen = new WarsmashGdxMenuScreen(null,
+					game);
+			game.setScreen(menuScreen);
+		});
 		initialize(warsmashGdxMultiScreenGame, configuration);
 	}
 
@@ -73,11 +79,10 @@ public class AndroidLauncher extends AndroidApplication {
 			public long play(Sound buffer, float volume, float pitch, float x, float y, float z,
 							 boolean is3DSound, float maxDistance, float refDistance, boolean looping) {
 				if(looping) {
-					buffer.loop(volume, pitch, 0.0f);
+					return buffer.loop(volume, pitch, 0.0f);
 				} else {
-					buffer.play(volume, pitch, 0.0f);
+					return buffer.play(volume, pitch, 0.0f);
 				}
-				return 0;
 			}
 		};
 		Extensions.GL_LINE = 0;

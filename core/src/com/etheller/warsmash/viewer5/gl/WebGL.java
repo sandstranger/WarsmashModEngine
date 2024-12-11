@@ -56,8 +56,8 @@ public class WebGL {
 	}
 
 	public ShaderProgram createShaderProgram(String vertexSrc, String fragmentSrc) {
-		vertexSrc = vertexSrc.replace("mediump", "");
-		fragmentSrc = fragmentSrc.replace("mediump", "");
+		vertexSrc = vertexSrc;//.replace("mediump", "");
+		fragmentSrc = fragmentSrc;//.replace("mediump", "");
 		final Map<Integer, ShaderProgram> shaderPrograms = this.shaderPrograms;
 
 		final int hash = stringHash(vertexSrc + fragmentSrc);

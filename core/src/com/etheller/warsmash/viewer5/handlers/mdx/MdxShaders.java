@@ -4,7 +4,7 @@ import com.etheller.warsmash.viewer5.Shaders;
 import com.etheller.warsmash.viewer5.handlers.mdx.MdxHandler.ShaderEnvironmentType;
 
 public class MdxShaders {
-	public static final String vsHd = "#version 120\r\n" + Shaders.boneTexture + "\r\n" + //
+	public static final String vsHd = "#version 300 es\r\n" + Shaders.boneTexture + "\r\n" + //
 			"    uniform mat4 u_VP;\r\n" + //
 			"    uniform mat4 u_MV;\r\n" + //
 			"    uniform vec3 u_eyePos;\r\n" + //
@@ -256,7 +256,7 @@ public class MdxShaders {
 			"    }";
 
 	public static final String fsHd() {
-		return "#version 120\r\n" + //
+		return "#version 300 es\r\n" + //
 				"\r\n" + //
 				"\r\n" + //
 				"\r\n" + //
@@ -626,7 +626,7 @@ public class MdxShaders {
 			"    }\r\n";
 
 	public static final String vsComplex() {
-		return "\r\n" + //
+		return "precision mediump float;\r\n" + //
 				"\r\n" + //
 				"    uniform mat4 u_mvp;\r\n" + //
 				"    uniform vec4 u_vertexColor;\r\n" + //
@@ -704,7 +704,8 @@ public class MdxShaders {
 				"    }";
 	}
 
-	public static final String fsComplex = Shaders.quatTransform + "\r\n\r\n" + //
+	public static final String fsComplex = "precision mediump float;\r\n\r\n" + //
+			Shaders.quatTransform + "\r\n\r\n" + //
 			"    uniform sampler2D u_texture;\r\n" + //
 			"    uniform vec4 u_vertexColor;\r\n" + //
 			"    uniform float u_filterMode;\r\n" + //
@@ -769,7 +770,7 @@ public class MdxShaders {
 			"    }";
 
 	public static final String vsParticles() {
-		return "\r\n" + //
+		return "precision mediump float;\r\n" + //
 				"    #define EMITTER_PARTICLE2 0.0\r\n" + //
 				"    #define EMITTER_RIBBON 1.0\r\n" + //
 				"    #define EMITTER_SPLAT 2.0\r\n" + //
@@ -1026,7 +1027,7 @@ public class MdxShaders {
 				"    }";
 	}
 
-	public static final String fsParticles = "\r\n" + //
+	public static final String fsParticles = "precision mediump float;\r\n" + //
 			"    #define EMITTER_RIBBON 1.0\r\n" + //
 			"    uniform sampler2D u_texture;\r\n" + //
 			"    uniform mediump float u_emitter;\r\n" + //

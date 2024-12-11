@@ -1,5 +1,7 @@
 package com.etheller.warsmash;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -28,6 +30,7 @@ import com.etheller.warsmash.parsers.fdf.GameUI;
 import com.etheller.warsmash.parsers.jass.Jass2.RootFrameListener;
 import com.etheller.warsmash.units.DataTable;
 import com.etheller.warsmash.units.Element;
+import com.etheller.warsmash.util.StringBundle;
 import com.etheller.warsmash.util.WarsmashConstants;
 import com.etheller.warsmash.util.WarsmashUtils;
 import com.etheller.warsmash.viewer5.Camera;
@@ -77,9 +80,26 @@ public class WarsmashGdxMenuScreen implements InputProcessor, Screen, SingleMode
 	private boolean loaded = false;
 	private EnumSet<SecondaryTag> tags = SequenceUtils.EMPTY;
 
-	public WarsmashGdxMenuScreen(final DataTable warsmashIni, final WarsmashGdxMultiScreenGame game) {
+	public WarsmashGdxMenuScreen(DataTable warsmashIni, final WarsmashGdxMultiScreenGame game) {
+		if (warsmashIni == null){
+			warsmashIni = loadWarsmashIni();
+		}
+
 		this.warsmashIni = warsmashIni;
+
 		this.game = game;
+	}
+
+	public static DataTable loadWarsmashIni() {
+		final DataTable warsmashIni = new DataTable(StringBundle.EMPTY);
+		try (InputStream warsmashIniInputStream = Gdx.files.internal("warsmash.ini").read()) {
+			warsmashIni.readTXT(warsmashIniInputStream, true);
+		} catch (final FileNotFoundException e) {
+			throw new RuntimeException(e);
+		} catch (final IOException e) {
+			throw new RuntimeException(e);
+		}
+		return warsmashIni;
 	}
 
 	@Override
