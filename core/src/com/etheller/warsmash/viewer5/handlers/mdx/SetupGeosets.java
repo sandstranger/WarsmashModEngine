@@ -82,12 +82,10 @@ public class SetupGeosets {
 			model.arrayBuffer = gl.glGenBuffer();
 			gl.glBindBuffer(GL20.GL_ARRAY_BUFFER, model.arrayBuffer);
 			gl.glBufferData(GL20.GL_ARRAY_BUFFER, skinOffset + skinBytes, null, GL20.GL_STATIC_DRAW);
-			System.out.println("Predict ARRAY_BUFFER: " + (skinOffset + skinBytes));
 
 			model.elementBuffer = gl.glGenBuffer();
 			gl.glBindBuffer(GL20.GL_ELEMENT_ARRAY_BUFFER, model.elementBuffer);
 			gl.glBufferData(GL20.GL_ELEMENT_ARRAY_BUFFER, faceBytes, null, GL20.GL_STATIC_DRAW);
-			System.out.println("Predict ELEMENT_ARRAY_BUFFER: " + faceBytes);
 
 			for (int i = 0, l = geosets.size(); i < l; i++) {
 				final MdlxGeoset geoset = geosets.get(i);
