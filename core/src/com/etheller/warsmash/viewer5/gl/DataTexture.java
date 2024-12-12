@@ -2,6 +2,7 @@ package com.etheller.warsmash.viewer5.gl;
 
 import java.nio.Buffer;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.GL30;
 
@@ -16,7 +17,7 @@ public class DataTexture {
 	public DataTexture(final GL20 gl, final int channels, final int width, final int height) {
 		this.gl = gl;
 		this.texture = gl.glGenTexture();
-		this.format = (channels == 3 ? GL20.GL_RGB : GL20.GL_RGBA);
+		this.format = (channels == 3 ? GL20.GL_RGB : GL30.GL_RGBA);
 		this.internalFormat = (channels == 3 ? GL20.GL_RGB : GL30.GL_RGBA32F);
 
 		gl.glBindTexture(GL20.GL_TEXTURE_2D, this.texture);
@@ -36,7 +37,11 @@ public class DataTexture {
 			this.height = Math.max(this.height, height);
 
 			gl.glBindTexture(GL20.GL_TEXTURE_2D, this.texture);
-			gl.glTexImage2D(GL20.GL_TEXTURE_2D, 0, this.internalFormat, this.width, this.height, 0, this.format,
+			gl.glTexParameteri(GL20.GL_TEXTURE_2D, GL20.GL_TEXTURE_WRAP_S, GL20.GL_CLAMP_TO_EDGE);
+			gl.glTexParameteri(GL20.GL_TEXTURE_2D, GL20.GL_TEXTURE_WRAP_T, GL20.GL_CLAMP_TO_EDGE);
+			gl.glTexParameteri(GL20.GL_TEXTURE_2D, GL20.GL_TEXTURE_MIN_FILTER, GL20.GL_NEAREST);
+			gl.glTexParameteri(GL20.GL_TEXTURE_2D, GL20.GL_TEXTURE_MAG_FILTER, GL20.GL_NEAREST);
+			Gdx.gl30.glTexImage2D(GL20.GL_TEXTURE_2D, 0, this.internalFormat, this.width, this.height, 0, this.format,
 					GL20.GL_FLOAT, null);
 		}
 
@@ -50,6 +55,10 @@ public class DataTexture {
 		final GL20 gl = this.gl;
 
 		gl.glBindTexture(GL20.GL_TEXTURE_2D, this.texture);
+		gl.glTexParameteri(GL20.GL_TEXTURE_2D, GL20.GL_TEXTURE_WRAP_S, GL20.GL_CLAMP_TO_EDGE);
+		gl.glTexParameteri(GL20.GL_TEXTURE_2D, GL20.GL_TEXTURE_WRAP_T, GL20.GL_CLAMP_TO_EDGE);
+		gl.glTexParameteri(GL20.GL_TEXTURE_2D, GL20.GL_TEXTURE_MIN_FILTER, GL20.GL_NEAREST);
+		gl.glTexParameteri(GL20.GL_TEXTURE_2D, GL20.GL_TEXTURE_MAG_FILTER, GL20.GL_NEAREST);
 		gl.glTexSubImage2D(GL20.GL_TEXTURE_2D, 0, 0, 0, width, height, this.format, GL20.GL_FLOAT, buffer);
 	}
 
@@ -58,6 +67,10 @@ public class DataTexture {
 
 		gl.glActiveTexture(GL20.GL_TEXTURE0 + unit);
 		gl.glBindTexture(GL20.GL_TEXTURE_2D, this.texture);
+		gl.glTexParameteri(GL20.GL_TEXTURE_2D, GL20.GL_TEXTURE_WRAP_S, GL20.GL_CLAMP_TO_EDGE);
+		gl.glTexParameteri(GL20.GL_TEXTURE_2D, GL20.GL_TEXTURE_WRAP_T, GL20.GL_CLAMP_TO_EDGE);
+		gl.glTexParameteri(GL20.GL_TEXTURE_2D, GL20.GL_TEXTURE_MIN_FILTER, GL20.GL_NEAREST);
+		gl.glTexParameteri(GL20.GL_TEXTURE_2D, GL20.GL_TEXTURE_MAG_FILTER, GL20.GL_NEAREST);
 	}
 
 	public int getWidth() {

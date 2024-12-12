@@ -1636,7 +1636,7 @@ public class MenuUI {
 	}
 
 	public void show() {
-//		playMusic(this.rootFrame.trySkinField("GlueMusic"), true, 0);
+		playMusic(this.rootFrame.trySkinField("GlueMusic"), true, 0);
 		this.glueScreenLoop.play(this.uiScene.audioContext, 0f, 0f, 0f);
 	}
 
