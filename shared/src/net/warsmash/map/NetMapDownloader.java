@@ -8,6 +8,7 @@ import java.nio.file.StandardOpenOption;
 import java.util.zip.CRC32;
 import java.util.zip.CRC32C;
 
+
 public class NetMapDownloader {
 	private final File mapFilePath;
 	private FileChannel mapDataFileChannel;

@@ -22,7 +22,7 @@ public class CUnitDefaultAccuracyCheckListener implements CUnitAttackPreDamageLi
 		if (target instanceof CUnit) {
 			if (simulation.getTerrainHeight(attacker.getX(), attacker.getY()) < simulation.getTerrainHeight(target.getX(), target.getY())) {
 				Random random = simulation.getSeededRandom();
-				if (random.nextFloat(1f) < simulation.getGameplayConstants().getChanceToMiss()) {
+				if (random.nextFloat() < simulation.getGameplayConstants().getChanceToMiss()) {
 					miss = true;
 				}
 			}

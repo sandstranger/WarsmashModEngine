@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.zip.CRC32;
-import java.util.zip.CRC32C;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;

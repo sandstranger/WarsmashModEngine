@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import com.badlogic.gdx.math.Rectangle;
+import com.etheller.warsmash.Utils;
 import com.etheller.warsmash.units.GameObject;
 import com.etheller.warsmash.util.War3ID;
 import com.etheller.warsmash.util.WarsmashConstants;
@@ -113,7 +114,7 @@ public class CAbilityBlizzard extends CAbilityPointTargetSpellBase {
 			else {
 				final Random seededRandom = simulation.getSeededRandom();
 				for (int i = 0; i < this.shardCount; i++) {
-					final float randomAngle = seededRandom.nextFloat((float) (StrictMath.PI * 2));
+					final float randomAngle = Utils.nextFloat(seededRandom,((float) (StrictMath.PI * 2)));
 					/* (1 - StrictMath.pow(seededRandom.nextFloat(), 2)) */
 					final float randomDistance = seededRandom.nextFloat() * this.areaOfEffect;
 					simulation.spawnSpellEffectOnPoint(

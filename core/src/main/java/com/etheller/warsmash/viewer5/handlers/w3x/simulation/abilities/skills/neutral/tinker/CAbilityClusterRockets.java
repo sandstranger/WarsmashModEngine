@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import com.badlogic.gdx.math.Rectangle;
+import com.etheller.warsmash.Utils;
 import com.etheller.warsmash.units.GameObject;
 import com.etheller.warsmash.util.War3ID;
 import com.etheller.warsmash.util.WarsmashConstants;
@@ -102,7 +103,7 @@ public class CAbilityClusterRockets extends CAbilityPointTargetSpellBase {
 
 			final float targetingX = target.getX() + ((float) StrictMath.cos(targetingAngle) * areaOfEffect * 0.5f);
 			final float targetingY = target.getY() + ((float) StrictMath.sin(targetingAngle) * areaOfEffect * 0.5f);
-			final float randomAngle = seededRandom.nextFloat((float) (StrictMath.PI * 2));
+			final float randomAngle = Utils.nextFloat(seededRandom,((float) (StrictMath.PI * 2)));
 			final float randomDistance = seededRandom.nextFloat() * this.areaOfEffect * 0.25f;
 			final float missileLandX = targetingX + ((float) StrictMath.cos(randomAngle) * randomDistance);
 			final float missileLandY = targetingY + ((float) StrictMath.sin(randomAngle) * randomDistance);
