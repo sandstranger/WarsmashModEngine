@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 
 android {
-	compileSdkVersion 30
+	compileSdkVersion 34
 	sourceSets {
 		main {
 			manifest.srcFile 'AndroidManifest.xml'
@@ -31,8 +31,8 @@ android {
 	}
 	defaultConfig {
 		applicationId 'net.warsmash.phone'
-		minSdkVersion 19
-		targetSdkVersion 29
+		minSdkVersion 24
+		targetSdkVersion 34
 		versionCode 1
 		versionName "1.0"
 		multiDexEnabled true
