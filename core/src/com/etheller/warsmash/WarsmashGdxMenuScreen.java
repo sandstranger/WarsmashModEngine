@@ -86,8 +86,10 @@ public class WarsmashGdxMenuScreen implements InputProcessor, Screen, SingleMode
 		}
 
 		this.warsmashIni = warsmashIni;
-
 		this.game = game;
+
+		final Element emulatorConstants = warsmashIni.get("Emulator");
+		WarsmashConstants.loadConstants(emulatorConstants, warsmashIni);
 	}
 
 	public static DataTable loadWarsmashIni() {

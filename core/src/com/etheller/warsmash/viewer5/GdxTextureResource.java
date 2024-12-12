@@ -1,5 +1,6 @@
 package com.etheller.warsmash.viewer5;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture.TextureWrap;
 import com.etheller.warsmash.viewer5.handlers.ResourceHandler;
 
@@ -27,7 +28,9 @@ public abstract class GdxTextureResource extends Texture {
 
 	@Override
 	public void internalBind() {
-		this.gdxTexture.bind();
+		if (gdxTexture!=null) {
+			this.gdxTexture.bind();
+		}
 	}
 
 	@Override
