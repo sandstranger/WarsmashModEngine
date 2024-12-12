@@ -1,4 +1,4 @@
-package net.warsmash.phone.android;
+package net.warsmash.phone.android.engine.activity;
 
 import android.os.Bundle;
 import com.badlogic.gdx.Gdx;
@@ -17,13 +17,12 @@ import com.etheller.warsmash.viewer5.gl.WireframeExtension;
 import java.util.function.Consumer;
 
 /** Launches the Android application. */
-public class AndroidLauncher extends AndroidApplication {
+public class EngineActivity extends AndroidApplication {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		AndroidApplicationConfiguration configuration = new AndroidApplicationConfiguration();
 		configuration.useGL30 = true;
-//		DataTable dataTable = loadWarsmashIni();
 		loadExtensions();
 		final WarsmashGdxMultiScreenGame warsmashGdxMultiScreenGame = new WarsmashGdxMultiScreenGame((Consumer<WarsmashGdxMultiScreenGame>) (game) -> {
 			final WarsmashGdxMenuScreen menuScreen = new WarsmashGdxMenuScreen(null,

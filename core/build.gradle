@@ -3,11 +3,17 @@ plugins {
 }
 
 android {
-    namespace 'com.warsmash.warsmash_core'
-    compileSdk 34
+    namespace 'net.warsmash.core'
+    compileSdk target_sdk
 
-    defaultConfig {
-        minSdk 24
+    sourceSets {
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+            java.srcDirs = ['src/']
+        }
+    }
+        defaultConfig {
+        minSdk min_sdk
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -20,8 +26,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
 }
 
@@ -36,8 +42,4 @@ dependencies {
     api "org.apache.commons:commons-compress:1.21"
     api "net.nikr:dds:1.0.0"
     api files(fileTree(dir:'../jars', includes: ['*.jar']))
-    implementation 'com.android.support:appcompat-v7:28.0.0'
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 }

@@ -14,6 +14,11 @@ buildscript {
     dependencies {
         classpath "com.android.tools.build:gradle:$androidPluginVersion"
     }
+
+}
+
+plugins {
+    id 'org.jetbrains.kotlin.android' version '1.9.25' apply false
 }
 
 allprojects {
@@ -26,6 +31,8 @@ allprojects {
         gdxVersion = '1.12.1'
         antlrVersion = '4.7'
         xstreamVersion = '1.4.19'
+        target_sdk = 34
+        min_sdk = 24
     }
 
     repositories {
@@ -37,17 +44,6 @@ allprojects {
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
         maven { url "https://maven.nikr.net/" }
         maven { url "https://jitpack.io" }
-    }
-}
-
-project(":server") {
-    apply plugin: "java-library"
-
-
-    dependencies {
-        implementation project(":shared")
-        api "com.thoughtworks.xstream:xstream:$xstreamVersion"
-        api "commons-codec:commons-codec:1.15"
     }
 }
 
