@@ -8,7 +8,6 @@ import com.etheller.warsmash.viewer5.ModelViewer;
 import com.etheller.warsmash.viewer5.Scene;
 import com.etheller.warsmash.viewer5.SkeletalNode;
 import com.etheller.warsmash.viewer5.gl.ANGLEInstancedArrays;
-import com.etheller.warsmash.viewer5.handlers.w3x.DynamicShadowManager;
 
 public class EmitterGroup extends GenericGroup {
 	private final MdxModel model;
@@ -19,10 +18,6 @@ public class EmitterGroup extends GenericGroup {
 
 	@Override
 	public void render(final MdxComplexInstance instance, final Matrix4 mvp) {
-		if (DynamicShadowManager.IS_SHADOW_MAPPING) {
-			return;
-		}
-
 		final Scene scene = instance.scene;
 		final SkeletalNode[] nodes = instance.nodes;
 		final Model<?> model = instance.model;

@@ -1,5 +1,6 @@
 package com.etheller.warsmash.viewer5.handlers.mdx;
 
+import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -81,10 +82,12 @@ public class SetupGeosets {
 			model.arrayBuffer = gl.glGenBuffer();
 			gl.glBindBuffer(GL20.GL_ARRAY_BUFFER, model.arrayBuffer);
 			gl.glBufferData(GL20.GL_ARRAY_BUFFER, skinOffset + skinBytes, null, GL20.GL_STATIC_DRAW);
+			System.out.println("Predict ARRAY_BUFFER: " + (skinOffset + skinBytes));
 
 			model.elementBuffer = gl.glGenBuffer();
 			gl.glBindBuffer(GL20.GL_ELEMENT_ARRAY_BUFFER, model.elementBuffer);
 			gl.glBufferData(GL20.GL_ELEMENT_ARRAY_BUFFER, faceBytes, null, GL20.GL_STATIC_DRAW);
+			System.out.println("Predict ELEMENT_ARRAY_BUFFER: " + faceBytes);
 
 			for (int i = 0, l = geosets.size(); i < l; i++) {
 				final MdlxGeoset geoset = geosets.get(i);
@@ -154,7 +157,7 @@ public class SetupGeosets {
 
 								for (int j = 0; j < bones; j++) {
 									skin[offset + j] = (int) (matrixGroup[j] + 1); // 1 is added to diffrentiate
-																					// between matrix 0, and no matrix.
+									// between matrix 0, and no matrix.
 								}
 
 								skin[offset + maxBones] = bones;
@@ -182,34 +185,34 @@ public class SetupGeosets {
 					}
 
 					// Positions.
-					gl.glBufferSubData(GL20.GL_ARRAY_BUFFER, positionOffset, positions.length,
+					gl.glBufferSubData(GL20.GL_ARRAY_BUFFER, positionOffset, positions.length * 4,
 							RenderMathUtils.wrap(positions));
 					positionOffset += positions.length * 4;
 
 					// Normals.
-					gl.glBufferSubData(GL20.GL_ARRAY_BUFFER, normalOffset, normals.length,
+					gl.glBufferSubData(GL20.GL_ARRAY_BUFFER, normalOffset, normals.length * 4,
 							RenderMathUtils.wrap(normals));
 					normalOffset += normals.length * 4;
 
 					// Texture coordinates.
 					for (final float[] uvSet : uvSets) {
-						gl.glBufferSubData(GL20.GL_ARRAY_BUFFER, uvOffset, uvSet.length, RenderMathUtils.wrap(uvSet));
+						gl.glBufferSubData(GL20.GL_ARRAY_BUFFER, uvOffset, uvSet.length * 4, RenderMathUtils.wrap(uvSet));
 						uvOffset += uvSet.length * 4;
 					}
 
 					if (tangents != null) {
-						gl.glBufferSubData(GL20.GL_ARRAY_BUFFER, tangentOffset, tangents.length,
+						gl.glBufferSubData(GL20.GL_ARRAY_BUFFER, tangentOffset, tangents.length * 4,
 								RenderMathUtils.wrap(tangents));
 						tangentOffset += tangents.length * 4;
 					}
 
 					// Skin.
-					gl.glBufferSubData(GL20.GL_ARRAY_BUFFER, skinOffset, skin.length,
+					gl.glBufferSubData(GL20.GL_ARRAY_BUFFER, skinOffset, skin.length * (bigNodeSpace ? 4 : 1),
 							bigNodeSpace ? RenderMathUtils.wrap(skin) : RenderMathUtils.wrapAsBytes(skin));
 					skinOffset += skin.length * (bigNodeSpace ? 4 : 1);
 
 					// Faces.
-					gl.glBufferSubData(GL20.GL_ELEMENT_ARRAY_BUFFER, faceOffset, faces.length,
+					gl.glBufferSubData(GL20.GL_ELEMENT_ARRAY_BUFFER, faceOffset, faces.length*2,
 							RenderMathUtils.wrapFaces(faces));
 					faceOffset += faces.length * 2;
 				}

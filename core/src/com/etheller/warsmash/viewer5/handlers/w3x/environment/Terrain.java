@@ -46,7 +46,6 @@ import com.etheller.warsmash.viewer5.Texture;
 import com.etheller.warsmash.viewer5.gl.DataTexture;
 import com.etheller.warsmash.viewer5.gl.Extensions;
 import com.etheller.warsmash.viewer5.gl.WebGL;
-import com.etheller.warsmash.viewer5.handlers.w3x.DynamicShadowManager;
 import com.etheller.warsmash.viewer5.handlers.w3x.SplatModel;
 import com.etheller.warsmash.viewer5.handlers.w3x.SplatModel.SplatMover;
 import com.etheller.warsmash.viewer5.handlers.w3x.Variations;
@@ -951,7 +950,7 @@ public class Terrain {
 		}
 	}
 
-	public void renderGround(final DynamicShadowManager dynamicShadowManager) {
+	public void renderGround() {
 		// Render tiles
 
 		this.webGL.useShaderProgram(this.groundShader);
@@ -985,9 +984,6 @@ public class Terrain {
 		this.groundShader.setUniformf("u_fogParams", this.viewer.worldScene.fogSettings.style.ordinal(),
 				this.viewer.worldScene.fogSettings.start, this.viewer.worldScene.fogSettings.end,
 				this.viewer.worldScene.fogSettings.density);
-
-		gl.glUniformMatrix4fv(this.groundShader.getUniformLocation("DepthBiasMVP"), 1, false,
-				dynamicShadowManager.getDepthBiasMVP().val, 0);
 
 		gl.glUniform1i(this.groundShader.getUniformLocation("cliff_textures"), 0);
 		gl.glActiveTexture(GL30.GL_TEXTURE0);

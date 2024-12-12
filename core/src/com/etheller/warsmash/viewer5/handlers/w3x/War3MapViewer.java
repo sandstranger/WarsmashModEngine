@@ -237,8 +237,6 @@ public class War3MapViewer extends AbstractMdxModelViewer implements MdxAssetLoa
 	// for World Editor, I think
 	public Vector2[] startLocations = new Vector2[WarsmashConstants.MAX_PLAYERS];
 
-	private final DynamicShadowManager dynamicShadowManager = new DynamicShadowManager();
-
 	private final Random seededRandom = new Random(1337L);
 
 	private final Map<String, BufferedImage> filePathToPathingMap = new HashMap<>();
@@ -286,10 +284,6 @@ public class War3MapViewer extends AbstractMdxModelViewer implements MdxAssetLoa
 		this.wc3PathSolver = PathSolver.DEFAULT;
 
 		this.worldScene = addWorldScene();
-
-		if (!this.dynamicShadowManager.setup(webGL)) {
-			throw new IllegalStateException("FrameBuffer setup failed");
-		}
 
 		this.commandErrorListener = new SettableCommandErrorListener();
 		this.mapConfig = mapConfig;
@@ -1220,10 +1214,10 @@ public class War3MapViewer extends AbstractMdxModelViewer implements MdxAssetLoa
 			startFrame();
 			worldScene.startFrame();
 			if (DEBUG_DEPTH > 0) {
-				worldScene.renderOpaque(this.dynamicShadowManager, this.webGL);
+				worldScene.renderOpaque(this.webGL);
 			}
 			if (DEBUG_DEPTH > 1) {
-				this.terrain.renderGround(this.dynamicShadowManager);
+				this.terrain.renderGround();
 			}
 			if (DEBUG_DEPTH > 2) {
 				this.terrain.renderCliffs();
