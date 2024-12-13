@@ -1,10 +1,13 @@
 package com.etheller.warsmash.viewer5.handlers.blp;
 
-import java.io.InputStream;
+import android.graphics.Bitmap;
+import android.opengl.GLES20;
+import android.opengl.GLUtils;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.etheller.warsmash.TgaReader;
 import com.etheller.warsmash.datasources.DataSource;
 import com.etheller.warsmash.util.ImageUtils;
 import com.etheller.warsmash.viewer5.GdxTextureResource;
@@ -14,9 +17,11 @@ import com.etheller.warsmash.viewer5.handlers.ResourceHandler;
 
 import org.apache.commons.io.IOUtils;
 
-public class BlpGdxTexture extends GdxTextureResource {
+import java.io.InputStream;
 
-	public BlpGdxTexture(final ModelViewer viewer, final ResourceHandler handler, final String extension,
+public class TgaGdxTexture extends GdxTextureResource {
+
+	public TgaGdxTexture(final ModelViewer viewer, final ResourceHandler handler, final String extension,
 						 final PathSolver pathSolver, final String fetchUrl) {
 		super(viewer, handler, extension, pathSolver, fetchUrl);
 	}
@@ -29,39 +34,26 @@ public class BlpGdxTexture extends GdxTextureResource {
 	@Override
 	protected void load(final InputStream src, final Object options) {
 		try {
-
 			DataSource dataSource = (DataSource) options;
 
 			if(!dataSource.has(fetchUrl)) {
 				throw new RuntimeException("No such fetchURL: " + fetchUrl);
 			}
 
-			Pixmap pixmap = ImageUtils.getPixmap(IOUtils.toByteArray(src));
-			final Texture texture = new Texture(pixmap);
-			texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-			setGdxTexture(texture);
-			src.close();
+			Bitmap bitmap = TgaReader.decode(IOUtils.toByteArray(src));
 
-			Gdx.app.postRunnable(new Runnable() {
-				@Override
-				public void run() {
-					if (!pixmap.isDisposed()) {
-						pixmap.dispose();
-					}
-				}
-			});
-
-/*			DataSource dataSource = (DataSource) options;
-			if(!dataSource.has(fetchUrl)) {
-				throw new RuntimeException("No such fetchURL: " + fetchUrl);
-			}
-			Texture myTexture = new Texture(new DataSourceFileHandle(dataSource, fetchUrl));
-			myTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-			setGdxTexture(myTexture);*/
+			Gdx.app.postRunnable(() -> {
+                Texture tex = new Texture(bitmap.getWidth(), bitmap.getHeight(), Pixmap.Format.RGBA8888);
+                GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, tex.getTextureObjectHandle());
+                GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, bitmap, 0);
+                GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, 0);
+                bitmap.recycle();
+                tex.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+                setGdxTexture(tex);
+            });
 		}
 		catch (final Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 }
-

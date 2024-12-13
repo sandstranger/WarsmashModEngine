@@ -62,6 +62,13 @@ public final class ImageUtils {
 				Pixmap pixmap = getPixmap(IOUtils.toByteArray(stream));
 				Texture texture = new Texture(pixmap);
 				stream.close();
+
+				Gdx.app.postRunnable(() -> {
+                    if (!pixmap.isDisposed()) {
+                        pixmap.dispose();
+                    }
+                });
+
 				return new AnyExtensionImage(false, texture);
 			}
 			return new AnyExtensionImage(false, new Texture(new DataSourceFileHandle(dataSource, path)));
