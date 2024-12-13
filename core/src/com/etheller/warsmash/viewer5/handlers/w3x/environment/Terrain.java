@@ -21,6 +21,8 @@ import org.apache.commons.compress.utils.IOUtils;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.GL30;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Matrix4;
@@ -39,6 +41,7 @@ import com.etheller.warsmash.util.RenderMathUtils;
 import com.etheller.warsmash.util.War3ID;
 import com.etheller.warsmash.util.WorldEditStrings;
 import com.etheller.warsmash.viewer5.Camera;
+import com.etheller.warsmash.viewer5.GdxTextureResource;
 import com.etheller.warsmash.viewer5.PathSolver;
 import com.etheller.warsmash.viewer5.RawOpenGLTextureResource;
 import com.etheller.warsmash.viewer5.Texture;
@@ -1271,7 +1274,7 @@ public class Terrain {
 		final int height = texture.getHeight();
 		final int ox = (int) Math.round(width * 0.3);
 		final int oy = (int) Math.round(height * 0.7);
-		blitShadowDataLocation(columns, rows, (RawOpenGLTextureResource) texture, width, height, ox, oy,
+		blitShadowDataLocation(columns, rows, (GdxTextureResource) texture, width, height, ox, oy,
 				this.centerOffset, shadowX, shadowY, this.shadowData);
 	}
 
@@ -1350,13 +1353,13 @@ public class Terrain {
 			final int ox = (int) Math.round(width * 0.3);
 			final int oy = (int) Math.round(height * 0.7);
 			for (final float[] location : this.shadows.get(file)) {
-				blitShadowDataLocation(columns, rows, (RawOpenGLTextureResource) texture, width, height, ox, oy,
+				blitShadowDataLocation(columns, rows, (GdxTextureResource) texture, width, height, ox, oy,
 						centerOffset, location[0], location[1], this.shadowData);
 			}
 		}
 	}
 
-	public void blitShadowDataLocation(final int columns, final int rows, final RawOpenGLTextureResource texture,
+	public void blitShadowDataLocation(final int columns, final int rows, final GdxTextureResource texture,
 			final int width, final int height, final int x01, final int y01, final float[] centerOffset, final float v,
 			final float v2, final byte[] shadowData) {
 		final int x0 = (int) Math.floor((v - centerOffset[0]) / 32.0) - x01;
@@ -1369,7 +1372,14 @@ public class Terrain {
 				if (((x0 + x) < 0) || ((x0 + x) >= columns)) {
 					continue;
 				}
-				if (texture.getData().get((((y * width) + x) * 4) + 3) != 0) {
+				com.badlogic.gdx.graphics.Texture gdxTexture = texture.getGdxTexture();
+				TextureData textureData = gdxTexture.getTextureData();
+				if(!textureData.isPrepared()) {
+					System.out.println("prepare: " + texture.fetchUrl);
+					textureData.prepare();
+				}
+				Pixmap pixmap = textureData.consumePixmap();
+				if((pixmap.getPixel(x, y) & 0xFF) != 0) {
 					shadowData[((y0 - y) * columns) + x0 + x] = (byte) 128;
 				}
 			}

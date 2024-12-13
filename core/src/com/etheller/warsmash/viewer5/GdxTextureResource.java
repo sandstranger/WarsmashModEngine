@@ -63,4 +63,7 @@ public abstract class GdxTextureResource extends Texture {
 		this.gdxTexture.setWrap(this.gdxTexture.getUWrap(), wrapT ? TextureWrap.Repeat : TextureWrap.ClampToEdge);
 	}
 
+	public com.badlogic.gdx.graphics.Texture getGdxTexture() {
+		return gdxTexture;
+	}
 }

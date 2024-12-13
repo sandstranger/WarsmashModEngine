@@ -492,7 +492,8 @@ public class MeleeUI implements CUnitStateListener, CommandButtonListener, Comma
             minimapTexture = ImageUtils.getAnyExtensionTexture(war3MapViewer.dataSource, "war3mapMap.tga");
         }
 		else if (war3MapViewer.dataSource.has("war3mapMap.blp")) {
-			minimapTexture = ImageUtils.getAnyExtensionTexture(war3MapViewer.dataSource, "war3mapMap.blp");
+//			minimapTexture = ImageUtils.getAnyExtensionTexture(war3MapViewer.dataSource, "war3mapMap.blp");
+			minimapTexture = ImageUtils.getAnyExtensionTexture(war3MapViewer.dataSource, "textures\\black32.blp");
 		}
 		final Texture[] teamColors = new Texture[WarsmashConstants.MAX_PLAYERS];
 		for (int i = 0; i < teamColors.length; i++) {

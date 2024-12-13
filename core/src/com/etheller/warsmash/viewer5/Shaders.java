@@ -169,7 +169,14 @@ public class Shaders {
 	}
 
 	public static String fogSystem(final boolean supportsUnfoggedMaterial,
-			final String fogIncreasesPixelColorBranchCondition) {
+								   final String fogIncreasesPixelColorBranchCondition) {
+
+		return fogSystem(supportsUnfoggedMaterial, fogIncreasesPixelColorBranchCondition, "color");
+	}
+
+
+		public static String fogSystem(final boolean supportsUnfoggedMaterial,
+			final String fogIncreasesPixelColorBranchCondition, String colorName) {
 		String firstLine;
 		if (supportsUnfoggedMaterial) {
 			firstLine = "      if(!u_unfogged && u_fogParams.x > 0.5) {\r\n";
@@ -184,9 +191,9 @@ public class Shaders {
 			// objects, so for those cases we introduce a branch
 			rgbModification = //
 					"        if (" + fogIncreasesPixelColorBranchCondition + ") {\r\n" + //
-							"          color.rgb = color.rgb * (1.0 - fogAmount) + u_fogColor.rgb * fogAmount;\r\n" + //
+							"          "+ colorName +".rgb = "+ colorName +".rgb * (1.0 - fogAmount) + u_fogColor.rgb * fogAmount;\r\n" + //
 							"        } else {\r\n" + //
-							"          color.rgb = color.rgb * (vec3(1.0 - fogAmount) + u_fogColor.rgb * fogAmount);\r\n"
+							"          "+ colorName +".rgb = "+ colorName +".rgb * (vec3(1.0 - fogAmount) + u_fogColor.rgb * fogAmount);\r\n"
 							+ //
 							"        }\r\n" //
 			;
@@ -195,7 +202,7 @@ public class Shaders {
 			// if no additive support, we do the simple equation for adding to the pixel
 			// color proportionally
 			rgbModification = //
-					"        color.rgb = color.rgb * (1.0 - fogAmount) + u_fogColor.rgb * fogAmount;\r\n" //
+					"        "+ colorName +".rgb = "+ colorName +".rgb * (1.0 - fogAmount) + u_fogColor.rgb * fogAmount;\r\n" //
 			;
 		}
 		return firstLine + //

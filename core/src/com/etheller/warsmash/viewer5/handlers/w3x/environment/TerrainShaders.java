@@ -129,7 +129,7 @@ public class TerrainShaders {
 				"	if (show_lighting) {\r\n" + //
 				"        outColor.rgb *=  shadeColor;\r\n" + //
 				"	}\r\n" + //
-				Shaders.fogSystem(false, null) + //
+				Shaders.fogSystem(false, null,"outColor") + //
 				"\r\n" + //
 				"}";
 	}
@@ -301,7 +301,7 @@ public class TerrainShaders {
 				"	} else {\r\n" + //
 				"     outColor = vec4(outColor.xyz * (1.0 - shadow), 1.0);\r\n" + //
 				"	}\r\n" + //
-				Shaders.fogSystem(false, null) + //
+				Shaders.fogSystem(false, null, "outColor") + //
 //				"\r\n" + //
 //				"	if (show_pathing_map) {\r\n" + //
 //				"		uint byte_static = texelFetch(pathing_map_static, ivec2(pathing_map_uv), 0).r;\r\n" + //
@@ -369,7 +369,7 @@ public class TerrainShaders {
 					"   vec3 Normal = vec3(0,0,1);\r\n" + //
 					"	gl_Position = is_water ? MVP * myposition : vec4(2.0, 0.0, 0.0, 1.0);\r\n" + //
 					"\r\n" + //
-					"    UV = vec2((vPosition.x + pos.x%2)/2.0, (vPosition.y + pos.y%2)/2.0);\r\n" + //
+					"    UV = vec2((vPosition.x + float(pos.x%2))/2.0, (vPosition.y + float(pos.y%2))/2.0);\r\n" + //
 					"\r\n" + //
 					"	float ground_height = texelFetch(ground_height_texture, height_pos, 0).r;\r\n" + //
 					"	float value = clamp(water_height - ground_height, 0.f, 1.f);\r\n" + //
@@ -384,7 +384,7 @@ public class TerrainShaders {
 							true, "texture")
 					+ "\r\n" + //
 					"        shadeColor = clamp(lightFactor, 0.0, 1.0);\r\n" + //
-					"        v_suv = (vPosition + pos) / size;\r\n" + //
+					"        v_suv = vec2((vPosition.x + float(pos.x))/float(size.x), (vPosition.y + float(pos.y))/float(size.y));\r\n" + //
 					" }";
 		}
 
@@ -411,7 +411,7 @@ public class TerrainShaders {
 				"void main() {\r\n" + //
 				"   vec2 d2 = min(position - mapBounds.xy, mapBounds.zw - position);\r\n" + //
 				"   float d1 = clamp(min(d2.x, d2.y) / 64.0 + 1.0, 0.0, 1.0) * 0.8 + 0.2;;\r\n" + //
-				"   float fogOfWarData = texture2D(fogOfWarMap, v_suv).r;\r\n" + //
+				"   float fogOfWarData = texture(fogOfWarMap, v_suv).r;\r\n" + //
 				"	color = texture(water_textures, vec3(UV, current_texture)) * vec4(vertexColor.rgb * d1 * shadeColor * (1.0 - fogOfWarData), vertexColor.a);\r\n"
 				+ //
 				Shaders.fogSystem(false, null) + //
