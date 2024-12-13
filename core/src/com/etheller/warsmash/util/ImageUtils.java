@@ -1,14 +1,20 @@
 package com.etheller.warsmash.util;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.TextureData;
 import com.etheller.warsmash.datasources.DataSource;
+import com.etheller.warsmash.pjblp.Blp2;
+
+import org.apache.commons.io.IOUtils;
+import org.lwjgl.BufferUtils;
 
 /**
  * Uses AWT stuff
@@ -23,6 +29,14 @@ public final class ImageUtils {
 			textureData.prepare();
 		}
 		return textureData.consumePixmap();
+	}
+
+	public static Pixmap getPixmap(byte[] bytes) throws IOException {
+		var image = Blp2.decode(bytes);
+		var data = Blp2.getImageData(image, 0);
+		var pixmap = new Pixmap(data.width, data.height, Pixmap.Format.RGBA8888);
+		pixmap.setPixels((ByteBuffer) BufferUtils.createByteBuffer(data.width * data.height * 4).put(data.data).flip());
+		return pixmap;
 	}
 
 	public static Texture getAnyExtensionTexture(final DataSource dataSource, final String path) {
@@ -41,9 +55,16 @@ public final class ImageUtils {
 
 	public static AnyExtensionImage getAnyExtensionImageFixRGB(final DataSource dataSource, final String path,
 															   final String errorType) throws IOException {
-		final String tgaPath = path.substring(0, path.length() - 4) + ".png";
-		if (dataSource.has(tgaPath)) {
-			return new AnyExtensionImage(false, new Texture(new DataSourceFileHandle(dataSource, tgaPath)));
+//		final String tgaPath = path.substring(0, path.length() - 4) + ".png";
+		if (dataSource.has(path)) {
+			if (path.toLowerCase().endsWith(".blp")){
+				InputStream stream = dataSource.getResourceAsStream(path);
+				Pixmap pixmap = getPixmap(IOUtils.toByteArray(stream));
+				Texture texture = new Texture(pixmap);
+				stream.close();
+				return new AnyExtensionImage(false, texture);
+			}
+			return new AnyExtensionImage(false, new Texture(new DataSourceFileHandle(dataSource, path)));
 		} else {
 			throw new IllegalStateException("Missing " + errorType + ": " + path);
 		}

@@ -45,6 +45,7 @@ tasks.withType<KotlinCompile> {
 }
 
 dependencies {
+    implementation ("org.lwjgl.lwjgl:lwjgl:2.9.3")
     implementation  ("com.badlogicgames.gdx:gdx:1.13.0")
     implementation  ("com.badlogicgames.gdx:gdx-box2d:1.13.0")
     implementation  ("com.badlogicgames.gdx:gdx-freetype:1.13.0")
@@ -55,5 +56,6 @@ dependencies {
     implementation(project(":fdfparser"))
     implementation(project(":jassparser"))
     implementation(project(":shared"))
+    implementation(files("libs/commons-io-2.18.0.jar"))
 //    api files(fileTree(dir:'../jars', includes: ['*.jar']))
 }

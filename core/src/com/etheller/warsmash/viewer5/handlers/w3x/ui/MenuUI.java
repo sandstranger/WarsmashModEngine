@@ -10,7 +10,6 @@ import java.nio.channels.SeekableByteChannel;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.zip.CRC32;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -59,6 +58,7 @@ import com.etheller.warsmash.units.DataTable;
 import com.etheller.warsmash.units.Element;
 import com.etheller.warsmash.units.custom.WTS;
 import com.etheller.warsmash.util.DataSourceFileHandle;
+import com.etheller.warsmash.util.JAVACrc32C;
 import com.etheller.warsmash.util.StringBundle;
 import com.etheller.warsmash.util.WarsmashConstants;
 import com.etheller.warsmash.util.WorldEditStrings;
@@ -491,7 +491,7 @@ public class MenuUI {
 								final String mapFileLookupName = mapDownloadDir + File.separator + mapNameOnly;
 								File mapLookupFile = new File(mapFileLookupName);
 								boolean hasMap = false;
-								final CRC32 checksumCalculator = new CRC32();
+								final JAVACrc32C checksumCalculator = new JAVACrc32C();
 								War3Map map = null;
 								int tildeIndex = 1;
 								while (mapLookupFile.exists()) {

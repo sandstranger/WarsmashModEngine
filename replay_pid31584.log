@@ -1,0 +1,9 @@
+JvmtiExport can_access_local_variables 0
+JvmtiExport can_hotswap_or_post_breakpoint 0
+JvmtiExport can_post_on_exceptions 0
+# 542 ciObject found
+ciMethodData java/lang/Object <init> ()V 2 59379688 orig 80 1 0 0 0 0 0 0 0 0 0 0 0 98 2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 data 4 0x0 0x9 0x1 0x0 oops 0 methods 0
+ciMethodData java/util/AbstractCollection <init> ()V 2 7798994 orig 80 0 0 0 0 0 0 0 0 0 0 0 0 248 127 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 data 7 0x10002 0x770304 0x0 0x0 0x9 0x1 0x0 oops 0 methods 0
+ciMethod java/lang/invoke/MethodHandle invokeBasic ()Ljava/lang/Object; 0 0 1 0 -1
+ciMethodData java/util/Arrays copyOf ([Ljava/lang/Object;I)[Ljava/lang/Object; 2 160092 orig 80 0 0 0 0 0 0 0 0 0 0 0 0 98 2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 data 19 0x30005 0x2715a 0x0 0x0 0x0 0x0 0x0 0x60002 0x2716b 0x0 0x0 0x0 0x0 0x0 0x0 0x9 0x2 0xffffffffffffffff 0x0 oops 0 methods 0
+ciMethodData java/util/HashMap hash (Ljava/lang/Object;)I 2 231545 orig 80 0 0 0 0 0 0 0 0 0 0 0 0 248 127 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 data 23 0x8000000600010007 0x38758 0x38 0x1c 0x50003 0x1c 0x50 0x90005 0x232c1 0x0 0x2623ca840c0 0x152a9 0x2620fad9e00 0x1ee 0x0 0x0 0x0 0x0 0x0 0x0 0x9 0x1 0xffffffffffffffff oops 2

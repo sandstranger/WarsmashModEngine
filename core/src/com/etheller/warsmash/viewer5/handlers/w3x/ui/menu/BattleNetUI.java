@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.CRC32;
 //import java.util.zip.CRC32C;
 
 import com.badlogic.gdx.utils.IntIntMap;
@@ -32,6 +31,7 @@ import com.etheller.warsmash.parsers.w3x.objectdata.Warcraft3MapObjectData;
 import com.etheller.warsmash.parsers.w3x.w3i.War3MapW3i;
 import com.etheller.warsmash.parsers.w3x.w3i.War3MapW3iFlags;
 import com.etheller.warsmash.units.custom.WTS;
+import com.etheller.warsmash.util.JAVACrc32C;
 import com.etheller.warsmash.util.WarsmashConstants;
 import com.etheller.warsmash.viewer5.Scene;
 import com.etheller.warsmash.viewer5.handlers.w3x.War3MapViewer;
@@ -590,7 +590,7 @@ public class BattleNetUI {
 		}
 
 		this.customCreatePanelCreateButton.setOnClick(new Runnable() {
-			private final CRC32 mapChecksumCalculator = new CRC32();
+			private final JAVACrc32C mapChecksumCalculator = new JAVACrc32C();
 
 			@Override
 			public void run() {

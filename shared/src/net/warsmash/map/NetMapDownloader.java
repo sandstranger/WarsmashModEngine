@@ -1,12 +1,13 @@
 package net.warsmash.map;
 
+import com.etheller.warsmash.util.JAVACrc32C;
+import com.etheller.warsmash.util.Utils;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.file.StandardOpenOption;
-import java.util.zip.CRC32;
-import java.util.zip.CRC32C;
 
 
 public class NetMapDownloader {
@@ -57,11 +58,11 @@ public class NetMapDownloader {
 		}
 		try (FileChannel readerChannel = FileChannel.open(this.mapFilePath.toPath(), StandardOpenOption.READ)) {
 			final ByteBuffer readBuffer = ByteBuffer.allocate(8 * 1024).clear();
-			final CRC32 checksum = new CRC32();
+			final JAVACrc32C checksum = new JAVACrc32C();
 			checksum.reset();
 			while ((readerChannel.read(readBuffer)) != -1) {
 				readBuffer.flip();
-				checksum.update(readBuffer);
+				Utils.update(checksum,readBuffer);
 				readBuffer.clear();
 			}
 			final long checksumValue = checksum.getValue();

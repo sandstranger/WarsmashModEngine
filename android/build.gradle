@@ -74,12 +74,12 @@ configurations { natives }
 
 dependencies {
 
-	def core_version = "1.13.1"
+	def multidex_version = "2.0.1"
+	implementation "androidx.multidex:multidex:$multidex_version"
 
 	// Java language implementation
 //	implementation "androidx.core:core:$core_version"
 	// Kotlin
-	implementation "androidx.core:core-ktx:$core_version"
 	implementation "androidx.appcompat:appcompat:1.7.0"
 	implementation "androidx.fragment:fragment-ktx:1.8.5"
 	implementation "androidx.preference:preference-ktx:1.2.1"
