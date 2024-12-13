@@ -1,14 +1,5 @@
 buildscript {
     repositories {
-        mavenLocal()
-		flatDir {
-			dirs "$rootProject.projectDir/jars"
-		}
-        mavenCentral()
-        gradlePluginPortal()
-        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
-        maven { url "https://maven.nikr.net/" }
-        google()
     }
 
     dependencies {
@@ -18,7 +9,8 @@ buildscript {
 }
 
 plugins {
-    id 'org.jetbrains.kotlin.android' version '1.9.25' apply false
+    id 'org.jetbrains.kotlin.plugin.compose' version '2.1.20-dev-5984' apply false
+    id 'org.jetbrains.kotlin.android' version '2.1.20-dev-5984' apply false
 }
 
 allprojects {
@@ -33,17 +25,6 @@ allprojects {
         xstreamVersion = '1.4.19'
         target_sdk = 34
         min_sdk = 24
-    }
-
-    repositories {
-        mavenLocal()
-        mavenCentral()
-        google()
-        gradlePluginPortal()
-        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
-        maven { url "https://oss.sonatype.org/content/repositories/releases/" }
-        maven { url "https://maven.nikr.net/" }
-        maven { url "https://jitpack.io" }
     }
 }
 

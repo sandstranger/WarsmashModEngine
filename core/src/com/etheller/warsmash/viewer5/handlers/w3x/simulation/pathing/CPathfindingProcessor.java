@@ -3,8 +3,10 @@ package com.etheller.warsmash.viewer5.handlers.w3x.simulation.pathing;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.PriorityQueue;
 
 import com.badlogic.gdx.math.Rectangle;
@@ -22,31 +24,59 @@ public class CPathfindingProcessor {
 	private final CWorldCollision worldCollision;
 	private final LinkedList<PathfindingJob> moveQueue = new LinkedList<>();
 	// things with modified state per current job:
-	private final Node[][] nodes;
-	private final Node[][] cornerNodes;
-	private final Node[] goalSet = new Node[4];
+	private final CPathingNode[][] nodes;
+	private final CPathingNode[][] cornerNodes;
+	private final CPathingNode[] goalSet = new CPathingNode[4];
 	private int goals = 0;
 	private int pathfindJobId = 0;
 	private int totalIterations = 0;
 	private int totalJobLoops = 0;
 	private final int pathingGridCellCount;
 
+	/**
+	 * Store the shallow copies of the searched Nodes where CPathfindingProcessors
+	 * would read/write the properties of the nodes without affecting the whole,
+	 * shared searchGraph. (master nodes)
+	 */
+	private Map<Integer, CPathingNode> metaNodes = new HashMap<Integer, CPathingNode>();
+
 	public CPathfindingProcessor(final PathingGrid pathingGrid, final CWorldCollision worldCollision) {
 		this.pathingGrid = pathingGrid;
 		this.worldCollision = worldCollision;
-		this.nodes = new Node[pathingGrid.getHeight()][pathingGrid.getWidth()];
-		this.cornerNodes = new Node[pathingGrid.getHeight() + 1][pathingGrid.getWidth() + 1];
+		this.nodes = new CPathingNode[pathingGrid.getHeight()][pathingGrid.getWidth()];
+		this.cornerNodes = new CPathingNode[pathingGrid.getHeight() + 1][pathingGrid.getWidth() + 1];
+
 		for (int i = 0; i < this.nodes.length; i++) {
 			for (int j = 0; j < this.nodes[i].length; j++) {
-				this.nodes[i][j] = new Node(new Vector2(pathingGrid.getWorldX(j), pathingGrid.getWorldY(i)));
+				this.nodes[i][j] = new CPathingNode(new Vector2(pathingGrid.getWorldX(j), pathingGrid.getWorldY(i)));
 			}
 		}
+
 		for (int i = 0; i < this.cornerNodes.length; i++) {
 			for (int j = 0; j < this.cornerNodes[i].length; j++) {
-				this.cornerNodes[i][j] = new Node(
+				this.cornerNodes[i][j] = new CPathingNode(
 						new Vector2(pathingGrid.getWorldXFromCorner(j), pathingGrid.getWorldYFromCorner(i)));
 			}
 		}
+
+		this.pathingGridCellCount = pathingGrid.getWidth() * pathingGrid.getHeight();
+	}
+
+	/**
+	 * Instead of initializing their own node arrays, CPathfindingProcessor assign a reference
+	 * to the "master" node arrays, allowing to save memory space.
+	 *
+	 *
+	 * @param pathingGrid
+	 * @param worldCollision
+	 * @param nodes
+	 * @param cornerNodes
+	 */
+	public CPathfindingProcessor(final PathingGrid pathingGrid, final CWorldCollision worldCollision, CPathingNode[][] nodes, CPathingNode[][] cornerNodes) {
+		this.pathingGrid = pathingGrid;
+		this.worldCollision = worldCollision;
+		this.nodes = nodes;
+		this.cornerNodes = cornerNodes;
 		this.pathingGridCellCount = pathingGrid.getWidth() * pathingGrid.getHeight();
 	}
 
@@ -111,15 +141,15 @@ public class CPathfindingProcessor {
 		return (((2 * (int) collisionSize) / 32) % 2) == 1;
 	}
 
-	public double f(final Node n) {
+	public double f(final CPathingNode n) {
 		return n.g + h(n);
 	}
 
-	public double g(final Node n) {
+	public double g(final CPathingNode n) {
 		return n.g;
 	}
 
-	private boolean isGoal(final Node n) {
+	private boolean isGoal(final CPathingNode n) {
 		for (int i = 0; i < this.goals; i++) {
 			if (n == this.goalSet[i]) {
 				return true;
@@ -128,7 +158,7 @@ public class CPathfindingProcessor {
 		return false;
 	}
 
-	public float h(final Node n) {
+	public float h(final CPathingNode n) {
 		float bestDistance = 0;
 		for (int i = 0; i < this.goals; i++) {
 			final float possibleDistance = n.point.dst(this.goalSet[i].point);
@@ -137,47 +167,6 @@ public class CPathfindingProcessor {
 			}
 		}
 		return bestDistance;
-	}
-
-	public static final class Node {
-		public Direction cameFromDirection;
-		private final Vector2 point;
-		private double f;
-		private double g;
-		private Node cameFrom;
-		private int pathfindJobId;
-
-		private Node(final Vector2 point) {
-			this.point = point;
-		}
-
-		private void touch(final int pathfindJobId) {
-			if (pathfindJobId != this.pathfindJobId) {
-				this.g = Float.POSITIVE_INFINITY;
-				this.f = Float.POSITIVE_INFINITY;
-				this.cameFrom = null;
-				this.cameFromDirection = null;
-				this.pathfindJobId = pathfindJobId;
-			}
-		}
-	}
-
-	private static enum Direction {
-		NORTH_WEST(-1, 1), NORTH(0, 1), NORTH_EAST(1, 1), EAST(1, 0), SOUTH_EAST(1, -1), SOUTH(0, -1),
-		SOUTH_WEST(-1, -1), WEST(-1, 0);
-
-		public static final Direction[] VALUES = values();
-
-		private final int xOffset;
-		private final int yOffset;
-		private final double length;
-
-		private Direction(final int xOffset, final int yOffset) {
-			this.xOffset = xOffset;
-			this.yOffset = yOffset;
-			final double sqrt = Math.sqrt((xOffset * xOffset) + (yOffset * yOffset));
-			this.length = sqrt;
-		}
 	}
 
 	public static interface GridMapping {
@@ -210,6 +199,14 @@ public class CPathfindingProcessor {
 			}
 
 		};
+	}
+
+	public CPathingNode searchNode(PathfindingJob job, int x, int y){
+		int pos = x + y * this.pathingGrid.getWidth();
+		if (!this.metaNodes.containsKey(pos)){
+			this.metaNodes.put(pos, job.searchGraph[y][x].clone());
+		}
+		return this.metaNodes.get(pos);
 	}
 
 	public void update(final CSimulation simulation) {
@@ -252,7 +249,7 @@ public class CPathfindingProcessor {
 				}
 				final int goalCellY = job.gridMapping.getY(this.pathingGrid, job.goalY);
 				final int goalCellX = job.gridMapping.getX(this.pathingGrid, job.goalX);
-				final Node mostLikelyGoal = job.searchGraph[goalCellY][goalCellX];
+				final CPathingNode mostLikelyGoal = this.searchNode(job, goalCellX, goalCellY);
 				mostLikelyGoal.touch(this.pathfindJobId);
 				final double bestGoalDistance = mostLikelyGoal.point.dst(job.goalX, job.goalY);
 				Arrays.fill(this.goalSet, null);
@@ -261,7 +258,7 @@ public class CPathfindingProcessor {
 					for (int j = goalCellY - 1; j <= (goalCellY + 1); j++) {
 						if ((j >= 0) && (j <= job.searchGraph.length)) {
 							if ((i >= 0) && (i < job.searchGraph[j].length)) {
-								final Node possibleGoal = job.searchGraph[j][i];
+								final CPathingNode possibleGoal = this.searchNode(job, i, j);
 								possibleGoal.touch(this.pathfindJobId);
 								if (possibleGoal.point.dst(job.goalX, job.goalY) <= bestGoalDistance) {
 									this.goalSet[this.goals++] = possibleGoal;
@@ -272,14 +269,14 @@ public class CPathfindingProcessor {
 				}
 				final int startGridY = job.gridMapping.getY(this.pathingGrid, job.startY);
 				final int startGridX = job.gridMapping.getX(this.pathingGrid, job.startX);
-				job.openSet = new PriorityQueue<>(new Comparator<Node>() {
+				job.openSet = new PriorityQueue<>(new Comparator<CPathingNode>() {
 					@Override
-					public int compare(final Node a, final Node b) {
+					public int compare(final CPathingNode a, final CPathingNode b) {
 						return Double.compare(f(a), f(b));
 					}
 				});
 
-				job.start = job.searchGraph[startGridY][startGridX];
+				job.start = this.searchNode(job, startGridX, startGridY);
 				job.start.touch(this.pathfindJobId);
 				if (job.startX > job.start.point.x) {
 					job.startGridMinX = startGridX;
@@ -309,7 +306,7 @@ public class CPathfindingProcessor {
 					for (int cellY = job.startGridMinY; cellY <= job.startGridMaxY; cellY++) {
 						if ((cellX >= 0) && (cellX < this.pathingGrid.getWidth()) && (cellY >= 0)
 								&& (cellY < this.pathingGrid.getHeight())) {
-							final Node possibleNode = job.searchGraph[cellY][cellX];
+							final CPathingNode possibleNode = this.searchNode(job, cellX, cellY);
 							possibleNode.touch(this.pathfindJobId);
 							final float x = possibleNode.point.x;
 							final float y = possibleNode.point.y;
@@ -336,11 +333,11 @@ public class CPathfindingProcessor {
 			}
 
 			while (!job.openSet.isEmpty()) {
-				Node current = job.openSet.poll();
+				CPathingNode current = job.openSet.poll();
 				current.touch(this.pathfindJobId);
 				if (isGoal(current)) {
 					final LinkedList<Vector2> totalPath = new LinkedList<>();
-					Direction lastCameFromDirection = null;
+					CDirection  lastCameFromDirection = null;
 
 					if ((current.cameFrom != null)
 							&& pathableBetween(job.ignoreIntersectionsWithThisUnit,
@@ -364,7 +361,7 @@ public class CPathfindingProcessor {
 						totalPath.addFirst(current.point);
 					}
 					lastCameFromDirection = current.cameFromDirection;
-					Node lastNode = null;
+					CPathingNode lastNode = null;
 					int stepsBackward = 0;
 					while (current.cameFrom != null) {
 						lastNode = current;
@@ -404,12 +401,13 @@ public class CPathfindingProcessor {
 					}
 					job.queueItem.pathFound(totalPath, simulation);
 					this.moveQueue.poll();
+					this.metaNodes.clear();
 					System.out.println("Task " + this.pathfindJobId + " took " + this.totalIterations
 							+ " iterations and " + this.totalJobLoops + " job loops!");
 					continue JobsLoop;
 				}
 
-				for (final Direction direction : Direction.VALUES) {
+				for (final CDirection direction : CDirection.VALUES) {
 					final float x = current.point.x + (direction.xOffset * 32);
 					final float y = current.point.y + (direction.yOffset * 32);
 					if (this.pathingGrid.contains(x, y)) {
@@ -426,8 +424,9 @@ public class CPathfindingProcessor {
 								job.movementType, job.collisionSize, x, y)) {
 							tentativeScore += (direction.length) * job.weightForHittingWalls;
 						}
-						final Node neighbor = job.searchGraph[job.gridMapping.getY(this.pathingGrid, y)][job.gridMapping
-								.getX(this.pathingGrid, x)];
+						int tmpY = job.gridMapping.getY(this.pathingGrid, y);
+						int tmpX = job.gridMapping.getX(this.pathingGrid, x);
+						final CPathingNode neighbor = this.searchNode(job, tmpX, tmpY);
 						neighbor.touch(this.pathfindJobId);
 						if (tentativeScore < neighbor.g) {
 							neighbor.cameFrom = current;
@@ -471,10 +470,10 @@ public class CPathfindingProcessor {
 		public float goalY;
 		public float goalX;
 		public float weightForHittingWalls;
-		Node[][] searchGraph;
+		CPathingNode[][] searchGraph;
 		GridMapping gridMapping;
-		PriorityQueue<Node> openSet;
-		Node start;
+		PriorityQueue<CPathingNode> openSet;
+		CPathingNode start;
 		int startGridMinX;
 		int startGridMinY;
 		int startGridMaxX;
@@ -497,3 +496,4 @@ public class CPathfindingProcessor {
 		}
 	}
 }
+

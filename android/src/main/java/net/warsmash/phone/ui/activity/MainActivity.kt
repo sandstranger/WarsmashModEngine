@@ -1,16 +1,13 @@
 package net.warsmash.phone.ui.activity
 
 import android.os.Bundle
-import net.warsmash.phone.presenter.MainActivityPresenter
-import moxy.MvpAppCompatActivity
-import moxy.MvpView
-import moxy.presenter.InjectPresenter
+import androidx.appcompat.app.AppCompatActivity
 import net.warsmash.phone.R
+import net.warsmash.phone.android.startEngine
 import net.warsmash.phone.databinding.MainActivityBinding
+import net.warsmash.phone.utils.extensions.requestExternalStoragePermission
 
-internal class MainActivity : MvpAppCompatActivity(), MvpView {
-    @InjectPresenter
-    lateinit var presenter: MainActivityPresenter
+internal class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,10 +15,10 @@ internal class MainActivity : MvpAppCompatActivity(), MvpView {
         setContentView(binding.root)
 
         binding.startGameButton.setOnClickListener {
-            presenter.onStartGameBtnClicked(this@MainActivity)
+            startEngine(this)
         }
 
-        presenter.requestExternalStorage(this)
+        this.requestExternalStoragePermission()
         changeFragment()
     }
 

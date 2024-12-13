@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'org.jetbrains.kotlin.android'
-apply plugin: 'kotlin-kapt'
+apply plugin: 'org.jetbrains.kotlin.plugin.compose'
 
 android {
 	namespace 'net.warsmash.phone'
@@ -40,8 +40,8 @@ android {
 		multiDexEnabled true
 	}
 	compileOptions {
-		sourceCompatibility JavaVersion.VERSION_1_8
-		targetCompatibility JavaVersion.VERSION_1_8
+		sourceCompatibility JavaVersion.VERSION_11
+		targetCompatibility JavaVersion.VERSION_11
 		coreLibraryDesugaringEnabled true
 	}
 	
@@ -57,7 +57,7 @@ android {
 	}
 
 	kotlinOptions {
-		jvmTarget = '1.8'
+		jvmTarget = '11'
 	}
 
 	buildFeatures {
@@ -66,21 +66,13 @@ android {
 		viewBinding true
 	}
 	composeOptions {
-		kotlinCompilerExtensionVersion '1.5.15'
+	//	kotlinCompilerExtensionVersion '1.5.15'
 	}
-}
-
-repositories {
-	// needed for AAPT2, may be needed for other tools
-	google()
 }
 
 configurations { natives }
 
 dependencies {
-
-	implementation "com.github.moxy-community:moxy-androidx:2.2.2"
-	kapt "com.github.moxy-community:moxy-compiler:2.2.2"
 
 	def core_version = "1.13.1"
 
@@ -97,6 +89,9 @@ dependencies {
 	// Java language implementation
 	coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
 	implementation "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
+	implementation  "com.badlogicgames.gdx:gdx:$gdxVersion"
+	implementation  "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
+	implementation  "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
 	implementation project(':core')
 
 	natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-arm64-v8a"

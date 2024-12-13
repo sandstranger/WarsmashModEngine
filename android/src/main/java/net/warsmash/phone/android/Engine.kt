@@ -15,6 +15,7 @@ import net.warsmash.phone.utils.extensions.startActivity
 
 fun killEngine() = Process.killProcess(Process.myPid())
 
+
 fun startEngine(context: Context) {
     context.startActivity<EngineActivity>()
 }

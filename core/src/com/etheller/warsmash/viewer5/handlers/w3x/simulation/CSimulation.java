@@ -59,6 +59,7 @@ import com.etheller.warsmash.viewer5.handlers.w3x.simulation.data.CItemData;
 import com.etheller.warsmash.viewer5.handlers.w3x.simulation.data.CUnitData;
 import com.etheller.warsmash.viewer5.handlers.w3x.simulation.data.CUpgradeData;
 import com.etheller.warsmash.viewer5.handlers.w3x.simulation.pathing.CPathfindingProcessor;
+import com.etheller.warsmash.viewer5.handlers.w3x.simulation.pathing.CPathingNode;
 import com.etheller.warsmash.viewer5.handlers.w3x.simulation.players.CAllianceType;
 import com.etheller.warsmash.viewer5.handlers.w3x.simulation.players.CMapControl;
 import com.etheller.warsmash.viewer5.handlers.w3x.simulation.players.CPlayer;
@@ -137,6 +138,9 @@ public class CSimulation implements CPlayerAPI, CFogMaskSettings {
 	private final List<Runnable> postUpdateCallbacks = new ArrayList<>();
 	private final List<Runnable> runningPostUpdateCallbacks = new ArrayList<>();
 
+	private CPathingNode[][] nodes;
+	private CPathingNode[][] cornerNodes;
+
 	public CSimulation(final War3MapConfig config, final int mapVersion, final DataTable miscData,
 			final ObjectData parsedUnitData, final ObjectData parsedItemData, final ObjectData parsedDestructableData,
 			final ObjectData parsedAbilityData, final ObjectData parsedUpgradeData,
@@ -165,9 +169,25 @@ public class CSimulation implements CPlayerAPI, CFogMaskSettings {
 		this.handleIdAllocator = new HandleIdAllocator();
 		this.worldCollision = new CWorldCollision(entireMapBounds, this.gameplayConstants.getMaxCollisionRadius());
 		this.regionManager = new CRegionManager(entireMapBounds, pathingGrid);
+
+		// Declaring the "master nodes"
+		this.nodes = new CPathingNode[pathingGrid.getHeight()][pathingGrid.getWidth()];
+		this.cornerNodes = new CPathingNode[pathingGrid.getHeight() + 1][pathingGrid.getWidth() + 1];
+		for (int i = 0; i < this.nodes.length; i++) {
+			for (int j = 0; j < this.nodes[i].length; j++) {
+				this.nodes[i][j] = new CPathingNode(new Vector2(pathingGrid.getWorldX(j), pathingGrid.getWorldY(i)));
+			}
+		}
+		for (int i = 0; i < this.cornerNodes.length; i++) {
+			for (int j = 0; j < this.cornerNodes[i].length; j++) {
+				this.cornerNodes[i][j] = new CPathingNode(
+						new Vector2(pathingGrid.getWorldXFromCorner(j), pathingGrid.getWorldYFromCorner(i)));
+			}
+		}
+
 		this.pathfindingProcessors = new CPathfindingProcessor[WarsmashConstants.MAX_PLAYERS];
 		for (int i = 0; i < WarsmashConstants.MAX_PLAYERS; i++) {
-			this.pathfindingProcessors[i] = new CPathfindingProcessor(pathingGrid, this.worldCollision);
+			this.pathfindingProcessors[i] = new CPathfindingProcessor(pathingGrid, this.worldCollision,nodes, cornerNodes);
 		}
 		this.seededRandom = seededRandom;
 		this.players = new ArrayList<>();
