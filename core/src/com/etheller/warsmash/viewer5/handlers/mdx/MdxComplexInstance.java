@@ -26,6 +26,7 @@ import com.etheller.warsmash.viewer5.Texture;
 import com.etheller.warsmash.viewer5.TextureMapper;
 import com.etheller.warsmash.viewer5.UpdatableObject;
 import com.etheller.warsmash.viewer5.gl.DataTexture;
+import com.etheller.warsmash.viewer5.handlers.w3x.DynamicShadowManager;
 import com.hiveworkshop.rms.parsers.mdlx.MdlxGeoset;
 
 public class MdxComplexInstance extends ModelInstance {
@@ -555,6 +556,9 @@ public class MdxComplexInstance extends ModelInstance {
 
 	@Override
 	public void renderTranslucent() {
+		if (DynamicShadowManager.IS_SHADOW_MAPPING) {
+			return;
+		}
 		final MdxModel model = (MdxModel) this.model;
 
 		if (this.additiveOverrideMeshMode) {

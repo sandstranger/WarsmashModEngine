@@ -10,8 +10,10 @@ import com.etheller.warsmash.viewer5.gl.ANGLEInstancedArrays
 import com.etheller.warsmash.viewer5.gl.AudioExtension
 import com.etheller.warsmash.viewer5.gl.Extensions
 import com.etheller.warsmash.viewer5.gl.WireframeExtension
+import net.warsmash.phone.android.engine.DynamicShadowExtensionGLES30
 import net.warsmash.phone.android.engine.activity.EngineActivity
 import net.warsmash.phone.utils.extensions.startActivity
+import org.lwjgl.opengl.GL11
 
 fun killEngine() = Process.killProcess(Process.myPid())
 
@@ -46,8 +48,12 @@ fun loadExtensions() {
             Gdx.gl30.glDrawArraysInstanced(mode, first, count, instanceCount)
         }
     }
+
     Extensions.wireframeExtension =
-        WireframeExtension { face, mode -> }
+        WireframeExtension { face, mode -> GL11.glPolygonMode(face, mode) }
+
+    Extensions.dynamicShadowExtension = DynamicShadowExtensionGLES30()
+
     Extensions.audio = object : AudioExtension {
         override fun createContext(world: Boolean): AudioContext {
             val listener = AudioContext.Listener.DO_NOTHING
@@ -74,6 +80,9 @@ fun loadExtensions() {
             }
         }
     }
-    Extensions.GL_LINE = 0
-    Extensions.GL_FILL = 0
+    Extensions.GL_LINE = GL11.GL_LINE
+    Extensions.GL_FILL = GL11.GL_FILL
+
+//    Extensions.GL_LINE = 0
+  //  Extensions.GL_FILL = 0
 }

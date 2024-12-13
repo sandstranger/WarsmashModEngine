@@ -39,10 +39,10 @@ public class MdxHandler extends ModelHandler {
 		this.shaders.complex = viewer.webGL.createShaderProgram(MdxShaders.vsComplex(), MdxShaders.fsComplex);
 		this.shaders.extended = viewer.webGL.createShaderProgram("#define EXTENDED_BONES\r\n" + MdxShaders.vsComplex(),
 				MdxShaders.fsComplex);
-	//	this.shaders.complexShadowMap = viewer.webGL.createShaderProgram(MdxShaders.vsComplex(),
-//				MdxShaders.fsComplexShadowMap);
-//		this.shaders.extendedShadowMap = viewer.webGL.createShaderProgram(
-	//			"#define EXTENDED_BONES\r\n" + MdxShaders.vsComplex(), MdxShaders.fsComplexShadowMap);
+		this.shaders.complexShadowMap = viewer.webGL.createShaderProgram(MdxShaders.vsComplex(),
+				MdxShaders.fsComplexShadowMap);
+		this.shaders.extendedShadowMap = viewer.webGL.createShaderProgram(
+				"#define EXTENDED_BONES\r\n" + MdxShaders.vsComplex(), MdxShaders.fsComplexShadowMap);
 		this.shaders.particles = viewer.webGL.createShaderProgram(MdxShaders.vsParticles(), MdxShaders.fsParticles);
 		// Shaders.simple = viewer.webGL.createShaderProgram(MdxShaders.vsSimple,
 		// MdxShaders.fsSimple);

@@ -625,8 +625,9 @@ public class MdxShaders {
 			"      gl_FragColor = color;\r\n" + //
 			"    }\r\n";
 
+
 	public static final String vsComplex() {
-		return "precision mediump float;\r\n" + //
+		return "\r\n" + //
 				"\r\n" + //
 				"    uniform mat4 u_mvp;\r\n" + //
 				"    uniform vec4 u_vertexColor;\r\n" + //

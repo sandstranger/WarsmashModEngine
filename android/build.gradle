@@ -94,6 +94,7 @@ dependencies {
 	implementation  "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
 	implementation project(':core')
 
+	api "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
 	natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-arm64-v8a"
 	natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-armeabi-v7a"
 	natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-x86"
