@@ -24,6 +24,7 @@ public class BlpGdxTexture extends GdxTextureResource {
 	@Override
 	protected void load(final InputStream src, final Object options) {
 		try {
+			src.close();
 			DataSource dataSource = (DataSource) options;
 			if(!dataSource.has(fetchUrl)) {
 				throw new RuntimeException("No such fetchURL: " + fetchUrl);
