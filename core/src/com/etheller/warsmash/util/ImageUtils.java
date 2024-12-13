@@ -17,6 +17,14 @@ public final class ImageUtils {
 	private static final int BYTES_PER_PIXEL = 4;
 	public static final String DEFAULT_ICON_PATH = "ReplaceableTextures\\CommandButtons\\BTNTemp.png";
 
+	public static Pixmap getPixmap (Texture texture){
+		TextureData textureData = texture.getTextureData();
+		if (!textureData.isPrepared()){
+			textureData.prepare();
+		}
+		return textureData.consumePixmap();
+	}
+
 	public static Texture getAnyExtensionTexture(final DataSource dataSource, final String path) {
 		Texture image;
 		try {
@@ -92,6 +100,7 @@ public final class ImageUtils {
 		}
 
 		buffer.flip();
+		pixmap.dispose();
 		return buffer;
 	}
 

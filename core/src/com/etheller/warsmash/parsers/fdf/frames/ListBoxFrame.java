@@ -51,11 +51,12 @@ public class ListBoxFrame extends ControlFrame implements ScrollBarFrame.ScrollB
 		pixmap.setColor(SELECT_COLOR);
 		pixmap.fill();
 		this.selectionFrame.setTexture(new Texture(pixmap));
+		pixmap.dispose();
 		final Pixmap mousePixmap = new Pixmap(1, 1, Format.RGBA8888);
 		mousePixmap.setColor(MOUSE_OVER_HIGHLIGHT_COLOR);
 		mousePixmap.fill();
 		this.mouseHighlightFrame.setTexture(new Texture(mousePixmap));
-
+		mousePixmap.dispose();
 		this.dataSource = dataSource;
 	}
 

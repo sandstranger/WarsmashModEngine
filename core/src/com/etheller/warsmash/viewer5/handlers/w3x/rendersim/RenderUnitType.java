@@ -3,6 +3,7 @@ package com.etheller.warsmash.viewer5.handlers.w3x.rendersim;
 import java.util.EnumSet;
 
 import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;
 import com.etheller.warsmash.units.manager.MutableObjectData.WorldEditorDataType;
 import com.etheller.warsmash.viewer5.handlers.mdx.MdxModel;
@@ -13,7 +14,7 @@ public class RenderUnitType implements RenderWidgetType {
 	private final MdxModel model;
 	private final MdxModel portraitModel;
 	private final MdxModel specialArtModel;
-	private final Pixmap buildingPathingPixelMap;
+	private final Texture buildingPathingPixelMap;
 	private final float maxPitch;
 	private final float maxRoll;
 	private final float sampleRadius;
@@ -36,14 +37,14 @@ public class RenderUnitType implements RenderWidgetType {
 	private final float blendTime;
 
 	public RenderUnitType(MdxModel model, MdxModel portraitModel, MdxModel specialArtModel,
-			Pixmap buildingPathingPixelMap, final float maxPitch, final float maxRoll, final float sampleRadius,
-			final boolean allowCustomTeamColor, final int teamColor, final float animationRunSpeed,
-			final float animationWalkSpeed, final float scalingValue, final String buildingShadow,
-			final String uberSplat, final float uberSplatScaleValue,
-			final EnumSet<SecondaryTag> requiredAnimationNamesForAttachments,
-			EnumSet<SecondaryTag> requiredAnimationNames, RenderShadowType renderShadowType, UnitSoundset soundset,
-			Vector3 tintingColor, float selectScale, float selectHeight, int orientationInterpolation,
-			float blendTime) {
+						  Texture buildingPathingPixelMap, final float maxPitch, final float maxRoll, final float sampleRadius,
+						  final boolean allowCustomTeamColor, final int teamColor, final float animationRunSpeed,
+						  final float animationWalkSpeed, final float scalingValue, final String buildingShadow,
+						  final String uberSplat, final float uberSplatScaleValue,
+						  final EnumSet<SecondaryTag> requiredAnimationNamesForAttachments,
+						  EnumSet<SecondaryTag> requiredAnimationNames, RenderShadowType renderShadowType, UnitSoundset soundset,
+						  Vector3 tintingColor, float selectScale, float selectHeight, int orientationInterpolation,
+						  float blendTime) {
 		this.model = model;
 		this.portraitModel = portraitModel;
 		this.specialArtModel = specialArtModel;
@@ -82,7 +83,7 @@ public class RenderUnitType implements RenderWidgetType {
 		return this.specialArtModel;
 	}
 
-	public Pixmap getBuildingPathingPixelMap() {
+	public Texture getBuildingPathingPixelMap() {
 		return this.buildingPathingPixelMap;
 	}
 

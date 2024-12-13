@@ -327,7 +327,7 @@ public class MeleeUI implements CUnitStateListener, CommandButtonListener, Comma
 	private RenderUnit activeCommandUnit;
 	private MdxComplexInstance cursorModelInstance = null;
 	private MdxComplexInstance rallyPointInstance = null;
-	private Pixmap cursorModelPathing;
+	private Texture cursorModelPathing;
 	private Pixmap cursorModelUnderneathPathingRedGreenPixmap;
 	private Texture cursorModelUnderneathPathingRedGreenPixmapTexture;
 	private PixmapTextureData cursorModelUnderneathPathingRedGreenPixmapTextureData;

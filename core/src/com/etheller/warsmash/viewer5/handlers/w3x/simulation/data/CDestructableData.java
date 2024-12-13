@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
 import com.etheller.warsmash.units.GameObject;
 import com.etheller.warsmash.units.ObjectData;
 import com.etheller.warsmash.util.War3ID;
@@ -56,9 +57,9 @@ public class CDestructableData {
 	private CDestructableType getUnitTypeInstance(final War3ID typeId, final GameObject unitType) {
 		CDestructableType unitTypeInstance = this.unitIdToUnitType.get(typeId);
 		if (unitTypeInstance == null) {
-			final Pixmap buildingPathingPixelMap = this.simulationRenderController
+			final Texture buildingPathingPixelMap = this.simulationRenderController
 					.getDestructablePathingPixelMap(typeId);
-			final Pixmap buildingPathingDeathPixelMap = this.simulationRenderController
+			final Texture buildingPathingDeathPixelMap = this.simulationRenderController
 					.getDestructablePathingDeathPixelMap(typeId);
 			final String name = unitType.getFieldAsString(NAME, 0);
 			final float life = unitType.getFieldAsFloat(HIT_POINT_MAXIMUM, 0);

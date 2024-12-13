@@ -44,6 +44,7 @@ public class WebGL {
 			}
 		}
 		this.emptyTexture = new com.badlogic.gdx.graphics.Texture(imageData);
+		imageData.dispose();
 		this.instancedArrays = Extensions.angleInstancedArrays;
 	}
 

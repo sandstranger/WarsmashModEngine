@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
 import com.etheller.warsmash.units.GameObject;
 import com.etheller.warsmash.units.ObjectData;
 import com.etheller.warsmash.util.War3ID;
@@ -243,7 +244,7 @@ public class CUnitData {
 	}
 
 	public CUnit create(final CSimulation simulation, final int playerIndex, final War3ID typeId, final float x,
-			final float y, final float facing, final Pixmap buildingPathingPixelMap,
+			final float y, final float facing, final Texture buildingPathingPixelMap,
 			final HandleIdAllocator handleIdAllocator) {
 		final GameObject unitType = this.unitData.get(typeId.asStringValue());
 		final int handleId = handleIdAllocator.createId();
@@ -498,7 +499,7 @@ public class CUnitData {
 		}
 	}
 
-	private CUnitType getUnitTypeInstance(final War3ID typeId, final Pixmap buildingPathingPixelMap,
+	private CUnitType getUnitTypeInstance(final War3ID typeId, final Texture buildingPathingPixelMap,
 			final GameObject unitType) {
 		CUnitType unitTypeInstance = this.unitIdToUnitType.get(typeId);
 		if (unitTypeInstance == null) {
@@ -1047,7 +1048,7 @@ public class CUnitData {
 		if (unitType == null) {
 			return null;
 		}
-		final Pixmap buildingPathingPixelMap = this.simulationRenderController
+		final Texture buildingPathingPixelMap = this.simulationRenderController
 				.getBuildingPathingPixelMap(rawcode);
 		return getUnitTypeInstance(rawcode, buildingPathingPixelMap, unitType);
 	}

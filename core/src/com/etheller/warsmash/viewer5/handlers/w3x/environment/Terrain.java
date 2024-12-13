@@ -1382,6 +1382,7 @@ public class Terrain {
 				if((pixmap.getPixel(x, y) & 0xFF) != 0) {
 					shadowData[((y0 - y) * columns) + x0 + x] = (byte) 128;
 				}
+				pixmap.dispose();
 			}
 		}
 	}
