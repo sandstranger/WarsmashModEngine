@@ -1055,7 +1055,7 @@ public class MdxShaders {
 			"    }";
 
 	public static final String vsLightning = "\r\n" + //
-			// " precision mediump float;\r\n" + //
+			 " precision mediump float;\r\n" + //
 			"    uniform mat4 u_VP;\r\n" + //
 			"    attribute vec3 a_position;\r\n" + //
 			"    attribute vec2 a_uv;\r\n" + //
@@ -1071,7 +1071,7 @@ public class MdxShaders {
 			"    }\r\n";
 
 	public static final String fsLightning = "\r\n" + //
-			// " precision mediump float;\r\n" + //
+			 " precision mediump float;\r\n" + //
 			"    uniform sampler2D u_texture;\r\n" + //
 			"    varying vec2 v_uv;\r\n" + //
 			"    varying vec4 v_color;\r\n" + //
