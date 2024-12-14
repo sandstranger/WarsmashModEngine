@@ -314,7 +314,7 @@ public class CPathfindingProcessor {
 									job.ignoreIntersectionsWithThisSecondUnit, job.startX, job.startY, job.movementType,
 									job.collisionSize, x, y)) {
 
-								final double tentativeScore = possibleNode.point.dot(job.startX, job.startY);
+								final double tentativeScore = possibleNode.point.dst(job.startX, job.startY);
 								possibleNode.g = tentativeScore;
 								possibleNode.f = tentativeScore + h(possibleNode);
 								job.openSet.add(possibleNode);
