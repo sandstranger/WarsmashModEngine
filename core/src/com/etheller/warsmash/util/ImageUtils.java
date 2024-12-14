@@ -62,21 +62,19 @@ public final class ImageUtils {
 				Pixmap pixmap = getPixmap(IOUtils.toByteArray(stream));
 				Texture texture = new Texture(pixmap);
 				stream.close();
-				disposePixMap(pixmap);
+
+				Gdx.app.postRunnable(() -> {
+                    if (!pixmap.isDisposed()) {
+                        pixmap.dispose();
+                    }
+                });
+
 				return new AnyExtensionImage(false, texture);
 			}
 			return new AnyExtensionImage(false, new Texture(new DataSourceFileHandle(dataSource, path)));
 		} else {
 			throw new IllegalStateException("Missing " + errorType + ": " + path);
 		}
-	}
-
-	public static void disposePixMap(Pixmap pixmap){
-		Gdx.app.postRunnable(() -> {
-			if (!pixmap.isDisposed()) {
-				pixmap.dispose();
-			}
-		});
 	}
 
 	public static final class AnyExtensionImage {
@@ -130,7 +128,7 @@ public final class ImageUtils {
 		}
 
 		buffer.flip();
-		ImageUtils.disposePixMap(pixmap);
+		pixmap.dispose();
 		return buffer;
 	}
 

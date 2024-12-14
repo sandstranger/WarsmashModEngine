@@ -3253,7 +3253,7 @@ public class CUnit extends CWidget {
 		}
 		Pixmap pixmap = ImageUtils.getPixmap(buildingPathingPixelMap);
 		int result = ImageUtils.getARGBFromRGBA(pixmap.getPixel(x, buildingPathingPixelMap.getHeight() - 1 - y));
-		ImageUtils.disposePixMap(pixmap);
+		pixmap.dispose();
 		return result;
 	}
 

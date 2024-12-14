@@ -81,7 +81,7 @@ public class PathingGrid {
 
 				Pixmap pixmap = ImageUtils.getPixmap(pathingTextureTga);
 				final int rgb = ImageUtils.getARGBFromRGBA(pixmap.getPixel(i, pathingTextureTga.getHeight() - 1 - j));
-				ImageUtils.disposePixMap(pixmap);
+				pixmap.dispose();
 				byte data = 0;
 				if ((rgb & 0xFF) > 127) {
 					data |= PathingFlags.UNBUILDABLE;

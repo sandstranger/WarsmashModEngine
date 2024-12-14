@@ -6,7 +6,6 @@ import java.util.Map;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
-import com.etheller.warsmash.util.ImageUtils;
 import com.etheller.warsmash.viewer5.Texture;
 import com.etheller.warsmash.viewer5.deprecated.ShaderUnitDeprecated;
 
@@ -45,7 +44,7 @@ public class WebGL {
 			}
 		}
 		this.emptyTexture = new com.badlogic.gdx.graphics.Texture(imageData);
-		ImageUtils.disposePixMap(imageData);
+		imageData.dispose();
 		this.instancedArrays = Extensions.angleInstancedArrays;
 	}
 
