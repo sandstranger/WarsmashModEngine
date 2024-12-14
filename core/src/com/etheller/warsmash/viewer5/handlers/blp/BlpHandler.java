@@ -22,8 +22,7 @@ public class BlpHandler extends ResourceHandler {
 
 	@Override
 	public HandlerResource<?> construct(final ResourceHandlerConstructionParams params) {
-		return new BlpGdxTexture(params.getViewer(), params.getHandler(), params.getExtension(), params.getPathSolver(),
-				params.getFetchUrl().substring(0,params.getFetchUrl().length()-4)+".png");
+		return new BlpGdxTexture(params.getViewer(), params.getHandler(), params.getExtension(), params.getPathSolver(), params.getFetchUrl());
 			//	return new BlpTexture(params.getViewer(), params.getHandler(), params.getExtension(), params.getPathSolver(),
 //				params.getFetchUrl());
 	}

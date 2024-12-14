@@ -7,6 +7,7 @@ import com.etheller.warsmash.viewer5.ModelViewer;
 import com.etheller.warsmash.viewer5.handlers.ResourceHandler;
 import com.etheller.warsmash.viewer5.handlers.ResourceHandlerConstructionParams;
 import com.etheller.warsmash.viewer5.handlers.blp.BlpGdxTexture;
+import com.etheller.warsmash.viewer5.handlers.blp.TgaGdxTexture;
 
 public class TgaHandler extends ResourceHandler {
 
@@ -22,8 +23,8 @@ public class TgaHandler extends ResourceHandler {
 
 	@Override
 	public HandlerResource<?> construct(final ResourceHandlerConstructionParams params) {
-		return new BlpGdxTexture(params.getViewer(), params.getHandler(), params.getExtension(), params.getPathSolver(),
-				params.getFetchUrl().substring(0,params.getFetchUrl().length()-4)+".png");
+		return new TgaGdxTexture(params.getViewer(), params.getHandler(), params.getExtension(), params.getPathSolver(),
+				params.getFetchUrl());
 	}
 
 }

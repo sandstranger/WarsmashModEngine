@@ -21,8 +21,8 @@ public class DdsHandler extends ResourceHandler {
 
 	@Override
 	public HandlerResource<?> construct(final ResourceHandlerConstructionParams params) {
-		return new BlpGdxTexture(params.getViewer(), params.getHandler(), params.getExtension(), params.getPathSolver(),
-				params.getFetchUrl().substring(0,params.getFetchUrl().length()-4)+".png");
+		return new DdsTexture(params.getViewer(), params.getHandler(), params.getExtension(), params.getPathSolver(),
+				params.getFetchUrl());
 		//	return new DdsTexture(params.getViewer(), params.getHandler(), params.getExtension(), params.getPathSolver(),
 	//			params.getFetchUrl());
 	}
