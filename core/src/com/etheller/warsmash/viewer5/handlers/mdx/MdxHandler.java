@@ -2,6 +2,7 @@ package com.etheller.warsmash.viewer5.handlers.mdx;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.etheller.warsmash.viewer5.HandlerResource;
 import com.etheller.warsmash.viewer5.ModelViewer;
@@ -44,6 +45,10 @@ public class MdxHandler extends ModelHandler {
 		this.shaders.extendedShadowMap = viewer.webGL.createShaderProgram(
 				"#define EXTENDED_BONES\r\n" + MdxShaders.vsComplex(), MdxShaders.fsComplexShadowMap);
 		this.shaders.particles = viewer.webGL.createShaderProgram(MdxShaders.vsParticles(), MdxShaders.fsParticles);
+
+		this.shaders.hd = viewer.webGL.createShaderProgram(Gdx.files.internal("gles3.2\\MdxShaders.vsHd.glsl").readString(),
+				Gdx.files.internal("gles3.2\\MdxShaders.fsHd.glsl").readString());
+
 		// Shaders.simple = viewer.webGL.createShaderProgram(MdxShaders.vsSimple,
 		// MdxShaders.fsSimple);
 		//this.shaders.hd = viewer.webGL.createShaderProgram(MdxShaders.vsHd, MdxShaders.fsHd());
