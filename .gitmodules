@@ -1,0 +1,3 @@
+[submodule "libgdx-oboe"]
+	path = libgdx-oboe
+	url = https://github.com/sandstranger/libgdx-oboe.git

@@ -78,7 +78,7 @@ public final class UnitSound {
 		Sound newSound = null;
 		if (dataSource.has(filePath + ".wav") || dataSource.has(filePath + ".flac")) {
 			try {
-				filePath = filePath.toLowerCase(Locale.US).replace('\\', '/');
+				filePath = filePath.replace('\\', '/');
 				newSound = Gdx.audio.newSound(Gdx.files.internal(filePath + ".wav"));
 			}
 			catch (final Exception exc) {

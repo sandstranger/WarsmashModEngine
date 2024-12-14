@@ -1,8 +1,11 @@
 package net.warsmash.phone.android.engine.activity
 
+import android.content.Context
 import android.os.Bundle
+import barsoosayque.libgdxoboe.OboeAudio
 import com.badlogic.gdx.backends.android.AndroidApplication
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration
+import com.badlogic.gdx.backends.android.AndroidAudio
 import com.etheller.warsmash.WarsmashGdxMenuScreen
 import com.etheller.warsmash.WarsmashGdxMultiScreenGame
 import net.warsmash.phone.android.engine.loadExtensions
@@ -11,7 +14,8 @@ import java.util.function.Consumer
 /** Launches the Android application.  */
 class EngineActivity : AndroidApplication() {
 
-//    val audio: AndroidOpenALAudio = AndroidOpenALAudio()
+    override fun createAudio(context: Context, config: AndroidApplicationConfiguration): AndroidAudio =
+        OboeAudio(context.assets)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

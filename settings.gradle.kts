@@ -19,6 +19,7 @@ pluginManagement {
         maven ("https://maven.nikr.net/")
         maven ("https://jitpack.io")
         maven ("https://maven.pkg.jetbrains.space/kotlin/p/kotlin/bootstrap")
+        maven ("https://kotlin.bintray.com/kotlinx")
         google()
     }
 }
@@ -37,6 +38,7 @@ dependencyResolutionManagement {
         maven ("https://maven.nikr.net/")
         maven ("https://jitpack.io")
         maven ("https://maven.pkg.jetbrains.space/kotlin/p/kotlin/bootstrap")
+        maven ("https://kotlin.bintray.com/kotlinx")
         google()
     }
 }
@@ -48,3 +50,5 @@ include(":core")
 include(":shared")
 include(":fdfparser")
 include(":jassparser")
+include(":libgdx-oboe")
+project(":libgdx-oboe").projectDir = file("C:\\unity-projects\\WarsmashModEngine-android\\libgdx-oboe\\library")
