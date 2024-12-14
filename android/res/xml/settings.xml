@@ -14,6 +14,11 @@
             android:summary="%s"
             android:title="@string/game_version" />
 
+        <EditTextPreference
+            android:dialogTitle="@string/player_count"
+            android:key="players_count"
+            android:defaultValue="28"
+            android:title="@string/player_count" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/user_interface">

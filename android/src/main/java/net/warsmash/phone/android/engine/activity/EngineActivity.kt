@@ -32,6 +32,7 @@ class EngineActivity : AndroidApplication() {
         Os.setenv(GAME_FILES_SHARED_PREFS_KEY,
             prefsManager.getString(GAME_FILES_SHARED_PREFS_KEY,""), true)
         Os.setenv("GAME_VERSION", getGameVersion().toString(), true)
+        Os.setenv("PLAYERS_COUNT", prefsManager.getString("players_count","28"), true)
 
         displayInCutoutArea(prefsManager)
 

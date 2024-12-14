@@ -10,6 +10,7 @@ import android.os.Environment
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import androidx.preference.EditTextPreference
 import androidx.preference.Preference
 import net.warsmash.phone.interfaces.SettingsFragmentMvpView
 import net.warsmash.phone.presenter.SettingsFragmentPresenter
@@ -17,6 +18,7 @@ import net.warsmash.phone.utils.GAME_FILES_SHARED_PREFS_KEY
 import com.obsez.android.lib.filechooser.ChooserDialog
 import moxy.presenter.InjectPresenter
 import net.warsmash.phone.R
+import net.warsmash.phone.utils.extensions.changeInputTypeToDecimal
 
 
 class SettingsFragment : MvpAppCompatFragment(), SettingsFragmentMvpView,
@@ -58,6 +60,8 @@ class SettingsFragment : MvpAppCompatFragment(), SettingsFragmentMvpView,
         }
         updatePreference(gameFilesPreference!!, GAME_FILES_SHARED_PREFS_KEY)
 
+        val playersCount = findPreference<EditTextPreference>("players_count")
+        playersCount?.changeInputTypeToDecimal()
 
         findPreference<Preference>("screen_controls_settings")?.setOnPreferenceClickListener {
             presenter.onConfigureScreenControlsClicked(requireContext())

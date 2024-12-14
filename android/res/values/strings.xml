@@ -13,7 +13,7 @@
     <string name="custom_resolution">Custom Resolution</string>
     <string name="hud_scaling">Hud scale</string>
     <string name="cursor_scaling">Cursor scale</string>
-    <string name="font_size">Font size</string>
+    <string name="player_count">Players count</string>
     <string name="game_version">Game version</string>
     <string name="audio_localization_title">Audio localization</string>
     <string name="btn_back">Back</string>

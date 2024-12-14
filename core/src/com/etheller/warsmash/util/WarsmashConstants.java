@@ -65,7 +65,7 @@ public class WarsmashConstants {
 	public static final boolean SHOW_FPS = true;
 
 	public static void loadConstants(final GameObject emulatorConstants, final DataTable warsmashIni) {
-		MAX_PLAYERS = emulatorConstants.getFieldValue("MaxPlayers");
+		MAX_PLAYERS = Integer.parseInt(Os.getenv("PLAYERS_COUNT"));//emulatorConstants.getFieldValue("MaxPlayers");
 		GAME_VERSION = Integer.parseInt(Os.getenv("GAME_VERSION"));//emulatorConstants.getFieldValue("GameVersion");
 		CATCH_CURSOR = emulatorConstants.getFieldValue("CatchCursor") == 1;
 		if (emulatorConstants.getField("FullScreenMenuBackdrop") != null) {
