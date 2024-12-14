@@ -1,5 +1,9 @@
 package com.etheller.warsmash.util;
 
+import android.graphics.Bitmap;
+import android.opengl.GLES20;
+import android.opengl.GLUtils;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.Buffer;
@@ -10,6 +14,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.TextureData;
+import com.etheller.warsmash.TgaReader;
 import com.etheller.warsmash.datasources.DataSource;
 import com.etheller.warsmash.pjblp.Blp2;
 
@@ -57,24 +62,38 @@ public final class ImageUtils {
 															   final String errorType) throws IOException {
 //		final String tgaPath = path.substring(0, path.length() - 4) + ".png";
 		if (dataSource.has(path)) {
-			if (path.toLowerCase().endsWith(".blp")){
+			String lowerCasePath = path.toLowerCase();
+			if (lowerCasePath.endsWith(".blp")){
 				InputStream stream = dataSource.getResourceAsStream(path);
 				Pixmap pixmap = getPixmap(IOUtils.toByteArray(stream));
 				Texture texture = new Texture(pixmap);
 				stream.close();
-
-				Gdx.app.postRunnable(() -> {
-                    if (!pixmap.isDisposed()) {
-                        pixmap.dispose();
-                    }
-                });
-
+				disposePixMap(pixmap);
 				return new AnyExtensionImage(false, texture);
+			} else if (lowerCasePath.endsWith(".tga")){
+				InputStream stream = dataSource.getResourceAsStream(path);
+				Bitmap bitmap = TgaReader.decode(IOUtils.toByteArray(stream));
+				Texture tex = new Texture(bitmap.getWidth(), bitmap.getHeight(), Pixmap.Format.RGBA8888);
+				GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, tex.getTextureObjectHandle());
+				GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, bitmap, 0);
+				GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, 0);
+				bitmap.recycle();
+				tex.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+				return new AnyExtensionImage(false, tex);
 			}
+
 			return new AnyExtensionImage(false, new Texture(new DataSourceFileHandle(dataSource, path)));
 		} else {
 			throw new IllegalStateException("Missing " + errorType + ": " + path);
 		}
+	}
+
+	public static void disposePixMap(Pixmap pixmap){
+		Gdx.app.postRunnable(() -> {
+			if (!pixmap.isDisposed()) {
+				pixmap.dispose();
+			}
+		});
 	}
 
 	public static final class AnyExtensionImage {
@@ -128,7 +147,6 @@ public final class ImageUtils {
 		}
 
 		buffer.flip();
-		pixmap.dispose();
 		return buffer;
 	}
 

@@ -13,7 +13,6 @@ import java.util.Queue;
 import java.util.Set;
 
 import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.IntIntMap;
 import com.etheller.interpreter.ast.scope.GlobalScope;
@@ -369,7 +368,7 @@ public class CUnit extends CWidget {
 		beginBehavior(game, this.defaultBehavior);
 	}
 
-	public void regeneratePathingInstance(final CSimulation game, final Texture buildingPathingPixelMap) {
+	public void regeneratePathingInstance(final CSimulation game, final Pixmap buildingPathingPixelMap) {
 		float unitX = getX();
 		float unitY = getY();
 		unitX = (float) Math.floor(unitX / 64f) * 64f;
@@ -3150,7 +3149,7 @@ public class CUnit extends CWidget {
 			final CUnit targetUnit = (CUnit) target;
 			final CUnitType targetUnitType = targetUnit.getUnitType();
 			if (targetUnit.isBuilding() && (targetUnitType.getBuildingPathingPixelMap() != null)) {
-				final Texture buildingPathingPixelMap = targetUnitType.getBuildingPathingPixelMap();
+				final Pixmap buildingPathingPixelMap = targetUnitType.getBuildingPathingPixelMap();
 				final float targetX = target.getX();
 				final float targetY = target.getY();
 				if (canReachToPathing(range, targetUnit.getFacing(), buildingPathingPixelMap, targetX, targetY)) {
@@ -3161,7 +3160,7 @@ public class CUnit extends CWidget {
 		else if (target instanceof CDestructable) {
 			final CDestructable targetDest = (CDestructable) target;
 			final CDestructableType targetDestType = targetDest.getDestType();
-			final Texture pathingPixelMap = targetDest.isDead() ? targetDestType.getPathingDeathPixelMap()
+			final Pixmap pathingPixelMap = targetDest.isDead() ? targetDestType.getPathingDeathPixelMap()
 					: targetDestType.getPathingPixelMap();
 			final float targetX = target.getX();
 			final float targetY = target.getY();
@@ -3177,7 +3176,7 @@ public class CUnit extends CWidget {
 	}
 
 	public boolean canReachToPathing(final float range, final float rotationForPathing,
-									 final Texture buildingPathingPixelMap, final float targetX, final float targetY) {
+									 final Pixmap buildingPathingPixelMap, final float targetX, final float targetY) {
 		if (buildingPathingPixelMap == null) {
 			return canReach(targetX, targetY, range);
 		}
@@ -3227,7 +3226,7 @@ public class CUnit extends CWidget {
 		return false;
 	}
 
-	private int getRGBFromPixelData(final Texture buildingPathingPixelMap, final int checkX, final int checkY,
+	private int getRGBFromPixelData(final Pixmap buildingPathingPixelMap, final int checkX, final int checkY,
 			final int rotation) {
 
 		// Below: y is downwards (:()
@@ -3251,10 +3250,7 @@ public class CUnit extends CWidget {
 			x = checkX;
 			y = checkY;
 		}
-		Pixmap pixmap = ImageUtils.getPixmap(buildingPathingPixelMap);
-		int result = ImageUtils.getARGBFromRGBA(pixmap.getPixel(x, buildingPathingPixelMap.getHeight() - 1 - y));
-		pixmap.dispose();
-		return result;
+		return ImageUtils.getARGBFromRGBA(buildingPathingPixelMap.getPixel(x, buildingPathingPixelMap.getHeight() - 1 - y));
 	}
 
 	public void addStateListener(final CUnitStateListener listener) {

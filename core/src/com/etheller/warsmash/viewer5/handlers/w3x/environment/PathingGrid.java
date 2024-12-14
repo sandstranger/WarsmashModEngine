@@ -8,8 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.math.Rectangle;
 import com.etheller.warsmash.parsers.w3x.wpm.War3MapWpm;
 import com.etheller.warsmash.util.ImageUtils;
@@ -19,7 +17,7 @@ import com.etheller.warsmash.viewer5.handlers.w3x.simulation.pathing.CBuildingPa
 import com.etheller.warsmash.viewer5.handlers.w3x.simulation.players.vision.CPlayerFogOfWar;
 
 public class PathingGrid {
-	public static final Texture BLANK_PATHING = new Texture(new Pixmap(1, 1, Pixmap.Format.RGBA8888));
+	public static final Pixmap BLANK_PATHING = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
 	private static final Map<String, MovementType> movetpToMovementType = new HashMap<>();
 	static {
 		for (final MovementType movementType : MovementType.values()) {
@@ -47,7 +45,7 @@ public class PathingGrid {
 	// that in credits as well:
 	// https://github.com/stijnherfst/HiveWE/blob/master/Base/PathingMap.cpp
 	private void blitPathingOverlayTexture(final float positionX, final float positionY, final int rotationInput,
-			final Texture pathingTextureTga, boolean blocksVision) {
+			final Pixmap pathingTextureTga, boolean blocksVision) {
 		final int rotation = (rotationInput + 450) % 360;
 		final int divW = ((rotation % 180) != 0) ? pathingTextureTga.getHeight() : pathingTextureTga.getWidth();
 		final int divH = ((rotation % 180) != 0) ? pathingTextureTga.getWidth() : pathingTextureTga.getHeight();
@@ -79,9 +77,7 @@ public class PathingGrid {
 					continue;
 				}
 
-				Pixmap pixmap = ImageUtils.getPixmap(pathingTextureTga);
-				final int rgb = ImageUtils.getARGBFromRGBA(pixmap.getPixel(i, pathingTextureTga.getHeight() - 1 - j));
-				pixmap.dispose();
+				final int rgb = ImageUtils.getARGBFromRGBA(pathingTextureTga.getPixel(i, pathingTextureTga.getHeight() - 1 - j));
 				byte data = 0;
 				if ((rgb & 0xFF) > 127) {
 					data |= PathingFlags.UNBUILDABLE;
@@ -99,7 +95,7 @@ public class PathingGrid {
 	}
 
 	public boolean checkPathingTexture(final float positionX, final float positionY, final int rotationInput,
-			Texture pathingTextureTga, final EnumSet<CBuildingPathingType> preventPathingTypes,
+			Pixmap pathingTextureTga, final EnumSet<CBuildingPathingType> preventPathingTypes,
 			final EnumSet<CBuildingPathingType> requirePathingTypes, final CWorldCollision cWorldCollision,
 			final CUnit unitToExcludeFromCollisionChecks) {
 		if (pathingTextureTga == null) {
@@ -183,7 +179,7 @@ public class PathingGrid {
 	}
 
 	public RemovablePathingMapInstance blitRemovablePathingOverlayTexture(final float positionX, final float positionY,
-			final int rotationInput, final Texture pathingTextureTga) {
+			final int rotationInput, final Pixmap pathingTextureTga) {
 		final RemovablePathingMapInstance removablePathingMapInstance = new RemovablePathingMapInstance(positionX,
 				positionY, rotationInput, pathingTextureTga);
 		removablePathingMapInstance.blit();
@@ -192,7 +188,7 @@ public class PathingGrid {
 	}
 
 	public RemovablePathingMapInstance createRemovablePathingOverlayTexture(final float positionX,
-			final float positionY, final int rotationInput, final Texture pathingTextureTga) {
+			final float positionY, final int rotationInput, final Pixmap pathingTextureTga) {
 		return new RemovablePathingMapInstance(positionX, positionY, rotationInput, pathingTextureTga);
 	}
 
@@ -524,11 +520,11 @@ public class PathingGrid {
 		private final float positionX;
 		private final float positionY;
 		private final int rotationInput;
-		private final Texture pathingTextureTga;
+		private final Pixmap pathingTextureTga;
 		private boolean blocksVision = false;
 
 		public RemovablePathingMapInstance(final float positionX, final float positionY, final int rotationInput,
-				final Texture pathingTextureTga) {
+				final Pixmap pathingTextureTga) {
 			this.positionX = positionX;
 			this.positionY = positionY;
 			this.rotationInput = rotationInput;

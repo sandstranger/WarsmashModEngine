@@ -720,6 +720,9 @@ public class StandardObjectData {
 			return name;
 		}
 
+		Pixmap storedImage = null;
+		String storedImagePath = null;
+
 		@Override
 		public Set<String> keySet() {
 			final Set<String> keySet = new HashSet<>();

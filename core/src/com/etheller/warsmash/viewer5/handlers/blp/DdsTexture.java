@@ -1,12 +1,7 @@
 package com.etheller.warsmash.viewer5.handlers.blp;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-
 import java.io.InputStream;
 
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
 import com.etheller.warsmash.viewer5.ModelViewer;
 import com.etheller.warsmash.viewer5.PathSolver;
 import com.etheller.warsmash.viewer5.RawOpenGLTextureResource;

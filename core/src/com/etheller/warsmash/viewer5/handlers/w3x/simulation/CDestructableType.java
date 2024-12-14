@@ -3,7 +3,6 @@ package com.etheller.warsmash.viewer5.handlers.w3x.simulation;
 import java.util.EnumSet;
 
 import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
 import com.etheller.warsmash.viewer5.handlers.w3x.simulation.combat.CTargetType;
 
 public class CDestructableType {
@@ -14,8 +13,8 @@ public class CDestructableType {
 	private final String armorType;
 	private final int buildTime;
 	private final float occlusionHeight;
-	private final Texture pathingPixelMap;
-	private final Texture pathingDeathPixelMap;
+	private final Pixmap pathingPixelMap;
+	private final Pixmap pathingDeathPixelMap;
 
 	private final int goldRepairCost;
 	private final int lumberRepairCost;
@@ -23,8 +22,8 @@ public class CDestructableType {
 
 	public CDestructableType(final String name, final float maxLife, final EnumSet<CTargetType> targetedAs,
 			final String armorType, final int buildTime, final int goldRepairCost, final int lumberRepairCost,
-			final int repairTime, final float occlusionHeight, final Texture pathingPixelMap,
-			final Texture pathingDeathPixelMap) {
+			final int repairTime, final float occlusionHeight, final Pixmap pathingPixelMap,
+			final Pixmap pathingDeathPixelMap) {
 		this.name = name;
 		this.maxLife = maxLife;
 		this.targetedAs = targetedAs;
@@ -74,11 +73,11 @@ public class CDestructableType {
 		return occlusionHeight;
 	}
 
-	public Texture getPathingPixelMap() {
+	public Pixmap getPathingPixelMap() {
 		return this.pathingPixelMap;
 	}
 
-	public Texture getPathingDeathPixelMap() {
+	public Pixmap getPathingDeathPixelMap() {
 		return this.pathingDeathPixelMap;
 	}
 }

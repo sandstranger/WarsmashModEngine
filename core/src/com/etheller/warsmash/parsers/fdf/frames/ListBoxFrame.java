@@ -15,6 +15,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.etheller.warsmash.util.AbstractListItemDisplay;
 import com.etheller.warsmash.util.AbstractListItemProperty;
+import com.etheller.warsmash.util.ImageUtils;
 import com.etheller.warsmash.util.ListItemEnum;
 import com.etheller.warsmash.datasources.DataSource;
 import com.etheller.warsmash.parsers.fdf.GameUI;
@@ -51,12 +52,12 @@ public class ListBoxFrame extends ControlFrame implements ScrollBarFrame.ScrollB
 		pixmap.setColor(SELECT_COLOR);
 		pixmap.fill();
 		this.selectionFrame.setTexture(new Texture(pixmap));
-		pixmap.dispose();
 		final Pixmap mousePixmap = new Pixmap(1, 1, Format.RGBA8888);
 		mousePixmap.setColor(MOUSE_OVER_HIGHLIGHT_COLOR);
 		mousePixmap.fill();
 		this.mouseHighlightFrame.setTexture(new Texture(mousePixmap));
-		mousePixmap.dispose();
+		ImageUtils.disposePixMap(mousePixmap);
+		ImageUtils.disposePixMap(pixmap);
 		this.dataSource = dataSource;
 	}
 

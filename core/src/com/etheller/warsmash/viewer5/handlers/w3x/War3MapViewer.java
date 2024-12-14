@@ -27,6 +27,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Plane;
 import com.badlogic.gdx.math.Rectangle;
@@ -239,7 +240,7 @@ public class War3MapViewer extends AbstractMdxModelViewer implements MdxAssetLoa
 
 	private final Random seededRandom = new Random(1337L);
 
-	private final Map<String, com.badlogic.gdx.graphics.Texture> filePathToPathingMap = new HashMap<>();
+	private final Map<String, Pixmap> filePathToPathingMap = new HashMap<>();
 
 	private final List<SelectionCircleSize> selectionCircleSizes = new ArrayList<>();
 
@@ -629,11 +630,11 @@ public class War3MapViewer extends AbstractMdxModelViewer implements MdxAssetLoa
 		}
 	}
 
-	protected com.badlogic.gdx.graphics.Texture getDestructablePathingPixelMap(final GameObject row) {
+	protected Pixmap getDestructablePathingPixelMap(final GameObject row) {
 		return loadPathingTexture(row.getFieldAsString(DESTRUCTABLE_PATHING, 0));
 	}
 
-	protected com.badlogic.gdx.graphics.Texture getDestructablePathingDeathPixelMap(final GameObject row) {
+	protected Pixmap getDestructablePathingDeathPixelMap(final GameObject row) {
 		return loadPathingTexture(row.getFieldAsString(DESTRUCTABLE_PATHING_DEATH, 0));
 	}
 
@@ -724,16 +725,22 @@ public class War3MapViewer extends AbstractMdxModelViewer implements MdxAssetLoa
 			final MdxModel model = (MdxModel) load(file, this.mapPathSolver, this.solverParams);
 
 			final String pathingTexture = row.readSLKTag("pathTex");
-			com.badlogic.gdx.graphics.Texture pathingTextureImage;
+			Pixmap pathingTextureImage;
 			if ((pathingTexture != null) && (pathingTexture.length() > 0) && !"_".equals(pathingTexture)) {
 
 				pathingTextureImage = this.filePathToPathingMap.get(pathingTexture.toLowerCase());
 				if (pathingTextureImage == null) {
 					if (this.mapMpq.has(pathingTexture)) {
 						try {
-							pathingTextureImage = ImageUtils.getAnyExtensionTexture(this.mapMpq, pathingTexture);
-							if (pathingTextureImage != null) {
-//								this.filePathToPathingMap.put(pathingTexture.toLowerCase(), pixmap);
+							com.badlogic.gdx.graphics.Texture libGDXTexture = ImageUtils.getAnyExtensionTexture(this.mapMpq, pathingTexture);
+							if (libGDXTexture != null) {
+								TextureData textureData = libGDXTexture.getTextureData();
+								if (!textureData.isPrepared()) {
+									textureData.prepare();
+								}
+								Pixmap pixmap = textureData.consumePixmap();
+								pathingTextureImage = pixmap;
+								this.filePathToPathingMap.put(pathingTexture.toLowerCase(), pixmap);
 //								pathingTextureImage = TgaFile.readTGA(pathingTexture,
 //									this.mapMpq.getResourceAsStream(pathingTexture));
 								this.filePathToPathingMap.put(pathingTexture.toLowerCase(), pathingTextureImage);
@@ -805,7 +812,7 @@ public class War3MapViewer extends AbstractMdxModelViewer implements MdxAssetLoa
 			destructableShadow = this.terrain.addShadow(shadowString, location[0], location[1]);
 		}
 
-		final com.badlogic.gdx.graphics.Texture destructablePathingPixelMap = getDestructablePathingPixelMap(row);
+		final Pixmap destructablePathingPixelMap = getDestructablePathingPixelMap(row);
 		if (destructablePathingPixelMap != null) {
 			destructablePathing = this.terrain.pathingGrid.createRemovablePathingOverlayTexture(location[0],
 					location[1], (int) Math.toDegrees(facingRadians), destructablePathingPixelMap);
@@ -813,7 +820,7 @@ public class War3MapViewer extends AbstractMdxModelViewer implements MdxAssetLoa
 				destructablePathing.add();
 			}
 		}
-		final com.badlogic.gdx.graphics.Texture destructablePathingDeathPixelMap = getDestructablePathingDeathPixelMap(row);
+		final Pixmap destructablePathingDeathPixelMap = getDestructablePathingDeathPixelMap(row);
 		if (destructablePathingDeathPixelMap != null) {
 			destructablePathingDeath = this.terrain.pathingGrid.createRemovablePathingOverlayTexture(location[0],
 					location[1], (int) Math.toDegrees(facingRadians), destructablePathingDeathPixelMap);
@@ -991,7 +998,7 @@ public class War3MapViewer extends AbstractMdxModelViewer implements MdxAssetLoa
 			float unitY, final int playerIndex, int customTeamColor, final float unitAngle) {
 		Splat buildingUberSplat = null;
 		SplatMover buildingUberSplatDynamicIngame = null;
-		com.badlogic.gdx.graphics.Texture buildingPathingPixelMap = null;
+		Pixmap buildingPathingPixelMap = null;
 		BuildingShadow buildingShadowInstance = null;
 
 		// Hardcoded?
@@ -1108,16 +1115,21 @@ public class War3MapViewer extends AbstractMdxModelViewer implements MdxAssetLoa
 	}
 
 	@Override
-	public com.badlogic.gdx.graphics.Texture loadPathingTexture(final String pathingTexture) {
-		com.badlogic.gdx.graphics.Texture buildingPathingPixelMap = null;
+	public Pixmap loadPathingTexture(final String pathingTexture) {
+		Pixmap buildingPathingPixelMap = null;
 		if ((pathingTexture != null) && (pathingTexture.length() > 0) && !"_".equals(pathingTexture)) {
 			buildingPathingPixelMap = this.filePathToPathingMap.get(pathingTexture.toLowerCase());
 			if (buildingPathingPixelMap == null) {
 				try {
 					com.badlogic.gdx.graphics.Texture libGDXTexture = ImageUtils.getAnyExtensionTexture(this.mapMpq, pathingTexture);
 					if (libGDXTexture != null) {
-						this.filePathToPathingMap.put(pathingTexture.toLowerCase(), libGDXTexture);
-						return libGDXTexture;
+						TextureData textureData = libGDXTexture.getTextureData();
+						if (!textureData.isPrepared()) {
+							textureData.prepare();
+						}
+						Pixmap pixmap = textureData.consumePixmap();
+						this.filePathToPathingMap.put(pathingTexture.toLowerCase(), pixmap);
+						return pixmap;
 					}
 				}
 				catch (final Exception exc) {
@@ -2849,18 +2861,18 @@ public class War3MapViewer extends AbstractMdxModelViewer implements MdxAssetLoa
 							}
 
 							@Override
-							public com.badlogic.gdx.graphics.Texture getBuildingPathingPixelMap(final War3ID rawcode) {
+							public Pixmap getBuildingPathingPixelMap(final War3ID rawcode) {
 								return War3MapViewer.this.renderUnitTypeData.get(rawcode).getBuildingPathingPixelMap();
 							}
 
 							@Override
-							public com.badlogic.gdx.graphics.Texture getDestructablePathingDeathPixelMap(final War3ID rawcode) {
+							public Pixmap getDestructablePathingDeathPixelMap(final War3ID rawcode) {
 								return War3MapViewer.this.getDestructablePathingDeathPixelMap(
 										War3MapViewer.this.allObjectData.getDestructibles().get(rawcode));
 							}
 
 							@Override
-							public com.badlogic.gdx.graphics.Texture getDestructablePathingPixelMap(final War3ID rawcode) {
+							public Pixmap getDestructablePathingPixelMap(final War3ID rawcode) {
 								return War3MapViewer.this.getDestructablePathingPixelMap(
 										War3MapViewer.this.allObjectData.getDestructibles().get(rawcode));
 							}

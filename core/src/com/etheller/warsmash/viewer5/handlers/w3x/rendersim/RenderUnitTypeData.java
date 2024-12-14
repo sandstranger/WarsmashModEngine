@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;
 import com.etheller.warsmash.datasources.DataSource;
 import com.etheller.warsmash.units.DataTable;
@@ -79,9 +78,9 @@ public class RenderUnitTypeData extends RenderWidgetTypeData<RenderUnitType> {
 		return path;
 	}
 
-	private Texture getBuildingPathingPixelMap(final GameObject row) {
+	private Pixmap getBuildingPathingPixelMap(final GameObject row) {
 		final String pathingTexture = row.getFieldAsString(UNIT_PATHING, 0);
-		final Texture buildingPathingPixelMap = this.mapViewer.loadPathingTexture(pathingTexture);
+		final Pixmap buildingPathingPixelMap = this.mapViewer.loadPathingTexture(pathingTexture);
 		return buildingPathingPixelMap;
 	}
 
@@ -105,7 +104,7 @@ public class RenderUnitTypeData extends RenderWidgetTypeData<RenderUnitType> {
 		final MdxModel model = this.mapViewer.loadModelMdx(path);
 		final MdxModel portraitModel = getPortraitModel(path, model);
 
-		final Texture buildingPathingPixelMap = getBuildingPathingPixelMap(row);
+		final Pixmap buildingPathingPixelMap = getBuildingPathingPixelMap(row);
 
 		final String unitShadow = row.getFieldAsString(UNIT_SHADOW, 0);
 		RenderShadowType renderShadowType = null;

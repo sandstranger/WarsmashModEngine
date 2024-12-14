@@ -1,7 +1,6 @@
 package com.etheller.warsmash.viewer5.handlers.w3x.simulation.behaviors.build;
 
 import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
 import com.etheller.warsmash.util.War3ID;
 import com.etheller.warsmash.util.WarsmashConstants;
 import com.etheller.warsmash.viewer5.handlers.w3x.simulation.CSimulation;
@@ -41,7 +40,7 @@ public class CBehaviorOrcBuild extends CAbstractRangedBehavior {
 	@Override
 	public boolean isWithinRange(final CSimulation simulation) {
 		final CUnitType unitType = simulation.getUnitData().getUnitType(this.orderId);
-		final Texture buildingPathingPixelMap = unitType.getBuildingPathingPixelMap();
+		final Pixmap buildingPathingPixelMap = unitType.getBuildingPathingPixelMap();
 		if (buildingPathingPixelMap != null) {
 			return this.unit.canReachToPathing(0, simulation.getGameplayConstants().getBuildingAngle(),
 					buildingPathingPixelMap, this.target.getX(), this.target.getY());
@@ -61,7 +60,7 @@ public class CBehaviorOrcBuild extends CAbstractRangedBehavior {
 		if (!this.unitCreated) {
 			this.unitCreated = true;
 			final CUnitType unitTypeToCreate = simulation.getUnitData().getUnitType(this.orderId);
-			final Texture buildingPathingPixelMap = unitTypeToCreate.getBuildingPathingPixelMap();
+			final Pixmap buildingPathingPixelMap = unitTypeToCreate.getBuildingPathingPixelMap();
 			final boolean canBeBuiltOnThem = unitTypeToCreate.isCanBeBuiltOnThem();
 			boolean buildLocationObstructed = AbstractCAbilityBuild.isBuildLocationObstructed(simulation,
 					unitTypeToCreate, buildingPathingPixelMap, canBeBuiltOnThem, this.target.getX(),

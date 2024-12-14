@@ -3,7 +3,6 @@ package com.etheller.warsmash.viewer5.handlers.w3x.simulation.abilities.build;
 import java.util.*;
 
 import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.etheller.warsmash.util.War3ID;
 import com.etheller.warsmash.viewer5.handlers.w3x.simulation.CSimulation;
@@ -104,7 +103,7 @@ public abstract class AbstractCAbilityBuild extends AbstractCAbility implements 
 		War3ID orderIdAsWar3ID = new War3ID(orderId);
 		if (this.structuresBuilt.contains(orderIdAsWar3ID)) {
 			final CUnitType unitTypeToCreate = game.getUnitData().getUnitType(orderIdAsWar3ID);
-			final Texture buildingPathingPixelMap = unitTypeToCreate.getBuildingPathingPixelMap();
+			final Pixmap buildingPathingPixelMap = unitTypeToCreate.getBuildingPathingPixelMap();
 			final boolean canBeBuiltOnThem = unitTypeToCreate.isCanBeBuiltOnThem();
 			roundTargetPoint(target, unitTypeToCreate);
 			float x = target.getX();
@@ -154,7 +153,7 @@ public abstract class AbstractCAbilityBuild extends AbstractCAbility implements 
 	public void onDeath(final CSimulation game, final CUnit cUnit) {
 	}
 
-	public static boolean isBuildLocationObstructed(CSimulation simulation, CUnitType unitTypeToCreate, Texture buildingPathingPixelMap, boolean canBeBuiltOnThem, float targetX, float targetY, CUnit worker, BuildOnBuildingIntersector buildOnBuildingIntersector) {
+	public static boolean isBuildLocationObstructed(CSimulation simulation, CUnitType unitTypeToCreate, Pixmap buildingPathingPixelMap, boolean canBeBuiltOnThem, float targetX, float targetY, CUnit worker, BuildOnBuildingIntersector buildOnBuildingIntersector) {
 		boolean buildLocationObstructed = false;
 		if (canBeBuiltOnThem) {
 			simulation.getWorldCollision().enumBuildingsAtPoint(targetX, targetY,
@@ -174,7 +173,7 @@ public abstract class AbstractCAbilityBuild extends AbstractCAbility implements 
 	}
 
 	public static void roundTargetPoint(Vector2 point, CUnitType unitType) {
-		final Texture buildingPathingPixelMap = unitType.getBuildingPathingPixelMap();
+		final Pixmap buildingPathingPixelMap = unitType.getBuildingPathingPixelMap();
 		if (buildingPathingPixelMap != null) {
 			point.x = (float) Math.floor(point.x / 64f) * 64f;
 			point.y = (float) Math.floor(point.y / 64f) * 64f;

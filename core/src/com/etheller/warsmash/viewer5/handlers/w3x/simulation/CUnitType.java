@@ -6,7 +6,6 @@ import java.util.EnumSet;
 import java.util.List;
 
 import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
 import com.etheller.warsmash.util.War3ID;
 import com.etheller.warsmash.viewer5.handlers.w3x.environment.PathingGrid;
 import com.etheller.warsmash.viewer5.handlers.w3x.environment.PathingGrid.MovementType;
@@ -53,7 +52,7 @@ public class CUnitType {
 
 	// TODO: this should probably not be stored as game state, i.e., is it really
 	// game data? can we store it in a cleaner way?
-	private final Texture buildingPathingPixelMap;
+	private final Pixmap buildingPathingPixelMap;
 	private final EnumSet<CTargetType> targetedAs;
 	private final float defaultAcquisitionRange;
 	private final float minimumAttackRange;
@@ -119,7 +118,7 @@ public class CUnitType {
 			final float defaultFlyingHeight, final float collisionSize,
 			final EnumSet<CUnitClassification> classifications, final List<CUnitAttack> attacks,
 			final int attacksEnabled, final String armorType, final boolean raise, final boolean decay,
-			final CDefenseType defenseType, final float impactZ, final Texture buildingPathingPixelMap,
+			final CDefenseType defenseType, final float impactZ, final Pixmap buildingPathingPixelMap,
 			final float deathTime, final EnumSet<CTargetType> targetedAs, final float defaultAcquisitionRange,
 			final float minimumAttackRange, final List<War3ID> structuresBuilt, final List<War3ID> unitsTrained,
 			final List<War3ID> researchesAvailable, final List<War3ID> upgradesUsed,
@@ -328,7 +327,7 @@ public class CUnitType {
 		return this.impactZ;
 	}
 
-	public Texture getBuildingPathingPixelMap() {
+	public Pixmap getBuildingPathingPixelMap() {
 		return this.buildingPathingPixelMap;
 	}
 

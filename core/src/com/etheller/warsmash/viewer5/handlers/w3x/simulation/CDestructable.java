@@ -5,7 +5,6 @@ import java.util.EnumSet;
 import java.util.List;
 
 import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.etheller.warsmash.viewer5.handlers.w3x.environment.PathingGrid;
 import com.etheller.warsmash.viewer5.handlers.w3x.environment.PathingGrid.RemovablePathingMapInstance;
@@ -55,8 +54,8 @@ public class CDestructable extends CWidget {
 
 	public Rectangle getOrCreateRegisteredEnumRectangle() {
 		if (this.registeredEnumRectangle == null) {
-			Texture pathingPixelMap = this.destType.getPathingPixelMap();
-			Texture pathingDeathPixelMap = this.destType.getPathingDeathPixelMap();
+			Pixmap pathingPixelMap = this.destType.getPathingPixelMap();
+			Pixmap pathingDeathPixelMap = this.destType.getPathingDeathPixelMap();
 			if (pathingPixelMap == null) {
 				pathingPixelMap = PathingGrid.BLANK_PATHING;
 			}
