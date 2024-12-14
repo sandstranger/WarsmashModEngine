@@ -85,11 +85,13 @@ public class EditBoxFrame extends AbstractRenderableFrame implements FocusableFr
 
 	@Override
 	public void onFocusGained() {
+		Gdx.input.setOnscreenKeyboardVisible(true);
 		this.focused = true;
 	}
 
 	@Override
 	public void onFocusLost() {
+		Gdx.input.setOnscreenKeyboardVisible(false);
 		this.focused = false;
 	}
 
