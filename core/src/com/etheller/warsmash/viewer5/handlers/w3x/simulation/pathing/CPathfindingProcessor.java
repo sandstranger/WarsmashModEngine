@@ -151,7 +151,7 @@ public class CPathfindingProcessor {
 
 	private boolean isGoal(final CPathingNode n) {
 		for (int i = 0; i < this.goals; i++) {
-			if (n == this.goalSet[i]) {
+			if (n.point == this.goalSet[i].point) {
 				return true;
 			}
 		}

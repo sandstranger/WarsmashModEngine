@@ -70,18 +70,7 @@ public final class ImageUtils {
 				stream.close();
 				disposePixMap(pixmap);
 				return new AnyExtensionImage(false, texture);
-			} else if (lowerCasePath.endsWith(".tga")){
-				InputStream stream = dataSource.getResourceAsStream(path);
-				Bitmap bitmap = TgaReader.decode(IOUtils.toByteArray(stream));
-				Texture tex = new Texture(bitmap.getWidth(), bitmap.getHeight(), Pixmap.Format.RGBA8888);
-				GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, tex.getTextureObjectHandle());
-				GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, bitmap, 0);
-				GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, 0);
-				bitmap.recycle();
-				tex.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-				return new AnyExtensionImage(false, tex);
 			}
-
 			return new AnyExtensionImage(false, new Texture(new DataSourceFileHandle(dataSource, path)));
 		} else {
 			throw new IllegalStateException("Missing " + errorType + ": " + path);
