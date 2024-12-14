@@ -41,15 +41,7 @@ public class BlpGdxTexture extends GdxTextureResource {
 			texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
 			setGdxTexture(texture);
 			src.close();
-
-			Gdx.app.postRunnable(new Runnable() {
-				@Override
-				public void run() {
-					if (!pixmap.isDisposed()) {
-						pixmap.dispose();
-					}
-				}
-			});
+			ImageUtils.disposePixMap(pixmap);
 
 /*			DataSource dataSource = (DataSource) options;
 			if(!dataSource.has(fetchUrl)) {
