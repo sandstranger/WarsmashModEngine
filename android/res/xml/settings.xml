@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <PreferenceCategory android:title="@string/general_settings">
+        <Preference
+            android:key="game_files"
+            android:title="@string/game_files" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/user_interface">
+        <Preference
+            android:key="screen_controls_settings"
+            android:title="@string/configure_screen_controls" />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="hide_screen_controls"
+            android:title="@string/hide_screen_controls" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/graphics">
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="display_cutout_area"
+            android:title="@string/display_cutout_area" />
+    </PreferenceCategory>
+</PreferenceScreen>

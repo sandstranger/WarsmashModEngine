@@ -22,7 +22,7 @@ fun startEngine(context: Context) {
 fun loadExtensions() {
 
     Extensions.audio = object : AudioExtension {
-        override fun getDuration(sound: Sound): Float {
+        override fun getDuration(sound: Sound?): Float {
             if (sound == null) {
                 return 1.0f
             }

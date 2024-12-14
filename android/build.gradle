@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'org.jetbrains.kotlin.android'
 apply plugin: 'org.jetbrains.kotlin.plugin.compose'
+apply plugin: 'kotlin-kapt'
 
 android {
 	namespace 'net.warsmash.phone'
@@ -74,8 +75,12 @@ configurations { natives }
 
 dependencies {
 
+	implementation project(':directory-picker')
 	def multidex_version = "2.0.1"
 	implementation "androidx.multidex:multidex:$multidex_version"
+
+	implementation "com.github.moxy-community:moxy-androidx:2.2.2"
+	kapt "com.github.moxy-community:moxy-compiler:2.2.2"
 
 	// Java language implementation
 //	implementation "androidx.core:core:$core_version"

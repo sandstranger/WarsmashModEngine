@@ -1,13 +1,17 @@
 package net.warsmash.phone.ui.activity
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import net.warsmash.phone.presenter.MainActivityPresenter
+import moxy.MvpAppCompatActivity
+import moxy.MvpView
+import moxy.presenter.InjectPresenter
 import net.warsmash.phone.R
-import net.warsmash.phone.android.engine.startEngine
 import net.warsmash.phone.databinding.MainActivityBinding
-import net.warsmash.phone.utils.extensions.requestExternalStoragePermission
+import net.warsmash.phone.ui.fragment.SettingsFragment
 
-internal class MainActivity : AppCompatActivity() {
+internal class MainActivity : MvpAppCompatActivity(), MvpView {
+    @InjectPresenter
+    lateinit var presenter: MainActivityPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -15,10 +19,10 @@ internal class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.startGameButton.setOnClickListener {
-            startEngine(this)
+            presenter.onStartGameBtnClicked(this@MainActivity)
         }
 
-        this.requestExternalStoragePermission()
+        presenter.requestExternalStorage(this)
         changeFragment()
     }
 
@@ -27,11 +31,11 @@ internal class MainActivity : AppCompatActivity() {
         var fragment = supportFragmentManager.findFragmentById(fragmentContainterResId)
 
         if (fragment == null) {
-          /*  fragment = SettingsFragment()
+            fragment = SettingsFragment()
             supportFragmentManager.beginTransaction().apply {
                 replace(fragmentContainterResId, fragment)
                 commit()
-            }*/
+            }
         }
     }
 }

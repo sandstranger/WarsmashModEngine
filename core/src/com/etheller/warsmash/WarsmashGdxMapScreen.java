@@ -1,5 +1,7 @@
 package com.etheller.warsmash;
 
+import android.system.Os;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
@@ -228,7 +230,8 @@ public class WarsmashGdxMapScreen implements InputProcessor, Screen {
 		final List<String> allCascPrefixes = new ArrayList<>();
 		for (int i = 0; i < dataSourcesConfig.size(); i++) {
 			final String type = dataSourcesConfig.getField("Type" + (i < 10 ? "0" : "") + i);
-			final String path = dataSourcesConfig.getField("Path" + (i < 10 ? "0" : "") + i);
+			final String path = dataSourcesConfig.getField("Path" + (i < 10 ? "0" : "") + i)
+												 .replace("EXTERNAL_STORAGE_ROOT",Os.getenv("game_files"));
 			switch (type) {
 			case "Folder": {
 				dataSourcesList.add(new FolderDataSourceDescriptor(path));
