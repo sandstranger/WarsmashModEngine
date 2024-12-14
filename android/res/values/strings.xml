@@ -12,7 +12,8 @@
     <string name="can_not_start_game">cfg ini file does not exist, so the game cannot be launched</string>
     <string name="custom_resolution">Custom Resolution</string>
     <string name="hud_scaling">Hud scale</string>
-    <string name="cursor_scaling">Cursor scale</string>
+    <string name="server">Server</string>
+    <string name="default_server">warsmash.net</string>
     <string name="player_count">Players count</string>
     <string name="game_version">Game version</string>
     <string name="audio_localization_title">Audio localization</string>

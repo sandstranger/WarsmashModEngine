@@ -19,6 +19,12 @@
             android:key="players_count"
             android:defaultValue="28"
             android:title="@string/player_count" />
+
+        <EditTextPreference
+            android:dialogTitle="@string/server"
+            android:key="server"
+            android:defaultValue="@string/default_server"
+            android:title="@string/server" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/user_interface">

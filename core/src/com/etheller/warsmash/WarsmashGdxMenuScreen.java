@@ -1,5 +1,7 @@
 package com.etheller.warsmash;
 
+import android.system.Os;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -205,7 +207,7 @@ public class WarsmashGdxMenuScreen implements InputProcessor, Screen, SingleMode
 			String mapDownloadDir;
 			final Element gamingNetworkSettings = this.warsmashIni.get("GamingNetwork");
 			if (gamingNetworkSettings != null) {
-				server = gamingNetworkSettings.getField("Server");
+				server = Os.getenv("SERVER"); ///gamingNetworkSettings.getField("Server");
 				mapDownloadDir = gamingNetworkSettings.getField("MapDownloadDir");
 				if (mapDownloadDir.isEmpty()) {
 					mapDownloadDir = MAPS_DOWNLOAD_DEFAULT;

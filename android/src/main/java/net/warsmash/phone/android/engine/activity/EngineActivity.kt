@@ -33,6 +33,7 @@ class EngineActivity : AndroidApplication() {
             prefsManager.getString(GAME_FILES_SHARED_PREFS_KEY,""), true)
         Os.setenv("GAME_VERSION", getGameVersion().toString(), true)
         Os.setenv("PLAYERS_COUNT", prefsManager.getString("players_count","28"), true)
+        Os.setenv("SERVER",prefsManager.getString("server","warsmash.net"), true)
 
         displayInCutoutArea(prefsManager)
 
