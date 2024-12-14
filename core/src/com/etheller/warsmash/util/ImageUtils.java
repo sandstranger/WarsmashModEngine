@@ -14,7 +14,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.TextureData;
-import com.etheller.warsmash.TgaReader;
+import com.etheller.warsmash.TGAReader;
 import com.etheller.warsmash.datasources.DataSource;
 import com.etheller.warsmash.pjblp.Blp2;
 
@@ -70,6 +70,15 @@ public final class ImageUtils {
 				stream.close();
 				disposePixMap(pixmap);
 				return new AnyExtensionImage(false, texture);
+			}
+			else if (lowerCasePath.endsWith(".tga")){
+				InputStream stream = dataSource.getResourceAsStream(path);
+				Pixmap bitmap = TGAReader.decode(IOUtils.toByteArray(stream));
+				Texture texture = new Texture(bitmap);
+				texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+				ImageUtils.disposePixMap(bitmap);
+				stream.close();
+				return new AnyExtensionImage(false,texture);
 			}
 			return new AnyExtensionImage(false, new Texture(new DataSourceFileHandle(dataSource, path)));
 		} else {

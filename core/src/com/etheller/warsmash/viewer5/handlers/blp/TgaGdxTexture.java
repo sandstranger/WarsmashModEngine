@@ -7,7 +7,7 @@ import android.opengl.GLUtils;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.etheller.warsmash.TgaReader;
+import com.etheller.warsmash.TGAReader;
 import com.etheller.warsmash.datasources.DataSource;
 import com.etheller.warsmash.util.ImageUtils;
 import com.etheller.warsmash.viewer5.GdxTextureResource;
@@ -39,18 +39,13 @@ public class TgaGdxTexture extends GdxTextureResource {
 			if(!dataSource.has(fetchUrl)) {
 				throw new RuntimeException("No such fetchURL: " + fetchUrl);
 			}
+			Gdx.files.internal(fetchUrl.replace("/","\\")).read()
 
-			Bitmap bitmap = TgaReader.decode(IOUtils.toByteArray(src));
-
-			Gdx.app.postRunnable(() -> {
-                Texture tex = new Texture(bitmap.getWidth(), bitmap.getHeight(), Pixmap.Format.RGBA8888);
-                GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, tex.getTextureObjectHandle());
-                GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, bitmap, 0);
-                GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, 0);
-                bitmap.recycle();
-                tex.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-                setGdxTexture(tex);
-            });
+			Pixmap bitmap = TGAReader.decode(IOUtils.toByteArray(src));
+			Texture texture = new Texture(bitmap);
+			texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+			setGdxTexture(texture);
+			ImageUtils.disposePixMap(bitmap);
 		}
 		catch (final Exception e) {
 			throw new RuntimeException(e);
