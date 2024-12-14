@@ -12,6 +12,7 @@ import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration
 import com.badlogic.gdx.backends.android.AndroidAudio
 import com.etheller.warsmash.WarsmashGdxMenuScreen
 import com.etheller.warsmash.WarsmashGdxMultiScreenGame
+import net.warsmash.phone.R
 import net.warsmash.phone.android.engine.loadExtensions
 import net.warsmash.phone.utils.GAME_FILES_SHARED_PREFS_KEY
 import net.warsmash.phone.utils.extensions.displayInCutoutArea
@@ -19,7 +20,6 @@ import java.util.function.Consumer
 
 /** Launches the Android application.  */
 class EngineActivity : AndroidApplication() {
-
     private lateinit var prefsManager : SharedPreferences
 
     override fun createAudio(context: Context, config: AndroidApplicationConfiguration): AndroidAudio =
@@ -31,6 +31,7 @@ class EngineActivity : AndroidApplication() {
         prefsManager = PreferenceManager.getDefaultSharedPreferences(this)
         Os.setenv(GAME_FILES_SHARED_PREFS_KEY,
             prefsManager.getString(GAME_FILES_SHARED_PREFS_KEY,""), true)
+        Os.setenv("GAME_VERSION", getGameVersion().toString(), true)
 
         displayInCutoutArea(prefsManager)
 
@@ -42,5 +43,10 @@ class EngineActivity : AndroidApplication() {
                 game.screen = menuScreen
             })
         initialize(warsmashGdxMultiScreenGame, configuration)
+    }
+
+    private fun getGameVersion () : Int {
+        val gameVersion = prefsManager.getString("Game version", "");
+        return if (gameVersion == "TFT") 1 else 0
     }
 }

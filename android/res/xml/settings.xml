@@ -5,6 +5,15 @@
         <Preference
             android:key="game_files"
             android:title="@string/game_files" />
+        <ListPreference
+            android:defaultValue="@string/tft_game_version"
+            android:dialogTitle="@string/game_version"
+            android:entries="@array/game_type"
+            android:entryValues="@array/game_type"
+            android:key="@string/game_version"
+            android:summary="%s"
+            android:title="@string/game_version" />
+
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/user_interface">

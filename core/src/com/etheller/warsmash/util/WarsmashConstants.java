@@ -1,5 +1,7 @@
 package com.etheller.warsmash.util;
 
+import android.system.Os;
+
 import java.util.List;
 
 import com.etheller.warsmash.units.DataTable;
@@ -64,7 +66,7 @@ public class WarsmashConstants {
 
 	public static void loadConstants(final GameObject emulatorConstants, final DataTable warsmashIni) {
 		MAX_PLAYERS = emulatorConstants.getFieldValue("MaxPlayers");
-		GAME_VERSION = emulatorConstants.getFieldValue("GameVersion");
+		GAME_VERSION = Integer.parseInt(Os.getenv("GAME_VERSION"));//emulatorConstants.getFieldValue("GameVersion");
 		CATCH_CURSOR = emulatorConstants.getFieldValue("CatchCursor") == 1;
 		if (emulatorConstants.getField("FullScreenMenuBackdrop") != null) {
 			FULL_SCREEN_MENU_BACKDROP = emulatorConstants.getFieldValue("FullScreenMenuBackdrop") == 1;
