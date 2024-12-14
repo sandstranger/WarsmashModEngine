@@ -21,7 +21,7 @@ import org.lwjgl.BufferUtils;
  */
 public final class ImageUtils {
 	private static final int BYTES_PER_PIXEL = 4;
-	public static final String DEFAULT_ICON_PATH = "ReplaceableTextures\\CommandButtons\\BTNTemp.png";
+	public static final String DEFAULT_ICON_PATH = "ReplaceableTextures\\CommandButtons\\BTNTemp.blp";
 
 	public static Pixmap getPixmap (Texture texture){
 		TextureData textureData = texture.getTextureData();
