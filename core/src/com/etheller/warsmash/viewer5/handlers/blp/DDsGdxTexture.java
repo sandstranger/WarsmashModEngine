@@ -7,7 +7,6 @@ import android.opengl.GLUtils;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.etheller.warsmash.TgaReader;
 import com.etheller.warsmash.datasources.DataSource;
 import com.etheller.warsmash.pjblp.DDSReader;
 import com.etheller.warsmash.viewer5.GdxTextureResource;
