@@ -25,7 +25,7 @@ allprojects {
         antlrVersion = '4.7'
         xstreamVersion = '1.4.19'
         target_sdk = 34
-        min_sdk = 24
+        min_sdk = 26
     }
 }
 
