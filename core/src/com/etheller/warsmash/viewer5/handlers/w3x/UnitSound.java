@@ -78,8 +78,7 @@ public final class UnitSound {
 		Sound newSound = null;
 		if (dataSource.has(filePath + ".wav") || dataSource.has(filePath + ".flac")) {
 			try {
-				filePath = filePath.replace('\\', '/');
-				newSound = Gdx.audio.newSound(Gdx.files.internal(filePath + ".wav"));
+				newSound = Gdx.audio.newSound(Gdx.files.internal(filePath.replace("/", "\\") + ".wav"));
 			}
 			catch (final Exception exc) {
 				exc.printStackTrace();
@@ -87,8 +86,7 @@ public final class UnitSound {
 		}
 		else if (dataSource.has(filePath + ".mp3")) {
 			try {
-				filePath = filePath.toLowerCase(Locale.US).replace('\\', '/');
-				newSound = Gdx.audio.newSound(Gdx.files.internal(filePath + ".mp3"));
+				newSound = Gdx.audio.newSound(Gdx.files.internal(filePath.replace('/', '\\') + ".mp3"));
 			}
 			catch (final Exception exc) {
 				exc.printStackTrace();

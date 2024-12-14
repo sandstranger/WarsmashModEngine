@@ -34,7 +34,7 @@ public class EventObjectEmitterObject extends GenericObject implements EmitterOb
 
 		@Override
 		public Object call(final InputStream data) {
-			return Gdx.audio.newSound(Gdx.files.internal(this.filename.replace('\\','/')));
+			return Gdx.audio.newSound(Gdx.files.internal(this.filename.replace('/','\\')));
 		}
 			/*
 			final FileHandle temp = new FileHandle(this.filename) {

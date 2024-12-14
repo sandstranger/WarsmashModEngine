@@ -177,7 +177,7 @@ public class WarsmashGdxFDFTestRenderScreen implements InputProcessor, Screen, S
 								final String[] moreSplitMusics = musicPath.split(",");
 								String finalMusicPath = moreSplitMusics[(int) (Math.random()
 										* moreSplitMusics.length)];
-								finalMusicPath = finalMusicPath.replace('\\', '/');
+								finalMusicPath = finalMusicPath.replace('/', '\\');
 								final Music music = Gdx.audio.newMusic(Gdx.files.internal(finalMusicPath));
 //							music.setVolume(0.2f);
 								music.setLooping(true);

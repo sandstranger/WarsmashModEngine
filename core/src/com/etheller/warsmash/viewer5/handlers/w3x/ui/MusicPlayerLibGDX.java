@@ -130,7 +130,7 @@ public class MusicPlayerLibGDX implements MusicPlayer {
 		int validMusicCount = 0;
 		for (int i = 0; i < musics.length; i++) {
 			if (this.dataSource.has(musics[i])) {
-				final Music newMusic = Gdx.audio.newMusic(Gdx.files.internal(musics[i].replace('\\', '/')));
+				final Music newMusic = Gdx.audio.newMusic(Gdx.files.internal(musics[i].replace('/', '\\')));
 				newMusic.setVolume(this.volume);
 				this.currentMusics[i] = newMusic;
 				validMusicCount++;
