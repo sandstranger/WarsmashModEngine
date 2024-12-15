@@ -44,7 +44,7 @@ public class W3xShadersWebGLDeprecated {
 
 		public static final String frag = "\r\n" + //
 				"// #extension GL_OES_standard_derivatives : enable\r\n" + //
-				"precision mediump float;\r\n" + //
+				"precision highp float;\r\n" + //
 				"uniform sampler2D u_texture1;\r\n" + //
 				"uniform sampler2D u_texture2;\r\n" + //
 				"varying vec3 v_normal;\r\n" + //
@@ -74,7 +74,7 @@ public class W3xShadersWebGLDeprecated {
 		}
 
 		public static final String frag = "\r\n" + //
-				"precision mediump float;\r\n" + //
+				"precision highp float;\r\n" + //
 				"uniform sampler2D u_tilesets[15];\r\n" + //
 				"varying vec4 v_tilesets;\r\n" + //
 				"varying vec2 v_uv[4];\r\n" + //
@@ -176,7 +176,7 @@ public class W3xShadersWebGLDeprecated {
 		}
 
 		public static final String frag = "\r\n" + //
-				"precision mediump float;\r\n" + //
+				"precision highp float;\r\n" + //
 				"uniform sampler2D u_waterTexture;\r\n" + //
 				"varying vec2 v_uv;\r\n" + //
 				"varying vec4 v_color;\r\n" + //

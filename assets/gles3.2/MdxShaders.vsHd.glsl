@@ -1,6 +1,6 @@
 #version 100
 
-precision mediump float;
+precision highp  float;
 
     uniform sampler2D u_boneMap;
     uniform float u_vectorSize;

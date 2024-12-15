@@ -612,7 +612,7 @@ public class MdxShaders {
 			"    }\r\n";
 
 	public static final String fsSimple = "\r\n" + //
-			"    precision mediump float;\r\n" + //
+			"    precision highp float;\r\n" + //
 			"    uniform sampler2D u_texture;\r\n" + //
 			"    uniform float u_filterMode;\r\n" + //
 			"    varying vec2 v_uv;\r\n" + //
@@ -627,7 +627,7 @@ public class MdxShaders {
 
 
 	public static final String vsComplex() {
-		return "precision mediump float;\r\n\r\n" + //
+		return "precision highp float;\r\n\r\n" + //
 				// "\r\n" + //
 				"\r\n" + //
 				"    uniform mat4 u_mvp;\r\n" + //
@@ -706,7 +706,7 @@ public class MdxShaders {
 				"    }";
 	}
 
-	public static final String fsComplex = "precision mediump float;\r\n\r\n" + //
+	public static final String fsComplex = "precision highp float;\r\n\r\n" + //
 			Shaders.quatTransform + "\r\n\r\n" + //
 			"    uniform sampler2D u_texture;\r\n" + //
 			"    uniform vec4 u_vertexColor;\r\n" + //

@@ -35,7 +35,7 @@ public class WebGL {
 		this.shaderPrograms = new HashMap<>();
 
 		this.currentShaderProgram = null;
-		this.floatPrecision = "precision mediump float;\n";
+		this.floatPrecision = "precision highp float;\n";
 
 		final Pixmap imageData = new Pixmap(2, 2, Pixmap.Format.RGBA8888);
 		for (int i = 0; i < 2; i++) {
@@ -56,8 +56,8 @@ public class WebGL {
 	}
 
 	public ShaderProgram createShaderProgram(String vertexSrc, String fragmentSrc) {
-		vertexSrc = vertexSrc;//.replace("mediump", "");
-		fragmentSrc = fragmentSrc;//.replace("mediump", "");
+		vertexSrc = vertexSrc;//.replace("highp", "");
+		fragmentSrc = fragmentSrc;//.replace("highp", "");
 		final Map<Integer, ShaderProgram> shaderPrograms = this.shaderPrograms;
 
 		final int hash = stringHash(vertexSrc + fragmentSrc);
