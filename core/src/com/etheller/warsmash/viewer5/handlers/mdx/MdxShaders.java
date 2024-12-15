@@ -741,7 +741,7 @@ public class MdxShaders {
 			"    }";
 
 	public static final String fsComplexShadowMap =
-			"precision mediump float;\r\n\r\n" + //
+			"precision highp float;\r\n\r\n" + //
 			"\r\n\r\n" + //
 			Shaders.quatTransform + "\r\n\r\n" + //
 			"    uniform sampler2D u_texture;\r\n" + //
@@ -774,7 +774,7 @@ public class MdxShaders {
 			"    }";
 
 	public static final String vsParticles() {
-		return "precision mediump float;\r\n" + //
+		return "precision highp float;\r\n" + //
 				"    #define EMITTER_PARTICLE2 0.0\r\n" + //
 				"    #define EMITTER_RIBBON 1.0\r\n" + //
 				"    #define EMITTER_SPLAT 2.0\r\n" + //
@@ -1031,7 +1031,7 @@ public class MdxShaders {
 				"    }";
 	}
 
-	public static final String fsParticles = "precision mediump float;\r\n" + //
+	public static final String fsParticles = "precision highp float;\r\n" + //
 			"    #define EMITTER_RIBBON 1.0\r\n" + //
 			"    uniform sampler2D u_texture;\r\n" + //
 			"    uniform mediump float u_emitter;\r\n" + //
@@ -1055,7 +1055,7 @@ public class MdxShaders {
 			"    }";
 
 	public static final String vsLightning = "\r\n" + //
-			 " precision mediump float;\r\n" + //
+			 " precision highp float;\r\n" + //
 			"    uniform mat4 u_VP;\r\n" + //
 			"    attribute vec3 a_position;\r\n" + //
 			"    attribute vec2 a_uv;\r\n" + //
@@ -1071,7 +1071,7 @@ public class MdxShaders {
 			"    }\r\n";
 
 	public static final String fsLightning = "\r\n" + //
-			 " precision mediump float;\r\n" + //
+			 " precision highp float;\r\n" + //
 			"    uniform sampler2D u_texture;\r\n" + //
 			"    varying vec2 v_uv;\r\n" + //
 			"    varying vec4 v_color;\r\n" + //
