@@ -1383,10 +1383,10 @@ public class Terrain {
 					textureData.prepare();
 				}
 				Pixmap pixmap = textureData.consumePixmap();
-				if((pixmap.getPixel(x, y) & 0xFF) != 0) {
+				if(!pixmap.isDisposed() && (pixmap.getPixel(x, y) & 0xFF) != 0) {
 					shadowData[((y0 - y) * columns) + x0 + x] = (byte) 128;
 				}
-				Gdx.app.postRunnable(pixmap::dispose);
+				ImageUtils.disposePixMap(pixmap);
 			}
 		}
 	}
