@@ -9,6 +9,7 @@ import com.badlogic.gdx.audio.Music;
 import com.etheller.warsmash.datasources.DataSource;
 import com.etheller.warsmash.units.DataTable;
 import com.etheller.warsmash.util.DataSourceFileHandle;
+import com.etheller.warsmash.util.WarsmashConstants;
 
 public class MusicPlayerLibGDX implements MusicPlayer {
 	private static final float GAME_MSECS_DIVISOR = 1000f;
@@ -130,7 +131,7 @@ public class MusicPlayerLibGDX implements MusicPlayer {
 		int validMusicCount = 0;
 		for (int i = 0; i < musics.length; i++) {
 			if (this.dataSource.has(musics[i])) {
-				final Music newMusic = Gdx.audio.newMusic(Gdx.files.internal(musics[i].replace('/', '\\')));
+				final Music newMusic = Gdx.audio.newMusic(Gdx.files.absolute(WarsmashConstants.GAME_PATH + "/" +musics[i].replace('\\', '/')));
 				newMusic.setVolume(this.volume);
 				this.currentMusics[i] = newMusic;
 				validMusicCount++;

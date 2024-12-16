@@ -231,7 +231,7 @@ public class WarsmashGdxMapScreen implements InputProcessor, Screen {
 		for (int i = 0; i < dataSourcesConfig.size(); i++) {
 			final String type = dataSourcesConfig.getField("Type" + (i < 10 ? "0" : "") + i);
 			final String path = dataSourcesConfig.getField("Path" + (i < 10 ? "0" : "") + i)
-												 .replace("EXTERNAL_STORAGE_ROOT",Os.getenv("game_files"));
+												 .replace("EXTERNAL_STORAGE_ROOT",WarsmashConstants.GAME_PATH);
 			switch (type) {
 			case "Folder": {
 				dataSourcesList.add(new FolderDataSourceDescriptor(path));

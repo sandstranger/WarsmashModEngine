@@ -11,6 +11,7 @@ import com.etheller.warsmash.datasources.DataSource;
 import com.etheller.warsmash.units.DataTable;
 import com.etheller.warsmash.units.Element;
 import com.etheller.warsmash.util.DataSourceFileHandle;
+import com.etheller.warsmash.util.WarsmashConstants;
 import com.etheller.warsmash.viewer5.AudioBufferSource;
 import com.etheller.warsmash.viewer5.AudioContext;
 import com.etheller.warsmash.viewer5.AudioPanner;
@@ -78,7 +79,7 @@ public final class UnitSound {
 		Sound newSound = null;
 		if (dataSource.has(filePath + ".wav") || dataSource.has(filePath + ".flac")) {
 			try {
-				newSound = Gdx.audio.newSound(Gdx.files.internal(filePath.replace("/", "\\") + ".wav"));
+				newSound = Gdx.audio.newSound(Gdx.files.absolute(WarsmashConstants.GAME_PATH + "/" + filePath.replace("\\", "/") + ".wav"));
 			}
 			catch (final Exception exc) {
 				exc.printStackTrace();
@@ -86,7 +87,7 @@ public final class UnitSound {
 		}
 		else if (dataSource.has(filePath + ".mp3")) {
 			try {
-				newSound = Gdx.audio.newSound(Gdx.files.internal(filePath.replace('/', '\\') + ".mp3"));
+				newSound = Gdx.audio.newSound(Gdx.files.absolute(WarsmashConstants.GAME_PATH + "/" +filePath.replace('\\', '/') + ".mp3"));
 			}
 			catch (final Exception exc) {
 				exc.printStackTrace();

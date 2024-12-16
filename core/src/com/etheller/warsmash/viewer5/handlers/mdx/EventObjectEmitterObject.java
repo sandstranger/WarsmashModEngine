@@ -15,6 +15,7 @@ import com.etheller.warsmash.common.FetchDataTypeName;
 import com.etheller.warsmash.common.LoadGenericCallback;
 import com.etheller.warsmash.util.MappedData;
 import com.etheller.warsmash.util.MappedDataRow;
+import com.etheller.warsmash.util.WarsmashConstants;
 import com.etheller.warsmash.viewer5.GenericResource;
 import com.etheller.warsmash.viewer5.ModelViewer;
 import com.etheller.warsmash.viewer5.PathSolver;
@@ -34,7 +35,7 @@ public class EventObjectEmitterObject extends GenericObject implements EmitterOb
 
 		@Override
 		public Object call(final InputStream data) {
-			return Gdx.audio.newSound(Gdx.files.internal(this.filename.replace('/','\\')));
+			return Gdx.audio.newSound(Gdx.files.absolute(WarsmashConstants.GAME_PATH + "/" + this.filename.replace('\\','/')));
 		}
 			/*
 			final FileHandle temp = new FileHandle(this.filename) {

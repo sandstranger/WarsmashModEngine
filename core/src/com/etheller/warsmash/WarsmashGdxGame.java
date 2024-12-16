@@ -20,6 +20,7 @@ import com.etheller.warsmash.datasources.DataSource;
 import com.etheller.warsmash.units.DataTable;
 import com.etheller.warsmash.util.DataSourceFileHandle;
 import com.etheller.warsmash.util.StringBundle;
+import com.etheller.warsmash.util.WarsmashConstants;
 import com.etheller.warsmash.viewer5.Camera;
 import com.etheller.warsmash.viewer5.CanvasProvider;
 import com.etheller.warsmash.viewer5.ModelViewer;
@@ -404,7 +405,7 @@ public class WarsmashGdxGame extends ApplicationAdapter implements CanvasProvide
 			this.mainInstance.frame += (int) (Gdx.graphics.getRawDeltaTime() * 1000);
 		}
 		if (this.firstFrame) {
-			final Music music = Gdx.audio.newMusic(Gdx.files.internal("Sound\\Ambient\\DoodadEffects\\FinalCinematic.mp3"));
+			final Music music = Gdx.audio.newMusic(Gdx.files.absolute(WarsmashConstants.GAME_PATH +"/Sound/Ambient/DoodadEffects/FinalCinematic.mp3"));
 			music.setVolume(0.2f);
 			music.setLooping(true);
 			music.play();

@@ -1238,11 +1238,7 @@ public class Terrain {
 
 	public BuildingShadow addShadow(final String file, final float shadowX, final float shadowY) {
 		if (!this.shadows.containsKey(file)) {
-			String path = "ReplaceableTextures\\Shadows\\" + file;
-			String lowercasePath = file.toLowerCase();
-			if (!lowercasePath.endsWith(".blp") && !lowercasePath.endsWith(".tga") && !lowercasePath.endsWith(".dds")){
-				path = path + ".blp";
-			}
+			String path = "ReplaceableTextures\\Shadows\\" + file + ".blp";
 			this.shadows.put(file, new ArrayList<>());
 			this.shadowTextures.put(file, (Texture) this.viewer.load(path, PathSolver.DEFAULT, null));
 		}
@@ -1390,7 +1386,7 @@ public class Terrain {
 				if((pixmap.getPixel(x, y) & 0xFF) != 0) {
 					shadowData[((y0 - y) * columns) + x0 + x] = (byte) 128;
 				}
-			//	pixmap.dispose();
+				Gdx.app.postRunnable(pixmap::dispose);
 			}
 		}
 	}

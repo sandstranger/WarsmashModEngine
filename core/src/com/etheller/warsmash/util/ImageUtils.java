@@ -71,8 +71,8 @@ public final class ImageUtils {
 				return new AnyExtensionImage(false, texture);
 			}
 			else if (lowerCasePath.endsWith(".tga")){
-				String pngPath = (path.substring(0, path.length()-4)+".png").replace("/","\\");
-				Texture myTexture = new Texture(pngPath);
+				String pngPath = WarsmashConstants.GAME_PATH + "/" + (path.substring(0, path.length()-4)+".png").replace("\\","/");
+				Texture myTexture = new Texture(Gdx.files.absolute(pngPath));
 				myTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
 				return new AnyExtensionImage(false,myTexture);
 			}
