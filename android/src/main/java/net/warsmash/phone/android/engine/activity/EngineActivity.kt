@@ -30,7 +30,7 @@ class EngineActivity : AndroidApplication() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        loggerProcess = createProcess(Environment.getExternalStorageDirectory().absolutePath
+        loggerProcess = createLoggerProcess(Environment.getExternalStorageDirectory().absolutePath
                 + "/" + "warsmash.log")
         prefsManager = PreferenceManager.getDefaultSharedPreferences(this)
         Os.setenv(GAME_FILES_SHARED_PREFS_KEY,
@@ -61,7 +61,7 @@ class EngineActivity : AndroidApplication() {
         return if (gameVersion == "TFT") 1 else 0
     }
 
-    private fun createProcess(pathToLog: String): Process {
+    private fun createLoggerProcess(pathToLog: String): Process {
         val file = File(pathToLog)
         if (file.exists()){
             file.delete()

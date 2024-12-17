@@ -210,12 +210,12 @@ public class WarsmashGdxMenuScreen implements InputProcessor, Screen, SingleMode
 				server = Os.getenv("SERVER"); ///gamingNetworkSettings.getField("Server");
 				mapDownloadDir = gamingNetworkSettings.getField("MapDownloadDir");
 				if (mapDownloadDir.isEmpty()) {
-					mapDownloadDir = MAPS_DOWNLOAD_DEFAULT;
+					mapDownloadDir = WarsmashConstants.GAME_PATH + "/" + MAPS_DOWNLOAD_DEFAULT;
 				}
 			}
 			else {
 				server = "localhost";
-				mapDownloadDir = MAPS_DOWNLOAD_DEFAULT;
+				mapDownloadDir = WarsmashConstants.GAME_PATH + "/" + MAPS_DOWNLOAD_DEFAULT;
 			}
 			this.menuUI = new MenuUI(this.viewer.dataSource, this.uiViewport, this.uiScene, this.viewer, this.game,
 					this, this.warsmashIni, new RootFrameListener() {
