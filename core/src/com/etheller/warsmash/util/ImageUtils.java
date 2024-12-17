@@ -14,6 +14,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.TextureData;
+import com.etheller.warsmash.TGAReader;
 import com.etheller.warsmash.datasources.DataSource;
 import com.etheller.warsmash.pjblp.Blp2;
 
@@ -71,10 +72,13 @@ public final class ImageUtils {
 				return new AnyExtensionImage(false, texture);
 			}
 			else if (lowerCasePath.endsWith(".tga")){
-				String pngPath = WarsmashConstants.GAME_PATH + "/" + (path.substring(0, path.length()-4)+".png").replace("\\","/");
-				Texture myTexture = new Texture(Gdx.files.absolute(pngPath));
-				myTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-				return new AnyExtensionImage(false,myTexture);
+				InputStream src = dataSource.getResourceAsStream(path);
+				Pixmap bitmap = TGAReader.decode(IOUtils.toByteArray(src));
+				Texture texture = new Texture(bitmap);
+				texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+				src.close();
+				disposePixMap(bitmap);
+				return new AnyExtensionImage(false,texture);
 			}
 			return new AnyExtensionImage(false, new Texture(new DataSourceFileHandle(dataSource, path)));
 		} else {
