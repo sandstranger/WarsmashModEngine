@@ -1,5 +1,5 @@
 # Warsmash Android port
-This is a android port of Warsmash engine, found at https://github.com/Retera/WarsmashModEngine
+This is an android port of Warsmash engine, found at https://github.com/Retera/WarsmashModEngine
 
 # Limitations of Android port
 1. At this moment Android port supports only Warcraft III: Frozen Throne: Patch 1.29 
