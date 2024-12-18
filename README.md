@@ -4,13 +4,11 @@ This is an android port of Warsmash engine, found at https://github.com/Retera/W
 # Limitations of Android port
 1. At this moment Android port supports only Warcraft III: Frozen Throne: Patch 1.29 
 2. Sounds and music playing from mpq files is not supported at this moment.
-3. tga textures are not supported in android port at this moment.
 
 # How to run Warsmash Android port
 1. Get a licensed copy of Warcraft III: Frozen Throne: Patch 1.29
-2. Use mpqeditor http://www.zezula.net/en/mpq/download.html and extract all music, sounds, and tga textures from mpq files.
-3. Convert all tga textures to png format using blp Lab https://www.hiveworkshop.com/threads/blp-lab-v0-5-0.137599
-4. Copy original files of Warcraft3 TFT, all music,sounds and png textures to your phone.
+2. Use mpqeditor http://www.zezula.net/en/mpq/download.html and extract all music, sounds from mpq files.
+4. Copy original files of Warcraft3 TFT, all music,sounds to your phone.
 5. Run android port and specify path to the folder with files of warcraft3 TFT
 
 # Warsmash: Mod Engine
