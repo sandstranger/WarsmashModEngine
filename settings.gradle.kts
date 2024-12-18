@@ -19,6 +19,7 @@ pluginManagement {
         maven ("https://maven.nikr.net/")
         maven ("https://jitpack.io")
         maven ("https://kotlin.bintray.com/kotlinx")
+        maven ( "https://andob.io/repository/open_source")
         google()
     }
 }
@@ -37,6 +38,7 @@ dependencyResolutionManagement {
         maven ("https://maven.nikr.net/")
         maven ("https://jitpack.io")
         maven ("https://kotlin.bintray.com/kotlinx")
+        maven ( "https://andob.io/repository/open_source")
         google()
     }
 }

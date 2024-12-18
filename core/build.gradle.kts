@@ -41,6 +41,7 @@ android {
 }
 
 dependencies {
+    implementation ("ro.andob.androidawt:androidawt:1.0.4")
     implementation ("org.lwjgl.lwjgl:lwjgl:2.9.3")
     implementation  ("com.badlogicgames.gdx:gdx:1.13.0")
     implementation  ("com.badlogicgames.gdx:gdx-box2d:1.13.0")
