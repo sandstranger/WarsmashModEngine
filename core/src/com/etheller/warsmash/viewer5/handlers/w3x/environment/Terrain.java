@@ -1352,6 +1352,10 @@ public class Terrain {
 			final String file = fileAndTexture.getKey();
 			final Texture texture = fileAndTexture.getValue();
 
+			if (texture.isNull()){
+				continue;
+			}
+
 			final int width = texture.getWidth();
 			final int height = texture.getHeight();
 			final int ox = (int) Math.round(width * 0.3);

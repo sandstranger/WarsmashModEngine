@@ -17,6 +17,10 @@ public abstract class Texture extends HandlerResource<ResourceHandler> implement
 
 	public abstract int getHeight();
 
+	public boolean isNull(){
+		return false;
+	}
+
 	@Override
 	public abstract int getGlTarget();
 

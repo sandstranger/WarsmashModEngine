@@ -59,6 +59,11 @@ public abstract class GdxTextureResource extends Texture {
 	}
 
 	@Override
+	public boolean isNull() {
+		return gdxTexture == null;
+	}
+
+	@Override
 	public void setWrapT(final boolean wrapT) {
 		this.gdxTexture.setWrap(this.gdxTexture.getUWrap(), wrapT ? TextureWrap.Repeat : TextureWrap.ClampToEdge);
 	}

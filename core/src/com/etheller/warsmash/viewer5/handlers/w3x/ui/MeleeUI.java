@@ -1,5 +1,7 @@
 package com.etheller.warsmash.viewer5.handlers.w3x.ui;
 
+import android.util.Log;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayDeque;
@@ -457,6 +459,10 @@ public class MeleeUI implements CUnitStateListener, CommandButtonListener, Comma
 
 		this.keysEmulator.setOnTouchDown(keyCode -> {
 			this.touchDown(previousTouchScreenX, previousTouchScreenY, previousWorldY,keyCode);
+			return Unit.INSTANCE;
+		});
+
+		this.keysEmulator.setOnTouchUp(keyCode -> {
 			this.touchUp(previousTouchScreenX, previousTouchScreenY, previousWorldY,keyCode);
 			return Unit.INSTANCE;
 		});
@@ -708,6 +714,7 @@ public class MeleeUI implements CUnitStateListener, CommandButtonListener, Comma
 				keysEmulator.setOnTouchDown(null);
 				keysEmulator.setOnKeyUpListener(null);
 				keysEmulator.setOnKeyDownListener(null);
+				keysEmulator.setOnTouchUp(null);
 
 				MeleeUI.this.exitGameRunnable.run();
 			}
@@ -4592,6 +4599,10 @@ public class MeleeUI implements CUnitStateListener, CommandButtonListener, Comma
 
 	@Override
 	public boolean touchUp(final int screenX, final int screenY, final float worldScreenY, final int button) {
+		previousTouchScreenX = screenX;
+		previousTouchScreenY = screenY;
+		previousWorldY = worldScreenY;
+
 		if (button == Input.Buttons.FORWARD) {
 			return false;
 		}
@@ -4603,9 +4614,6 @@ public class MeleeUI implements CUnitStateListener, CommandButtonListener, Comma
 		}
 		this.currentlyDraggingPointer = -1;
 
-		previousTouchScreenX = screenX;
-		previousTouchScreenY = screenY;
-		previousWorldY = worldScreenY;
 
 		screenCoordsVector.set(screenX, screenY);
 		this.uiViewport.unproject(screenCoordsVector);
