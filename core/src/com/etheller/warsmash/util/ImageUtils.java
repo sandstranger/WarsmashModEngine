@@ -16,7 +16,6 @@ import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.TextureData;
-import com.etheller.warsmash.TGAReader;
 import com.etheller.warsmash.datasources.DataSource;
 import com.etheller.warsmash.pjblp.Blp2;
 import com.etheller.warsmash.viewer5.handlers.tga.TgaFile;
