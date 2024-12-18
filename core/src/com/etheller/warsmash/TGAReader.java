@@ -19,6 +19,7 @@ import android.graphics.Bitmap;
 
 import com.badlogic.gdx.graphics.Pixmap;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -36,10 +37,10 @@ public final class TGAReader {
 		Bitmap bimg = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
 		bimg.setPixels(pixels, 0, width, 0, 0, width, height);
 
-		int size = bimg.getRowBytes() * bimg.getHeight();
-		ByteBuffer byteBuffer = ByteBuffer.allocate(size);
-		bimg.copyPixelsToBuffer(byteBuffer);
-		byte[] byteArray = byteBuffer.array();
+		ByteArrayOutputStream stream = new ByteArrayOutputStream();
+		bimg.compress(Bitmap.CompressFormat.PNG, 100, stream);
+		byte[] byteArray = stream.toByteArray();
+		bimg.recycle();
 
 		return new Pixmap(byteArray, 0, byteArray.length);
 	}

@@ -2,6 +2,7 @@ package net.warsmash.phone.android.engine
 
 import android.content.Context
 import android.os.Process
+import android.view.View
 import com.badlogic.gdx.audio.Sound
 import com.etheller.warsmash.viewer5.AudioContext
 import com.etheller.warsmash.viewer5.AudioDestination
@@ -12,8 +13,19 @@ import net.warsmash.phone.android.engine.activity.EngineActivity
 import net.warsmash.phone.utils.extensions.startActivity
 import org.lwjgl.opengl.GL11
 
-fun killEngine() = Process.killProcess(Process.myPid())
 
+@Suppress("DEPRECATION")
+internal fun setFullscreen(decorView: View) {
+    val uiOptions = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+            or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+            or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+            or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+            or View.SYSTEM_UI_FLAG_FULLSCREEN
+            or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
+    decorView.systemUiVisibility = uiOptions
+}
+
+fun killEngine() = Process.killProcess(Process.myPid())
 
 fun startEngine(context: Context) {
     context.startActivity<EngineActivity>()
@@ -58,7 +70,4 @@ fun loadExtensions() {
 
     Extensions.GL_LINE = GL11.GL_LINE
     Extensions.GL_FILL = GL11.GL_FILL
-
-//    Extensions.GL_LINE = 0
-  //  Extensions.GL_FILL = 0
 }

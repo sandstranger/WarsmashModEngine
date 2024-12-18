@@ -9,13 +9,15 @@ import net.warsmash.phone.utils.GAME_FILES_SHARED_PREFS_KEY
 import net.warsmash.phone.utils.copyGameAssets
 import moxy.InjectViewState
 import moxy.MvpPresenter
+import net.warsmash.phone.ui.activity.ConfigureControlsActivity
 import net.warsmash.phone.utils.GAME_FILES_FOLDER_NAME
+import net.warsmash.phone.utils.extensions.startActivity
 
 @InjectViewState
 class SettingsFragmentPresenter : MvpPresenter<SettingsFragmentMvpView>() {
 
     fun onConfigureScreenControlsClicked(context: Context) {
-        //context.startActivity<ConfigureControlsActivity>(finishParentActivity = false)
+        context.startActivity<ConfigureControlsActivity>(finishParentActivity = false)
     }
 
     fun saveGamePath(data: Intent, context: Context, preferences: SharedPreferences) {

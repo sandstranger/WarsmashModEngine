@@ -18,7 +18,6 @@ pluginManagement {
         maven ("https://oss.sonatype.org/content/repositories/releases/")
         maven ("https://maven.nikr.net/")
         maven ("https://jitpack.io")
-        maven ("https://maven.pkg.jetbrains.space/kotlin/p/kotlin/bootstrap")
         maven ("https://kotlin.bintray.com/kotlinx")
         google()
     }
@@ -37,7 +36,6 @@ dependencyResolutionManagement {
         maven ("https://oss.sonatype.org/content/repositories/releases/")
         maven ("https://maven.nikr.net/")
         maven ("https://jitpack.io")
-        maven ("https://maven.pkg.jetbrains.space/kotlin/p/kotlin/bootstrap")
         maven ("https://kotlin.bintray.com/kotlinx")
         google()
     }

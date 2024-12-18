@@ -40,10 +40,6 @@ android {
     }
 }
 
-tasks.withType<KotlinCompile> {
-    kotlinOptions.freeCompilerArgs += "-Xvalue-classes"
-}
-
 dependencies {
     implementation ("org.lwjgl.lwjgl:lwjgl:2.9.3")
     implementation  ("com.badlogicgames.gdx:gdx:1.13.0")

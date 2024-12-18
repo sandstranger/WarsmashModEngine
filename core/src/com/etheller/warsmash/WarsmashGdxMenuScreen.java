@@ -81,15 +81,17 @@ public class WarsmashGdxMenuScreen implements InputProcessor, Screen, SingleMode
 	private boolean hasPlayedStandHack = false;
 	private boolean loaded = false;
 	private EnumSet<SecondaryTag> tags = SequenceUtils.EMPTY;
+	private final KeysEmulator keysEmulator;
 
-	public WarsmashGdxMenuScreen(DataTable warsmashIni, final WarsmashGdxMultiScreenGame game) {
+	public WarsmashGdxMenuScreen(DataTable warsmashIni, final WarsmashGdxMultiScreenGame game,
+								 final KeysEmulator keysEmulator) {
 		if (warsmashIni == null){
 			warsmashIni = loadWarsmashIni();
 		}
 
 		this.warsmashIni = warsmashIni;
 		this.game = game;
-
+		this.keysEmulator = keysEmulator;
 		final Element emulatorConstants = warsmashIni.get("Emulator");
 		WarsmashConstants.loadConstants(emulatorConstants, warsmashIni);
 	}
@@ -223,7 +225,7 @@ public class WarsmashGdxMenuScreen implements InputProcessor, Screen, SingleMode
 						public void onCreate(final GameUI rootFrame) {
 //						WarsmashGdxMapGame.this.viewer.setGameUI(rootFrame);
 						}
-					}, new GamingNetworkConnectionImpl(server), mapDownloadDir);
+					}, new GamingNetworkConnectionImpl(server), mapDownloadDir, keysEmulator);
 
 			final ModelInstance libgdxContentInstance = new LibGDXContentLayerModel(null, this.viewer, "",
 					PathSolver.DEFAULT, "").addInstance();

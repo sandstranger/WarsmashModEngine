@@ -40,6 +40,7 @@ import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.etheller.interpreter.ast.scope.GlobalScope;
+import com.etheller.warsmash.KeysEmulator;
 import com.etheller.warsmash.datasources.DataSource;
 import com.etheller.warsmash.parsers.fdf.GameUI;
 import com.etheller.warsmash.parsers.fdf.datamodel.AnchorDefinition;
@@ -202,6 +203,8 @@ import com.etheller.warsmash.viewer5.handlers.w3x.ui.dialog.CScriptDialog;
 import com.etheller.warsmash.viewer5.handlers.w3x.ui.dialog.CScriptDialogButton;
 import com.etheller.warsmash.viewer5.handlers.w3x.ui.dialog.CTimerDialog;
 import com.hiveworkshop.rms.parsers.mdlx.MdlxLayer.FilterMode;
+
+import kotlin.Unit;
 
 public class MeleeUI implements CUnitStateListener, CommandButtonListener, CommandCardCommandListener,
 		QueueIconListener, CommandErrorListener, CPlayerStateListener, WarsmashUI, WarsmashToggleableUI {
@@ -428,11 +431,36 @@ public class MeleeUI implements CUnitStateListener, CommandButtonListener, Comma
 	private boolean subtitleDisplayOverride;
 	private UIFrame cinematicScenePanel;
 	private CinematicPortrait cinematicPortrait;
+	private final KeysEmulator keysEmulator;
+	private int previousTouchScreenX;
+	private int previousTouchScreenY;
+	private float previousWorldY;
 
 	public MeleeUI(final DataSource dataSource, final ExtendViewport uiViewport, final Scene uiScene,
 			final Scene portraitScene, final CameraPreset[] cameraPresets, final CameraRates cameraRates,
 			final War3MapViewer war3MapViewer, final RootFrameListener rootFrameListener,
-			final CPlayerUnitOrderListener unitOrderListener, final Runnable exitGameRunnable) {
+			final CPlayerUnitOrderListener unitOrderListener, final Runnable exitGameRunnable,
+				   final KeysEmulator keysEmulator) {
+		this.keysEmulator = keysEmulator;
+		this.keysEmulator.setOnKeyDownListener(keyCode -> {
+			this.keyDown(keyCode);
+			return Unit.INSTANCE;
+		});
+		this.keysEmulator.setOnKeyUpListener(keyCode -> {
+			this.keyUp(keyCode);
+			return Unit.INSTANCE;
+		});
+		this.keysEmulator.setOnScrolledListener(scrolledAmount -> {
+			this.scrolled(0, scrolledAmount);
+			return Unit.INSTANCE;
+		});
+
+		this.keysEmulator.setOnTouchDown(keyCode -> {
+			this.touchDown(previousTouchScreenX, previousTouchScreenY, previousWorldY,keyCode);
+			this.touchUp(previousTouchScreenX, previousTouchScreenY, previousWorldY,keyCode);
+			return Unit.INSTANCE;
+		});
+
 		this.dataSource = dataSource;
 		this.uiViewport = uiViewport;
 		this.uiScene = uiScene;
@@ -676,6 +704,11 @@ public class MeleeUI implements CUnitStateListener, CommandButtonListener, Comma
 			@Override
 			public void run() {
 				escMenuInnerEndGamePanel.setVisible(false);
+
+				keysEmulator.setOnTouchDown(null);
+				keysEmulator.setOnKeyUpListener(null);
+				keysEmulator.setOnKeyDownListener(null);
+
 				MeleeUI.this.exitGameRunnable.run();
 			}
 		});
@@ -4036,6 +4069,10 @@ public class MeleeUI implements CUnitStateListener, CommandButtonListener, Comma
 
 	@Override
 	public boolean touchDown(final int screenX, final int screenY, final float worldScreenY, final int button) {
+		previousTouchScreenX = screenX;
+		previousTouchScreenY = screenY;
+		previousWorldY = worldScreenY;
+
 		if (!this.userControlEnabled) {
 			return false;
 		}
@@ -4565,6 +4602,11 @@ public class MeleeUI implements CUnitStateListener, CommandButtonListener, Comma
 			return false;
 		}
 		this.currentlyDraggingPointer = -1;
+
+		previousTouchScreenX = screenX;
+		previousTouchScreenY = screenY;
+		previousWorldY = worldScreenY;
+
 		screenCoordsVector.set(screenX, screenY);
 		this.uiViewport.unproject(screenCoordsVector);
 		final UIFrame clickedUIFrame = this.rootFrame.touchUp(screenCoordsVector.x, screenCoordsVector.y, button);
@@ -4690,6 +4732,10 @@ public class MeleeUI implements CUnitStateListener, CommandButtonListener, Comma
 		if (!this.userControlEnabled) {
 			return false;
 		}
+		previousTouchScreenX = screenX;
+		previousTouchScreenY = screenY;
+		previousWorldY = worldScreenY;
+
 		screenCoordsVector.set(screenX, screenY);
 		this.uiViewport.unproject(screenCoordsVector);
 

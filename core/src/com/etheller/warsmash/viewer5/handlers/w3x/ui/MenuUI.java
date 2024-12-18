@@ -24,6 +24,7 @@ import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.etheller.warsmash.KeysEmulator;
 import com.etheller.warsmash.SingleModelScreen;
 import com.etheller.warsmash.WarsmashGdxMapScreen;
 import com.etheller.warsmash.WarsmashGdxMenuScreen;
@@ -57,7 +58,6 @@ import com.etheller.warsmash.parsers.w3x.w3i.War3MapW3iFlags;
 import com.etheller.warsmash.units.DataTable;
 import com.etheller.warsmash.units.Element;
 import com.etheller.warsmash.units.custom.WTS;
-import com.etheller.warsmash.util.DataSourceFileHandle;
 import com.etheller.warsmash.util.JAVACrc32C;
 import com.etheller.warsmash.util.StringBundle;
 import com.etheller.warsmash.util.WarsmashConstants;
@@ -240,11 +240,14 @@ public class MenuUI {
 	private boolean hideUI;
 	private final DataTable miscData;
 	private FogSettings menuFogSettings;
+	private final KeysEmulator keysEmulator;
 
 	public MenuUI(final DataSource dataSource, final Viewport uiViewport, final Scene uiScene, final MdxViewer viewer,
 			final WarsmashGdxMultiScreenGame screenManager, final SingleModelScreen menuScreen,
 			final DataTable warsmashIni, final RootFrameListener rootFrameListener,
-			final GamingNetworkConnection gamingNetworkConnection, final String mapDownloadDir) {
+			final GamingNetworkConnection gamingNetworkConnection, final String mapDownloadDir,
+				  final KeysEmulator keysEmulator) {
+		this.keysEmulator = keysEmulator;
 		this.dataSource = dataSource;
 		this.uiViewport = uiViewport;
 		this.uiScene = uiScene;
@@ -259,7 +262,6 @@ public class MenuUI {
 		this.heightRatioCorrection = getMinWorldHeight() / 1200f;
 
 		this.profileManager = PlayerProfileManager.loadFromGdx();
-
 		this.musicSLK = new DataTable(StringBundle.EMPTY);
 		final String musicSLKPath = "UI\\SoundInfo\\Music.SLK";
 		if (viewer.dataSource.has(musicSLKPath)) {
@@ -1916,7 +1918,7 @@ public class MenuUI {
 
 								// TODO not cast menu screen
 								MenuUI.this.screenManager.setScreen(new WarsmashGdxMapScreen(this.loadingMap.viewer,
-										this.screenManager, (WarsmashGdxMenuScreen) this.menuScreen, uiOrderListener));
+										this.screenManager, (WarsmashGdxMenuScreen) this.menuScreen, uiOrderListener, this.keysEmulator));
 								this.loadingMap = null;
 								this.beginGameInformation = null;
 
@@ -2213,7 +2215,7 @@ public class MenuUI {
 				break;
 			case RESTARTING:
 				MenuUI.this.screenManager
-						.setScreen(new WarsmashGdxMenuScreen(MenuUI.this.warsmashIni, this.screenManager));
+						.setScreen(new WarsmashGdxMenuScreen(MenuUI.this.warsmashIni, this.screenManager, this.keysEmulator));
 				break;
 			default:
 				break;

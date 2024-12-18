@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/screen_controls_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/buttons_holder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnOpacityPlus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="clickOpacityPlus"
+                android:text="@string/btn_opacityPlus" />
+
+            <Button
+                android:id="@+id/btnOpacityMinus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="clickOpacityMinus"
+                android:text="@string/btn_opacityMinus" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnSizePlus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="clickSizePlus"
+                android:text="@string/btn_sizePlus" />
+
+            <Button
+                android:id="@+id/btnSizeMinus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="clickSizeMinus"
+                android:text="@string/btn_sizeMinus" />
+        </LinearLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="clickResetControls"
+            android:text="@string/btn_resetControlsLayout" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="clickBack"
+            android:text="@string/btn_back" />
+    </LinearLayout>
+
+    <net.warsmash.phone.ui.controls.views.MouseButton
+        android:id="@+id/right_mouse_button"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleType="fitCenter"
+        android:background="@null"
+        android:layout_gravity="right"
+        android:src="@drawable/mouse" />
+
+    <net.warsmash.phone.ui.controls.views.ScrollableImageButton
+        android:id="@+id/scroll_up_button"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleType="fitCenter"
+        android:background="@null"
+        android:layout_gravity="right"
+        android:src="@drawable/up_arrow" />
+
+    <net.warsmash.phone.ui.controls.views.ScrollableImageButton
+        android:id="@+id/scroll_down_button"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleType="fitCenter"
+        android:background="@null"
+        android:layout_gravity="right"
+        android:src="@drawable/down_arrow" />
+
+    <net.warsmash.phone.ui.controls.views.TouchScreenImageButton
+        android:id="@+id/camera_left_button"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleType="fitCenter"
+        android:background="@null"
+        android:layout_gravity="right"
+        android:src="@drawable/left_arrow" />
+
+    <net.warsmash.phone.ui.controls.views.TouchScreenImageButton
+        android:id="@+id/camera_right_button"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleType="fitCenter"
+        android:background="@null"
+        android:layout_gravity="right"
+        android:src="@drawable/right_arrow" />
+
+    <net.warsmash.phone.ui.controls.views.TouchScreenImageButton
+        android:id="@+id/camera_down_button"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleType="fitCenter"
+        android:background="@null"
+        android:layout_gravity="right"
+        android:src="@drawable/down_arrow" />
+
+    <net.warsmash.phone.ui.controls.views.TouchScreenImageButton
+        android:id="@+id/camera_up_button"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleType="fitCenter"
+        android:background="@null"
+        android:layout_gravity="right"
+        android:src="@drawable/up_arrow" />
+
+</FrameLayout>

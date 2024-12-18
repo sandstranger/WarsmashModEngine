@@ -1,7 +1,5 @@
 package com.etheller.warsmash;
 
-import android.system.Os;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
@@ -84,14 +82,17 @@ public class WarsmashGdxMapScreen implements InputProcessor, Screen {
 	private final WarsmashGdxMultiScreenGame screenManager;
 	private final WarsmashGdxMenuScreen menuScreen;
 	private final CPlayerUnitOrderListener uiOrderListener;
+	private final KeysEmulator keysEmulator;
 	private CommonEnvironment commonEnv;
 
 	public WarsmashGdxMapScreen(final War3MapViewer mapViewer, final WarsmashGdxMultiScreenGame screenManager,
-			final WarsmashGdxMenuScreen menuScreen, final CPlayerUnitOrderListener uiOrderListener) {
+			final WarsmashGdxMenuScreen menuScreen, final CPlayerUnitOrderListener uiOrderListener,
+			final KeysEmulator keysEmulator) {
 		this.viewer = mapViewer;
 		this.screenManager = screenManager;
 		this.menuScreen = menuScreen;
 		this.uiOrderListener = uiOrderListener;
+		this.keysEmulator = keysEmulator;
 	}
 
 	/*
@@ -198,7 +199,7 @@ public class WarsmashGdxMapScreen implements InputProcessor, Screen {
 						WarsmashGdxMapScreen.this.menuScreen.onReturnFromGame();
 						WarsmashGdxMapScreen.this.screenManager.setScreen(WarsmashGdxMapScreen.this.menuScreen);
 					}
-				});
+				}, keysEmulator);
 		final MeleeToggleUI toggleUI = new MeleeToggleUI(baseMeleeUI, Arrays.asList(baseMeleeUI));
 		this.meleeUI = toggleUI;
 		this.viewer.getCommandErrorListener().setDelegate(this.meleeUI);
