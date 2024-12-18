@@ -4617,6 +4617,11 @@ public class MeleeUI implements CUnitStateListener, CommandButtonListener, Comma
 
 		screenCoordsVector.set(screenX, screenY);
 		this.uiViewport.unproject(screenCoordsVector);
+
+		if (button == Input.Buttons.LEFT){
+			loadTooltip();
+		}
+		
 		final UIFrame clickedUIFrame = this.rootFrame.touchUp(screenCoordsVector.x, screenCoordsVector.y, button);
 		if (this.mouseDownUIFrame != null) {
 			if (clickedUIFrame == this.mouseDownUIFrame) {
@@ -4746,7 +4751,7 @@ public class MeleeUI implements CUnitStateListener, CommandButtonListener, Comma
 
 		screenCoordsVector.set(screenX, screenY);
 		this.uiViewport.unproject(screenCoordsVector);
-
+		loadTooltip();
 		if (this.meleeUIMinimap.containsMouse(screenCoordsVector.x, screenCoordsVector.y)) {
 			final Vector2 worldPoint = this.meleeUIMinimap.getWorldPointFromScreen(screenCoordsVector.x,
 					screenCoordsVector.y);
@@ -4787,6 +4792,20 @@ public class MeleeUI implements CUnitStateListener, CommandButtonListener, Comma
 	public boolean mouseMoved(final int screenX, final int screenY, final float worldScreenY) {
 		screenCoordsVector.set(screenX, screenY);
 		this.uiViewport.unproject(screenCoordsVector);
+		loadTooltip();
+		final UIFrame hover = getHoveredFrame(this.rootFrame, screenCoordsVector.x, screenCoordsVector.y,
+				this.includeFrames, this.ignoreFrames);
+		if (hover == null) {
+			updateMouseOverUnit(screenX, worldScreenY);
+		}
+		else {
+			this.war3MapViewer.clearUnitMouseOverHighlight();
+			this.mouseOverUnit = null;
+		}
+		return false;
+	}
+
+	private void loadTooltip() {
 		final UIFrame mousedUIFrame = this.rootFrame.getFrameChildUnderMouse(screenCoordsVector.x,
 				screenCoordsVector.y);
 		if (mousedUIFrame != this.mouseOverUIFrame) {
@@ -4807,16 +4826,6 @@ public class MeleeUI implements CUnitStateListener, CommandButtonListener, Comma
 				this.tooltipFrame.setVisible(false);
 			}
 		}
-		final UIFrame hover = getHoveredFrame(this.rootFrame, screenCoordsVector.x, screenCoordsVector.y,
-				this.includeFrames, this.ignoreFrames);
-		if (hover == null) {
-			updateMouseOverUnit(screenX, worldScreenY);
-		}
-		else {
-			this.war3MapViewer.clearUnitMouseOverHighlight();
-			this.mouseOverUnit = null;
-		}
-		return false;
 	}
 
 	private void updateMouseOverUnit(final int screenX, final float worldScreenY) {
