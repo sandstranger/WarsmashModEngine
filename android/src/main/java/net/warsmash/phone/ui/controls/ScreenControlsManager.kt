@@ -65,20 +65,13 @@ class ScreenControlsManager(
             900, 340, 70
         )
 
+        controlsItems += ControlsItem(
+            "hide_all_btns_button", screenControlsBinding.hideAllBtnsButton,
+            450, 10, 70
+        )
+
         controlsItems.forEach {
             it.loadPrefs()
-        }
-    }
-
-    fun hideScreenControls (){
-        for (button in controlsItems){
-            button.view.visibility = View.GONE
-        }
-    }
-
-    fun showScreenControls (){
-        for (button in controlsItems){
-            button.view.visibility = View.VISIBLE
         }
     }
 
@@ -101,7 +94,17 @@ class ScreenControlsManager(
 
     fun enableScreenControls() {
         screenControlsBinding.buttonsHolder.visibility = View.GONE
-        showScreenControls()
+
+        screenControlsBinding.hideAllBtnsButton.setOnClickListener {
+            for (button in controlsItems) {
+                if (button.view === screenControlsBinding.hideAllBtnsButton) {
+                    continue
+                }
+
+                button.view.visibility =
+                    if (button.view.visibility == View.GONE) View.VISIBLE else View.GONE
+            }
+        }
     }
 
     fun changeOpacity(delta: Float) {

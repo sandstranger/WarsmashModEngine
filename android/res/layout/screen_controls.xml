@@ -67,6 +67,15 @@
             android:text="@string/btn_back" />
     </LinearLayout>
 
+    <ImageButton
+        android:id="@+id/hide_all_btns_button"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleType="fitCenter"
+        android:background="@null"
+        android:layout_gravity="right"
+        android:src="@drawable/toggle" />
+
     <net.warsmash.phone.ui.controls.views.MouseButton
         android:id="@+id/right_mouse_button"
         android:layout_width="100dp"
