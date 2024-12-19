@@ -9,6 +9,20 @@ At this moment Android port supports Warcraft III: Frozen Throne: Patch 1.22 - 1
 2. Copy original files of Warcraft3 TFT to your phone.
 3. Run android port and specify path to the folder with files of warcraft3 TFT
 
+# System Requirements
+
+Warsmash for Android has the following system requirements:
+
+### Minimum
+* Operating system: Android 8 or later
+* Graphics: videocard, which supports GLES 3 render
+* Memory: 8GB system RAM
+
+### Recommended
+* Operating system: Android 11 or later
+* Graphics: videocard, which supports GLES 3 render
+* Memory: 16GB system RAM or more
+
 # Warsmash: Mod Engine
 This is a Warcraft III emulator made using LibGDX game engine. For obvious reasons, the Warsmash project does not include Warcraft III assets. Instead, in order to run the Warcraft III emulator you need to purchase a valid copy of Warcraft III from Activision Blizzard and then configure Warsmash to use those assets.
 
