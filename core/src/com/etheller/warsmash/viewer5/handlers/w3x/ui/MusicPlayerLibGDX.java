@@ -6,6 +6,7 @@ import java.util.Locale;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.etheller.warsmash.AudioLoaderKt;
 import com.etheller.warsmash.datasources.DataSource;
 import com.etheller.warsmash.units.DataTable;
 import com.etheller.warsmash.util.DataSourceFileHandle;
@@ -131,7 +132,7 @@ public class MusicPlayerLibGDX implements MusicPlayer {
 		int validMusicCount = 0;
 		for (int i = 0; i < musics.length; i++) {
 			if (this.dataSource.has(musics[i])) {
-				final Music newMusic = Gdx.audio.newMusic(Gdx.files.absolute(WarsmashConstants.GAME_PATH + "/" +musics[i].replace('\\', '/')));
+				final Music newMusic = AudioLoaderKt.loadMusic(new DataSourceFileHandle(this.dataSource, musics[i]));
 				newMusic.setVolume(this.volume);
 				this.currentMusics[i] = newMusic;
 				validMusicCount++;

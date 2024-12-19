@@ -18,6 +18,7 @@ public class WarsmashConstants {
 	 * whatever for custom mods and other stuff
 	 */
 	public static int GAME_VERSION = 1;
+	public static final String AUDIO_FILES_PATH;
 	public static final String GAME_PATH;
 	public static final int REPLACEABLE_TEXTURE_LIMIT = 64;
 	public static final float SIMULATION_STEP_TIME = 1 / 20f;
@@ -67,6 +68,7 @@ public class WarsmashConstants {
 
 	static {
 		GAME_PATH = Os.getenv("game_files");
+		AUDIO_FILES_PATH = GAME_PATH + "/Audio";
 	}
 
 	public static void loadConstants(final GameObject emulatorConstants, final DataTable warsmashIni) {

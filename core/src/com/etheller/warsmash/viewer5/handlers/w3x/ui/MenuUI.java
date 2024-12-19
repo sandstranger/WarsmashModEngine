@@ -24,6 +24,7 @@ import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.etheller.warsmash.AudioLoaderKt;
 import com.etheller.warsmash.KeysEmulator;
 import com.etheller.warsmash.SingleModelScreen;
 import com.etheller.warsmash.WarsmashGdxMapScreen;
@@ -58,6 +59,7 @@ import com.etheller.warsmash.parsers.w3x.w3i.War3MapW3iFlags;
 import com.etheller.warsmash.units.DataTable;
 import com.etheller.warsmash.units.Element;
 import com.etheller.warsmash.units.custom.WTS;
+import com.etheller.warsmash.util.DataSourceFileHandle;
 import com.etheller.warsmash.util.JAVACrc32C;
 import com.etheller.warsmash.util.StringBundle;
 import com.etheller.warsmash.util.WarsmashConstants;
@@ -2605,7 +2607,7 @@ public class MenuUI {
 			int validMusicCount = 0;
 			for (int i = 0; i < musics.length; i++) {
 				if (this.viewer.dataSource.has(musics[i])) {
-					final Music newMusic = Gdx.audio.newMusic(Gdx.files.absolute(WarsmashConstants.GAME_PATH + "/" +musics[i].replace('\\', '/')));
+					final Music newMusic = AudioLoaderKt.loadMusic(new DataSourceFileHandle(this.viewer.dataSource, musics[i]));
 					newMusic.setVolume(1.0f);
 					this.currentMusics[i] = newMusic;
 					validMusicCount++;

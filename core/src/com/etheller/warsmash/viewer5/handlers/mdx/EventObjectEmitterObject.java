@@ -11,6 +11,7 @@ import java.util.List;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
+import com.etheller.warsmash.AudioLoaderKt;
 import com.etheller.warsmash.common.FetchDataTypeName;
 import com.etheller.warsmash.common.LoadGenericCallback;
 import com.etheller.warsmash.util.MappedData;
@@ -35,25 +36,14 @@ public class EventObjectEmitterObject extends GenericObject implements EmitterOb
 
 		@Override
 		public Object call(final InputStream data) {
-			return Gdx.audio.newSound(Gdx.files.absolute(WarsmashConstants.GAME_PATH + "/" + this.filename.replace('\\','/')));
-		}
-			/*
-			final FileHandle temp = new FileHandle(this.filename) {
-				@Override
-				public InputStream read() {
-					return data;
-				}
-
-				;
-			};
 			if (data != null) {
-				return Gdx.audio.newSound(temp);
+				return AudioLoaderKt.loadSound(data, this.filename);
 			}
 			else {
 				System.err.println("Warning: missing sound file: " + this.filename);
 				return null;
 			}
-		}*/
+		}
 	}
 
 	private static final LoadGenericCallback mappedDataCallback = new LoadGenericCallback() {
