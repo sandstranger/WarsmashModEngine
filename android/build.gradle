@@ -93,8 +93,8 @@ dependencies {
 
 	// Java language implementation
 	coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
+	implementation project(":libgdx")
 //	implementation "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
-	implementation(files("libs/gdx-backend-android-release.aar"))
 	implementation  "com.badlogicgames.gdx:gdx:$gdxVersion"
 	implementation  "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
 	implementation  "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
