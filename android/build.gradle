@@ -36,8 +36,8 @@ android {
 		applicationId 'net.warsmash.phone'
 		minSdkVersion min_sdk
 		targetSdkVersion target_sdk
-		versionCode 2
-		versionName "1.0.1"
+		versionCode 3
+		versionName "1.0.2"
 		multiDexEnabled true
 	}
 	compileOptions {
