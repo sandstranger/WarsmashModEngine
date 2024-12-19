@@ -57,6 +57,10 @@ class EngineActivity : AndroidApplication() {
             } catch (e: Exception) {
             }
         }
+        else{
+            Os.setenv("SCREEN_WIDTH", "",true)
+            Os.setenv("SCREEN_HEIGHT","",true)
+        }
     }
 
     private fun launchGame (){

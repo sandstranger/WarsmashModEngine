@@ -18,8 +18,8 @@ public class WarsmashConstants {
 	 * whatever for custom mods and other stuff
 	 */
 	public static int GAME_VERSION = 1;
-	public static final String AUDIO_FILES_PATH;
-	public static final String GAME_PATH;
+	public static String AUDIO_FILES_PATH;
+	public static String GAME_PATH;
 	public static final int REPLACEABLE_TEXTURE_LIMIT = 64;
 	public static final float SIMULATION_STEP_TIME = 1 / 20f;
 	public static final int PORT_NUMBER = GamingNetwork.UDP_SINGLE_GAME_PORT;
@@ -66,12 +66,10 @@ public class WarsmashConstants {
 
 	public static final boolean SHOW_FPS = true;
 
-	static {
+	public static void loadConstants(final GameObject emulatorConstants, final DataTable warsmashIni) {
 		GAME_PATH = Os.getenv("game_files");
 		AUDIO_FILES_PATH = GAME_PATH + "/Audio";
-	}
 
-	public static void loadConstants(final GameObject emulatorConstants, final DataTable warsmashIni) {
 		MAX_PLAYERS = Integer.parseInt(Os.getenv("PLAYERS_COUNT"));//emulatorConstants.getFieldValue("MaxPlayers");
 		GAME_VERSION = Integer.parseInt(Os.getenv("GAME_VERSION"));//emulatorConstants.getFieldValue("GameVersion");
 		CATCH_CURSOR = emulatorConstants.getFieldValue("CatchCursor") == 1;
