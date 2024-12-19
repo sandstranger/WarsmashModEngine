@@ -3,7 +3,6 @@ package net.warsmash.phone.android.engine.activity
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.os.Environment
 import android.system.Os
 import android.view.ViewGroup
 import androidx.preference.PreferenceManager
@@ -14,7 +13,6 @@ import com.badlogic.gdx.backends.android.AndroidAudio
 import com.etheller.warsmash.KeysEmulator
 import com.etheller.warsmash.WarsmashGdxMenuScreen
 import com.etheller.warsmash.WarsmashGdxMultiScreenGame
-import kotlinx.coroutines.launch
 import net.warsmash.phone.android.engine.loadExtensions
 import net.warsmash.phone.android.engine.setFullscreen
 import net.warsmash.phone.databinding.ScreenControlsBinding
@@ -22,13 +20,11 @@ import net.warsmash.phone.ui.controls.ScreenControlsManager
 import net.warsmash.phone.utils.GAME_FILES_SHARED_PREFS_KEY
 import net.warsmash.phone.utils.HIDE_SCREEN_CONTROLS_KEY
 import net.warsmash.phone.utils.extensions.displayInCutoutArea
-import java.io.File
 import java.util.function.Consumer
 
 
 /** Launches the Android application.  */
 class EngineActivity : AndroidApplication() {
-    private lateinit var loggerProcess : Process
     private lateinit var prefsManager : SharedPreferences
     private lateinit var screenControlsManager : ScreenControlsManager
     private val keysEmulator : KeysEmulator = KeysEmulator()
@@ -40,18 +36,11 @@ class EngineActivity : AndroidApplication() {
         setFullscreen(window.decorView)
         super.onCreate(savedInstanceState)
 
-        loggerProcess = createLoggerProcess(Environment.getExternalStorageDirectory().absolutePath
-                + "/" + "warsmash.log")
         prefsManager = PreferenceManager.getDefaultSharedPreferences(this)
 
         displayInCutoutArea(prefsManager)
         launchGame()
         initScreenControls()
-    }
-
-    public override fun onDestroy() {
-        super.onDestroy()
-        loggerProcess.destroy()
     }
 
     private fun launchGame (){
@@ -73,17 +62,6 @@ class EngineActivity : AndroidApplication() {
     private fun getGameVersion () : Int {
         val gameVersion = prefsManager.getString("Game version", "");
         return if (gameVersion == "TFT") 1 else 0
-    }
-
-    private fun createLoggerProcess(pathToLog: String): Process {
-        val file = File(pathToLog)
-        if (file.exists()){
-            file.delete()
-        }
-        val processBuilder = ProcessBuilder()
-        processBuilder.command("/system/bin/sh", "-c", "logcat *:W -d -f $pathToLog")
-        processBuilder.redirectErrorStream(true)
-        return processBuilder.start()
     }
 
     private fun initScreenControls (){
