@@ -18,7 +18,9 @@ import net.warsmash.phone.utils.GAME_FILES_SHARED_PREFS_KEY
 import com.obsez.android.lib.filechooser.ChooserDialog
 import moxy.presenter.InjectPresenter
 import net.warsmash.phone.R
+import net.warsmash.phone.utils.CUSTOM_RESOLUTION_PREFS_KEY
 import net.warsmash.phone.utils.extensions.changeInputTypeToDecimal
+import net.warsmash.phone.utils.extensions.setHint
 
 
 class SettingsFragment : MvpAppCompatFragment(), SettingsFragmentMvpView,
@@ -58,7 +60,6 @@ class SettingsFragment : MvpAppCompatFragment(), SettingsFragmentMvpView,
 
             true
         }
-        updatePreference(gameFilesPreference!!, GAME_FILES_SHARED_PREFS_KEY)
 
         val playersCount = findPreference<EditTextPreference>("players_count")
         playersCount?.changeInputTypeToDecimal()
@@ -67,6 +68,14 @@ class SettingsFragment : MvpAppCompatFragment(), SettingsFragmentMvpView,
             presenter.onConfigureScreenControlsClicked(requireContext())
             true
         }
+
+        val customResolution = findPreference<EditTextPreference>(CUSTOM_RESOLUTION_PREFS_KEY)
+        customResolution?.setHint(R.string.custom_resolution_hint)
+
+        updatePreference(gameFilesPreference!!, GAME_FILES_SHARED_PREFS_KEY)
+        updatePreference(customResolution!!, CUSTOM_RESOLUTION_PREFS_KEY)
+        updatePreference(findPreference<EditTextPreference>("players_count")!!,"players_count")
+        updatePreference(findPreference<EditTextPreference>("server")!!,"server")
 
         setHasOptionsMenu(true)
     }

@@ -38,6 +38,10 @@
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/graphics">
+        <EditTextPreference
+            android:dialogTitle="@string/custom_resolution"
+            android:key="custom_resolution"
+            android:title="@string/custom_resolution" />
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="display_cutout_area"

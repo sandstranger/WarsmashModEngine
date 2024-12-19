@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.system.Os
+import android.util.Log
 import android.view.ViewGroup
 import androidx.preference.PreferenceManager
 import barsoosayque.libgdxoboe.OboeAudio
@@ -17,6 +18,7 @@ import net.warsmash.phone.android.engine.loadExtensions
 import net.warsmash.phone.android.engine.setFullscreen
 import net.warsmash.phone.databinding.ScreenControlsBinding
 import net.warsmash.phone.ui.controls.ScreenControlsManager
+import net.warsmash.phone.utils.CUSTOM_RESOLUTION_PREFS_KEY
 import net.warsmash.phone.utils.GAME_FILES_SHARED_PREFS_KEY
 import net.warsmash.phone.utils.HIDE_SCREEN_CONTROLS_KEY
 import net.warsmash.phone.utils.extensions.displayInCutoutArea
@@ -25,6 +27,8 @@ import java.util.function.Consumer
 
 /** Launches the Android application.  */
 class EngineActivity : AndroidApplication() {
+    private val RESOLUTION_DELIMITER = "x"
+
     private lateinit var prefsManager : SharedPreferences
     private lateinit var screenControlsManager : ScreenControlsManager
     private val keysEmulator : KeysEmulator = KeysEmulator()
@@ -43,7 +47,20 @@ class EngineActivity : AndroidApplication() {
         initScreenControls()
     }
 
+    private fun setCustomResolution (){
+        val customResolution = prefsManager.getString(CUSTOM_RESOLUTION_PREFS_KEY, "")
+        if (!customResolution.isNullOrEmpty() && customResolution.contains(RESOLUTION_DELIMITER)) {
+            try {
+                val resolutionsArray = customResolution.split(RESOLUTION_DELIMITER)
+                Os.setenv("SCREEN_WIDTH", resolutionsArray[0],true)
+                Os.setenv("SCREEN_HEIGHT",resolutionsArray[1],true)
+            } catch (e: Exception) {
+            }
+        }
+    }
+
     private fun launchGame (){
+        setCustomResolution()
         Os.setenv(GAME_FILES_SHARED_PREFS_KEY,
             prefsManager.getString(GAME_FILES_SHARED_PREFS_KEY,""), true)
         Os.setenv("GAME_VERSION", getGameVersion().toString(), true)
