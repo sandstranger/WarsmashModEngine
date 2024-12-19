@@ -5,7 +5,7 @@ This is an android port of Warsmash engine, found at https://github.com/Retera/W
 At this moment Android port supports Warcraft III: Frozen Throne: Patch 1.22 - 1.29 
 
 # How to run Warsmash Android port
-1. Get a licensed copy of Warcraft III: Frozen Throne: Patch 1.22 - 1.28 
+1. Get a licensed copy of Warcraft III: Frozen Throne: Patch 1.22 - 1.29 
 2. Copy original files of Warcraft3 TFT, all music,sounds to your phone.
 3. Run android port and specify path to the folder with files of warcraft3 TFT
 
