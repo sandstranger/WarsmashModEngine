@@ -1,5 +1,6 @@
 package com.etheller.warsmash;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
@@ -254,6 +255,11 @@ public class WarsmashGdxMapScreen implements InputProcessor, Screen {
 			default:
 				throw new RuntimeException("Unknown data source type: " + type);
 			}
+		}
+		var mpqFiles = new File(WarsmashConstants.GAME_PATH).listFiles((dir, file) -> file.toLowerCase().endsWith(".mpq"));
+		for (var file : mpqFiles)
+		{
+			dataSourcesList.add(new MpqDataSourceDescriptor(file.getAbsolutePath()));
 		}
 		final DataSource baseCompoundDataSource = new CompoundDataSourceDescriptor(dataSourcesList).createDataSource();
 
